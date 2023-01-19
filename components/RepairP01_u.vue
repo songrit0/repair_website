@@ -1,0 +1,314 @@
+<template>
+	<div class="div-receive-row">
+		<h3>รอตอบรับ</h3>
+		<div class="err_not_item" v-if="response?.length == 0||response == null">
+			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
+				<b>ยังไม่มีข้อมูล</b>
+				<li>กรุณาการแจ้งซ่อม</li></div>
+		</div>
+		<div class="div-item1" v-if="response?.length == !0">
+			<table>
+				<tr>
+					<th style="width: 30px;">ID</th>
+					<th style="width: 100px;">ปัณหา</th>
+					<th style="width: 88px;">ต้องการแจ้งซ่อม</th>
+					<th style="width: 80px;">ชื้อผู้แจ้งซ่อม</th>
+					<th style="width: 70px;">วัน/เวลาที่แจ้ง</th>
+					<th style="width: 70px;">วัน/เวลารับแจ้ง</th>
+					<th style="width: 55px;">สถานะ</th>
+					<th style="width: 65px;">button</th>
+				</tr>
+
+				<tr v-for="(item, idex) in response" :key="idex">
+					<td>
+						<li>{{ item.id_repair_i }}</li>
+					</td>
+					<td>
+						<li>{{ item.problem_symptom }}</li>
+					</td>
+					<td>
+						<li>{{ item.equipment }}</li>
+					</td>
+					<td>
+						<li>{{ item.name_sender }}</li>
+
+					</td>
+					<td>
+						<b>{{
+						`${new Date(item.date_repair).getDate()} /
+						${new Date(item.date_repair).getMonth() + 1} /
+						${new Date(item.date_repair).getFullYear()}
+						`
+						}}<br>{{ settime(item.date_repair) }}
+						</b>
+					</td>
+					<td>
+						<b>{{
+						`${new Date(item.date_repair).getDate()} /
+						${new Date(item.date_repair).getMonth() + 1} /
+						${new Date(item.date_repair).getFullYear()}
+						`
+						}}<br>{{ settime(item.date_repair) }}
+						</b>
+					</td>
+					<td>
+						<li>{{ item.staus }}</li>
+					</td>
+					<td>
+						<button>ข้อมูลเพิ่มเติม</button>
+					</td>
+				</tr>
+			</table>
+
+
+		</div>
+		<div class="Pagination-item" v-if="response?.length == !0">
+			<label for="cars">หน้าที่ :</label>
+			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
+			<select class="form-select" v-model="page">
+				<option v-for="idex in set_length" :key="idex" :value="idex">{{ idex }}</option>
+			</select>
+			<button type="button" @click="onpot_pages_go()" class="btn btn-outline-primary">&raquo;</button>
+		</div>
+
+	</div>
+</template>
+
+<script>
+import axios from 'axios'
+import { URL_GET_ALL_REQ, URL_GET_REQ, URL_PUT_PROCESS } from '../constants'
+import Swal from 'sweetalert2'
+export default {
+
+	data() {
+		return {
+			response: [],
+			page: 1,
+			set_length: 0,
+			staus: 'ทั้งหมด',
+
+			get_lengthdata: {
+				All: '',
+				process01: '',
+				process02: '',
+				process03: '',
+			}
+		}
+	},
+	methods: {
+		onpot_pages_go() {
+			if (this.page === this.set_length) {
+
+			} else {
+				this.page = this.page + 1
+			}
+
+		},
+		onpot_pages_back() {
+			if (this.page === 1) {
+
+			} else {
+				this.page = this.page - 1
+			}
+		},
+		settime(item) {
+			var H = new Date(item).getHours()
+			var M = new Date(item).getMinutes()
+			return `${H}:${M} น.`
+		},
+		button(item, staus) {
+			axios.put(`${URL_PUT_PROCESS}/${item}`, {
+				staus: staus
+			}).then(
+				response => {
+					console.log(response);
+					if (response.data.status === 'ok') {
+						Swal.fire({
+							position: 'center',
+							icon: 'success',
+							title: 'กำลังดำเนินการ',
+							showConfirmButton: false,
+							timer: 2500
+						}).then(() => {
+							axios.get(`${URL_GET_REQ}/?staus="รอตอบรับ"&page=${this.page}&limit=10`).then(response => {
+								//?staus=ซ่อมเสร็จ&page=1&limit=10&user_id=1
+								this.response = response.data.results
+							})
+							axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
+								this.get_lengthdata.process01 = response.data.lengthdata
+								var sum = response.data.lengthdata / 10
+								this.set_length = Math.ceil(sum)
+							})
+							axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ`).then(response => {
+								this.get_lengthdata.process02 = response.data.lengthdata
+							})
+						})
+					}
+				}
+			)
+		}
+	},
+	mounted() {
+
+		// เปิดเว็บทำงานเลย
+		axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10&user_id=1`).then(response => {
+			this.response = response.data.results
+			console.log(response.data.results.length);
+		})
+		axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
+			this.get_lengthdata.process01 = response.data.lengthdata
+			var sum = response.data.lengthdata / 10
+			this.set_length = Math.ceil(sum)
+		})
+		// เช็คทุกๆ10วิ
+		setInterval(() => {
+			axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10&user_id=1`).then(response => {
+			this.response = response.data.results
+		})
+			axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
+				this.get_lengthdata.process01 = response.data.lengthdata
+				var sum = response.data.lengthdata / 10
+				this.set_length = Math.ceil(sum)
+			})
+		}, 10000);
+	},
+	watch: {
+
+		page() {
+			axios.get(`${URL_GET_REQ}/?staus="รอตอบรับ"&page=${this.page}&limit=10&user_id=1`).then(response => {
+				this.response = response.data.results
+				// console.log(this.Getlimit_information);
+			})
+		}
+	}
+}
+</script>
+
+<style>
+.div-receive {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	margin-top: 40px;
+	z-index: 1;
+}
+
+.div-receive-pages {
+	display: flex;
+	flex-direction: column;
+	width: 95%;
+	align-items: center;
+}
+
+.div-receive-row {
+	display: flex;
+	width: 85%;
+	grid-template-columns: 1fr;
+	/* border: 2px solid #ff0000; */
+	flex-direction: column;
+	flex-wrap: nowrap;
+}
+
+
+.item-staus {
+	border-radius: 10px;
+	width: 145px;
+	height: 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	/* background: #c7c7ff; */
+
+}
+
+.div-staus {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	justify-items: stretch;
+	align-items: stretch;
+	column-gap: 27px;
+	row-gap: 27px;
+}
+
+
+
+.div-receive-row .div-item1 .item {
+	width: auto;
+	height: 150px;
+	display: flex;
+	background-color: #f3bbe1;
+	flex-direction: row;
+	border-radius: 4px;
+}
+
+
+
+.div-receive-row .div-item1 .item .item2 {
+	display: grid;
+	align-content: space-between;
+	/* justify-items: center; */
+	margin: 0px 0px 0px 10px;
+	align-content: space-around;
+
+}
+
+
+
+.Pagination-item {
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	align-items: center;
+}
+
+.Pagination-item label {
+	width: 100px;
+}
+
+.Pagination-item select {
+	width: 120px;
+}/* --------------------table-------------------- */
+
+.div-item1 table {
+	width: 100%;
+	border-spacing: 0;
+	border-radius: 12px 12px 12px 12px;
+	color: aliceblue;
+	text-align: center;
+	background-color: #0b1621;
+	/* border-radius: 26px; */
+	overflow: hidden;
+}
+
+.div-item1 table th {
+	color: black;
+	background-color: #c7c7ff;
+	height: 60px;
+	text-transform: uppercase;
+	font-size: 17px;
+}
+
+.div-item1 table td {
+	/* color: aliceblue; */
+	background-color: #ffffffe1;
+	height: 60px;
+	font-size: 14px;
+}
+
+
+/* --------------------table-end------------------- */
+
+@media screen and (max-width: 800px) {
+	.div-receive-row .div-item1 {
+		grid-template-columns: 1fr;
+	}
+
+	.div-staus {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+</style>
