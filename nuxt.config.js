@@ -1,7 +1,8 @@
 export default {
-	 server: {
-    host:  '0.0.0.0', // default: localhost
-	 port: 2455 // default: 3000
+  server: {
+    host: "0.0.0.0", // default: localhost
+    hostname: "quest.localhost",
+    port: 2455, // default: 3000
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -51,12 +52,12 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [ ],
+  css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-	// '../plugins/'
-	// '~/plugins/mosha-vue-toastify.js'
+    // '../plugins/'
+    // '~/plugins/mosha-vue-toastify.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
