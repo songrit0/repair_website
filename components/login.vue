@@ -185,8 +185,9 @@ export default {
 					console.log(response.data.token);
 					if (response.data.status === 'ok') {
 						//เข้าสู่ระบบได้
+						console.log("data",response);
 						localStorage.setItem('acessToken', response.data.token)
-						// localStorage.setItem('acess_users_id', response.data.users[0].id)
+						localStorage.setItem('users_id', response.data.user_id)
 						// localStorage.setItem('acess_users_user_status', response.data.users[0].user_status)
 						// localStorage.setItem('acess_users_phone', response.data.users[0].phone)
 						// localStorage.setItem('acess_users_users_name', response.data.users[0].users_name)

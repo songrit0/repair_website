@@ -3,7 +3,8 @@
 		<nav class="menu-bar-layouts">
 			<div class="group-layouts" @click="$router.push({ path: '/', replace: true })">
 				<!-- <img class="logo-img" src="~/~/img/LogoMain.png" alt="" width="50px"> -->
-				<li class="item-layouts title-layouts">ระบบแจ้งซ่อม
+				<li class="item-layouts title-layouts" @click="setUSER()">ระบบแจ้งซ่อม
+					{{ getnewUSER }}
 				</li><label>Repair Notification System</label>
 
 			</div>
@@ -41,12 +42,22 @@
 
 </template>
 <script>
+import axios from 'axios';
+import { URL_GET_USER } from "../constants"
+
 export default ({
 	data() {
 		return {
 			MenuDropdown: false,
 			get_acessToken: '',
 			getIndex: ''
+		}
+	}, computed: {
+		mode() {
+			return this.$store.state.counter
+		},
+		getnewUSER(){
+			return this.$store.state.newUSER
 		}
 	},
 	methods: {
@@ -56,10 +67,24 @@ export default ({
 		},
 		logout() {
 			localStorage.removeItem('acessToken')
+			localStorage.removeItem('users_id')
+			this.$store.commit('steUSER',null)
 			// window.location.replace(`/login0`)
 		},
+		increment() {
+			this.$store.commit('increment')
+		},
+		setUSER(){
+			var id = localStorage.users_id
+			axios.get(`${URL_GET_USER}/${id}`).then(response => {
+			this.$store.commit('steUSER',response.data.results[0])
+			// console.log('home:',response.data.results[0]);
+		});
+		}
+		
 	},
 	mounted() {
+		this.setUSER()
 		setInterval(() => {
 			this.getIndex = this.$route.query.Index
 		}, 10);
@@ -277,23 +302,25 @@ br {
 .button-B button:hover {
 	/* box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff; */
 	transform: translateY(-2px);
-	
+
 }
+
 .err_not_item {
 	display: grid;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
 	/* background-color: red; */
 }
+
 .err_not_item .item {
 	background-color: #ff00004d;
-    width: 150px;
-    height: 135px;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    flex-direction: column;
+	width: 150px;
+	height: 135px;
+	display: flex;
+	align-items: center;
+	align-content: center;
+	flex-direction: column;
 	border-radius: 5px;
 }
 </style>
