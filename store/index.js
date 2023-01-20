@@ -1,6 +1,7 @@
 export const state = () => ({
   counter: 0,
   newUSER: "",
+  formon: false
 });
 
 export const getters = {
@@ -19,7 +20,11 @@ export const mutations = {
   steUSER(state,payload){
 	state.newUSER = payload
 	// console.log(payload);
-  }
+  },
+  steformON(state ) {
+	state.formon = !state.formon 
+	console.log(state.formon);
+  },
 };
 
 export const actions = {

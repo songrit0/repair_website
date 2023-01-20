@@ -1,7 +1,12 @@
 <template>
 	<div class="div-receive-row">
 		<h3>ทั้งหมด</h3>
-		<div class="div-item0">
+		<div class="err_not_item" v-if="response?.length == 0||response == null">
+			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
+				<b>ยังไม่มีข้อมูล</b>
+				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li></div>
+		</div>
+		<div class="div-item0" v-if="response?.length == !0 ">
 			<table>
 				<tr>
 					<th style="width: 30px;">ID</th>
@@ -56,7 +61,7 @@
 			</table>
 		</div>
 
-		<div class="Pagination-item" >
+		<div class="Pagination-item" v-if="response?.length == !0 " >
 			<label for="cars">หน้าที่ :</label>
 			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
 			<select class="form-select" v-model="page">
@@ -144,7 +149,7 @@ export default {
 		// เปิดเว็บทำงานเลย
 		axios.get(`${URL_GET__INFORMATION}/?page=${this.page}&per_page=10`).then(response => {
 			this.response = response.data.results
-			console.log(response.data);
+			console.log(response.data.results);
 		})
 		axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด`).then(response => {
 			this.get_lengthdata.process01 = response.data.lengthdata

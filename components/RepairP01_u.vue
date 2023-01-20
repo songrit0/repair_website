@@ -4,9 +4,9 @@
 		<div class="err_not_item" v-if="response?.length == 0||response == null">
 			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
 				<b>ยังไม่มีข้อมูล</b>
-				<li>กรุณาการแจ้งซ่อม</li></div>
+				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li></div>
 		</div>
-		<div class="div-item1" v-if="response?.length == !0">
+		<div class="div-item01" v-if="response?.length == !0">
 			<table>
 				<tr>
 					<th style="width: 30px;">ID</th>
@@ -82,7 +82,7 @@ export default {
 
 	data() {
 		return {
-			response: [],
+			response: '',
 			page: 1,
 			set_length: 0,
 			staus: 'ทั้งหมด',
@@ -116,44 +116,14 @@ export default {
 			var M = new Date(item).getMinutes()
 			return `${H}:${M} น.`
 		},
-		button(item, staus) {
-			axios.put(`${URL_PUT_PROCESS}/${item}`, {
-				staus: staus
-			}).then(
-				response => {
-					console.log(response);
-					if (response.data.status === 'ok') {
-						Swal.fire({
-							position: 'center',
-							icon: 'success',
-							title: 'กำลังดำเนินการ',
-							showConfirmButton: false,
-							timer: 2500
-						}).then(() => {
-							axios.get(`${URL_GET_REQ}/?staus="รอตอบรับ"&page=${this.page}&limit=10`).then(response => {
-								//?staus=ซ่อมเสร็จ&page=1&limit=10&user_id=1
-								this.response = response.data.results
-							})
-							axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
-								this.get_lengthdata.process01 = response.data.lengthdata
-								var sum = response.data.lengthdata / 10
-								this.set_length = Math.ceil(sum)
-							})
-							axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ`).then(response => {
-								this.get_lengthdata.process02 = response.data.lengthdata
-							})
-						})
-					}
-				}
-			)
-		}
+		
 	},
 	mounted() {
 
 		// เปิดเว็บทำงานเลย
-		axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10&user_id=1`).then(response => {
+		axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10&user_id=${localStorage.users_id}`).then(response => {
 			this.response = response.data.results
-			console.log(response.data.results.length);
+			console.log(response.data.results);
 		})
 		axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
 			this.get_lengthdata.process01 = response.data.lengthdata
@@ -162,7 +132,7 @@ export default {
 		})
 		// เช็คทุกๆ10วิ
 		setInterval(() => {
-			axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10&user_id=1`).then(response => {
+			axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10&user_id=${localStorage.users_id}`).then(response => {
 			this.response = response.data.results
 		})
 			axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
@@ -175,7 +145,7 @@ export default {
 	watch: {
 
 		page() {
-			axios.get(`${URL_GET_REQ}/?staus="รอตอบรับ"&page=${this.page}&limit=10&user_id=1`).then(response => {
+			axios.get(`${URL_GET_REQ}/?staus="รอตอบรับ"&page=${this.page}&limit=10&user_id=${localStorage.users_id}`).then(response => {
 				this.response = response.data.results
 				// console.log(this.Getlimit_information);
 			})
@@ -235,7 +205,7 @@ export default {
 
 
 
-.div-receive-row .div-item1 .item {
+.div-receive-row .div-item01 .item {
 	width: auto;
 	height: 150px;
 	display: flex;
@@ -246,7 +216,7 @@ export default {
 
 
 
-.div-receive-row .div-item1 .item .item2 {
+.div-receive-row .div-item01 .item .item2 {
 	display: grid;
 	align-content: space-between;
 	/* justify-items: center; */
@@ -273,7 +243,7 @@ export default {
 	width: 120px;
 }/* --------------------table-------------------- */
 
-.div-item1 table {
+.div-item01 table {
 	width: 100%;
 	border-spacing: 0;
 	border-radius: 12px 12px 12px 12px;
@@ -284,7 +254,7 @@ export default {
 	overflow: hidden;
 }
 
-.div-item1 table th {
+.div-item01 table th {
 	color: black;
 	background-color: #c7c7ff;
 	height: 60px;
@@ -292,7 +262,7 @@ export default {
 	font-size: 17px;
 }
 
-.div-item1 table td {
+.div-item01 table td {
 	/* color: aliceblue; */
 	background-color: #ffffffe1;
 	height: 60px;
@@ -303,7 +273,7 @@ export default {
 /* --------------------table-end------------------- */
 
 @media screen and (max-width: 800px) {
-	.div-receive-row .div-item1 {
+	.div-receive-row .div-item01 {
 		grid-template-columns: 1fr;
 	}
 

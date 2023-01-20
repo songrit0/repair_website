@@ -4,7 +4,7 @@
 			<div class="group-layouts" @click="$router.push({ path: '/', replace: true })">
 				<!-- <img class="logo-img" src="~/~/img/LogoMain.png" alt="" width="50px"> -->
 				<li class="item-layouts title-layouts" @click="setUSER()">ระบบแจ้งซ่อม
-					{{ getnewUSER }}
+					<!-- {{ getnewUSER }} -->
 				</li><label>Repair Notification System</label>
 
 			</div>
@@ -53,6 +53,7 @@ export default ({
 			getIndex: ''
 		}
 	}, computed: {
+		
 		mode() {
 			return this.$store.state.counter
 		},
@@ -315,12 +316,13 @@ br {
 
 .err_not_item .item {
 	background-color: #ff00004d;
-	width: 150px;
-	height: 135px;
+	width: 200px;
+	height: 200px;
 	display: flex;
 	align-items: center;
 	align-content: center;
 	flex-direction: column;
 	border-radius: 5px;
+	text-align: -webkit-center;
 }
 </style>

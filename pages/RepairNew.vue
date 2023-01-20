@@ -63,7 +63,11 @@
 							</label>
 						</div>
 					</div>
+
+
 				</div>
+				<div class="button-ADD"><button @click="setFORMON()" :style="getformon?'background-color:#ffd8be;':''"> + แจ้งซ่อม</button></div>
+				<FormR :getformon="getformon" />
 			</div>
 			<br>
 			<br>
@@ -90,10 +94,12 @@ import RepairP02_u from '../components/RepairP02_u.vue';
 import RepairP01_u from '../components/RepairP01_u.vue';
 import { URL_GET_ALL_REQ, URL_GET_REQ, URL_PUT_PROCESS } from '../constants'
 import RepairP03_u from '../components/RepairP03_u.vue';
+import FormR from '../components/FormR.vue';
 // import Swal from 'sweetalert2'
 export default {
 	data() {
 		return {
+			formon: false,
 			response: "",
 			page: "1",
 			set_length: 10,
@@ -108,7 +114,9 @@ export default {
 				process01: false,
 				process02: false,
 				process03: false,
-			}
+			},
+			getformon: this.$store.state.formon
+			
 		};
 	},
 	methods: {
@@ -117,31 +125,67 @@ export default {
 			var M = new Date(item).getMinutes();
 			return `${H}:${M} น.`;
 		},
-		GETall_lengthdata(){
-			axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด&user_id=1`).then(response => {
-			this.get_lengthdata.All = response.data.lengthdata;
-		});
-		axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ&user_id=1`).then(response => {
-			this.get_lengthdata.process01 = response.data.lengthdata;
-		});
-		axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ&user_id=1`).then(response => {
-			this.get_lengthdata.process02 = response.data.lengthdata;
-		});
-		axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ&user_id=1`).then(response => {
-			this.get_lengthdata.process03 = response.data.lengthdata;
-		});
+		GETall_lengthdata() {
+			axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด&user_id=${localStorage.users_id}`).then(response => {
+				this.get_lengthdata.All = response.data.lengthdata;
+			});
+			axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
+				this.get_lengthdata.process01 = response.data.lengthdata;
+			});
+			axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ&user_id=${localStorage.users_id}`).then(response => {
+				this.get_lengthdata.process02 = response.data.lengthdata;
+			});
+			axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ&user_id=${localStorage.users_id}`).then(response => {
+				this.get_lengthdata.process03 = response.data.lengthdata;
+			});
+		}
+	},
+	computed: {
+
+	},
+	methods: {
+		setFORMON() {
+			$nuxt.$store.commit('steformON')
+			this.getformon = this.$store.state.formon
 		}
 	},
 	mounted() {
 		// เปิดเว็บทำงานเลย
-		this.GETall_lengthdata()
+		axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด&user_id=${localStorage.users_id}`).then(response => {
+			this.get_lengthdata.All = response.data.lengthdata;
+		});
+		axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ&user_id=${localStorage.users_id}`).then(response => {
+			this.get_lengthdata.process01 = response.data.lengthdata;
+		});
+		axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ&user_id=${localStorage.users_id}`).then(response => {
+			this.get_lengthdata.process02 = response.data.lengthdata;
+		});
+		axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ&user_id=${localStorage.users_id}`).then(response => {
+			this.get_lengthdata.process03 = response.data.lengthdata;
+		});
 		// เช็คทุกๆ10วิ
 		setInterval(() => {
-			this.GETall_lengthdata()
+			axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด&user_id=${localStorage.users_id}`).then(response => {
+				this.get_lengthdata.All = response.data.lengthdata;
+			});
+			axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ&user_id=${localStorage.users_id}`).then(response => {
+				this.get_lengthdata.process01 = response.data.lengthdata;
+			});
+			axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ&user_id=${localStorage.users_id}`).then(response => {
+				this.get_lengthdata.process02 = response.data.lengthdata;
+			});
+			axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ&user_id=${localStorage.users_id}`).then(response => {
+				this.get_lengthdata.process03 = response.data.lengthdata;
+			});
 		}, 10000);
+		setInterval(() => {
+			this.getformon = this.$store.state.formon
+		}, 1000);
 	},
-	watch: {},
-	components: { RepairP00_u, RepairP01_u, RepairP02_u, RepairP03_u }
+	watch: {
+
+	},
+	components: { RepairP00_u, RepairP01_u, RepairP02_u, RepairP03_u, FormR }
 }
 </script>
 
@@ -340,6 +384,24 @@ export default {
 
 .switch input[type="checkbox"]:checked:active+.slider::after {
 	transform: translateX(calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)));
+}
+
+.button-ADD {
+	border-radius: 10px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+}
+
+.button-ADD button {
+	width: 100%;
+	height: 40px;
+	background: #c7c7ff;
+	border: none;
+	border-radius: 12px;
 }
 
 /* checkbox-div */

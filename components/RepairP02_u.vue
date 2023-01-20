@@ -1,12 +1,13 @@
 <template>
 	<div class="div-receive-row">
 		<h3>กำลังดำเนินการ</h3>
-		<div class="err_not_item" v-if="!response">
+		<div class="err_not_item" v-if="response?.length == 0 || response == null">
 			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
 				<b>ยังไม่มีข้อมูล</b>
-				<li>กรุณาการแจ้งซ่อม</li></div>
+				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li>
+			</div>
 		</div>
-		<div class="div-item02 " v-if="response">
+		<div class="div-item02 " v-if="response?.length == !0">
 			<table>
 				<tr>
 					<th style="width: 30px;">ID</th>
@@ -64,13 +65,13 @@
 		</div>
 
 
-		<div class="Pagination-item" v-if="response">
+		<div class="Pagination-item" v-if="response?.length == !0">
 			<label for="cars">หน้าที่ :</label>
 			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
 			<select class="form-select" v-model="page">
 				<option v-for="idex in set_length" :key="idex" :value="idex">{{ idex }}</option>
 			</select>
-			<button type="button" @click="onpot_pages_go()"  class="btn btn-outline-primary">&raquo;</button>
+			<button type="button" @click="onpot_pages_go()" class="btn btn-outline-primary">&raquo;</button>
 		</div>
 
 	</div>
@@ -86,7 +87,7 @@ export default {
 			response: '',
 			page: 1,
 			set_length: 10,
-			A:0,
+			A: 0,
 			// staus: 'ซ่อมเสร็จ',
 			get_lengthdata: {
 				All: '',
@@ -288,7 +289,7 @@ export default {
 
 .div-item .item1 .button2 {
 
-	position: absolute; 
+	position: absolute;
 	margin-top: -111px;
 	width: 73px;
 	height: 20px;
@@ -309,9 +310,10 @@ export default {
 .Pagination-item select {
 	width: 120px;
 }
+
 /* --------------------table-------------------- */
 
-.div-item02  table {
+.div-item02 table {
 	width: 100%;
 	border-spacing: 0;
 	border-radius: 12px 12px 12px 12px;
@@ -322,7 +324,7 @@ export default {
 	overflow: hidden;
 }
 
-.div-item02  table th {
+.div-item02 table th {
 	color: black;
 	background-color: #ffd8be;
 	height: 60px;
@@ -330,7 +332,7 @@ export default {
 	font-size: 17px;
 }
 
-.div-item02  table td {
+.div-item02 table td {
 	/* color: aliceblue; */
 	background-color: #ffffffe1;
 	height: 60px;

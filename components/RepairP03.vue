@@ -1,7 +1,13 @@
 <template>
 	<div class="div-receive-row">
 		<h3>ซ่อมเสร็จ</h3>
-		<div class="div-item2">
+		<div class="err_not_item" v-if="response?.length == 0 || response == null">
+			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
+				<b>ยังไม่มีข้อมูล</b>
+				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li>
+			</div>
+		</div>
+		<div class="div-item2"  v-if="response?.length == !0 " >
 			<table>
 				<tr>
 					<th style="width: 30px;">ID</th>
@@ -56,13 +62,13 @@
 			</table>
 		</div>
 
-		<div class="Pagination-item" >
+		<div class="Pagination-item" v-if="response?.length == !0 ">
 			<label for="cars">หน้าที่ :</label>
 			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
 			<select class="form-select" v-model="page">
 				<option v-for="idex in set_length" :key="idex" :value="idex">{{ idex }}</option>
 			</select>
-			<button type="button" @click="onpot_pages_go()"  class="btn btn-outline-primary">&raquo;</button>
+			<button type="button" @click="onpot_pages_go()" class="btn btn-outline-primary">&raquo;</button>
 		</div>
 
 	</div>
@@ -142,7 +148,7 @@ export default {
 	},
 	mounted() {
 		// เปิดเว็บทำงานเลย
-		axios.get(`${URL_GET_REQ}/?staus="ซ่อมเสร็จ"&page=${this.page}&limit=10`).then(response => {
+		axios.get(`${URL_GET_REQ}/?staus=ซ่อมเสร็จ&page=${this.page}&limit=10`).then(response => {
 			this.response = response.data.results
 			console.log(response.data);
 		})

@@ -4,7 +4,7 @@
 		<div class="err_not_item" v-if="response?.length == 0||response == null">
 			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
 				<b>ยังไม่มีข้อมูล</b>
-				<li>กรุณาการแจ้งซ่อม</li></div>
+				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li></div>
 		</div>
 		<div class="div-item1">
 
