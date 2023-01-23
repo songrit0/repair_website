@@ -84,7 +84,7 @@ export default {
 			}
 		},
 		GET_by_id() {
-			axios.get(`${URL_PUT_GET_BY_ID}/${this.ID}`).then(response => {
+			axios.get(`${URL_PUT_GET_BY_ID}/${this.$store.state.showformitem.id}`).then(response => {
 				this.GETBYID = response.data.results
 				console.log(response.data);
 				console.log(this.GETBYID);
