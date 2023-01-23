@@ -52,7 +52,7 @@
 						<li><b>ผู้ประสานงาน(ผู้รับแจ้งซ่อม):</b> {{check(GETBYID.name_responsible)}}</li>
 					</div>
 					<div class="col-12 py-2">
-						<button type="button" class="btn btn-danger"  @click="button(GETBYID.id_repair_i, 'ยกเลิก')">ยกเลิกการแจ้งซ่อม</button>
+						<button type="button" class="btn btn-danger"  @click="button(GETBYID.id_repair_i, 'ยกเลิก')" v-if="GETBYID.staus === 'รอตอบรับ'||GETBYID.staus === 'กำลังดำเนินการ'">ยกเลิกการแจ้งซ่อม</button>
 					</div>
 
 				</div>
