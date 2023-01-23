@@ -2,8 +2,12 @@ export const state = () => ({
   counter: 0,
   newUSER: "",
   formon: false,
-  showformitem:{ status:false , id:0}
+  showformitem: { status: false, id: 0 },
+  //user
 
+ 
+  
+  //user END
 });
 
 export const getters = {
@@ -19,27 +23,28 @@ export const mutations = {
   increment(state) {
     state.counter++;
   },
-  steUSER(state,payload){
-	state.newUSER = payload
-	// console.log(payload);
+  steUSER(state, payload) {
+    state.newUSER = payload;
+    // console.log(payload);
   },
-  steformON(state ) {
-	state.formon = !state.formon 
-	console.log(state.formon);
+  steformON(state) {
+    state.formon = !state.formon;
+    // console.log(state.formon);
   },
-  setShowformitem(state,payload){
-	state.showformitem.status = payload
-	console.log(1,payload);
+  setShowformitem(state, payload) {
+    state.showformitem.status = payload;
+    // console.log(1, payload);
   },
-  setShowformitem_id(state,payload){
-	state.showformitem.id = payload
-	console.log(2,payload);
-  }
+  setShowformitem_id(state, payload) {
+    state.showformitem.id = payload;
+    // console.log(2, payload);
+  },
+
 };
 
 export const actions = {
   async getapiUSER(state, payload) {
-    return s
+    return s;
   },
   async fetchCounter({ state }) {
     // make request

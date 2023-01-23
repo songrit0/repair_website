@@ -17,7 +17,7 @@
 					</button>
 					<div class="Menu_item2" :class="MenuDropdown ? '' : 'Menu_off2'">
 						<div>
-							<li class="p-1 " @click="submitSearch()">user</li>
+							<li class="p-1 " @click="lengthdata_all()">user</li>
 						</div>
 						<div>
 							<li class="p-1 " @click="logout()">Log Out</li>
@@ -43,14 +43,16 @@
 </template>
 <script>
 import axios from 'axios';
-import { URL_GET_USER } from "../constants"
+import { URL_GET_ALL_REQ, URL_GET_REQ, URL_GET_USER } from "../constants"
 
 export default ({
 	data() {
 		return {
 			MenuDropdown: false,
 			get_acessToken: '',
-			getIndex: ''
+			getIndex: '',
+			
+
 		}
 	}, computed: {
 
@@ -81,11 +83,14 @@ export default ({
 				this.$store.commit('steUSER', response.data.results[0])
 				// console.log('home:',response.data.results[0]);
 			});
-		}
+		},
+	
 
 	},
 	mounted() {
 		this.setUSER()
+		this.lengthdata()
+		this.lengthdata_all()
 		setInterval(() => {
 			this.getIndex = this.$route.query.Index
 		}, 10);
@@ -325,6 +330,4 @@ br {
 	border-radius: 5px;
 	text-align: -webkit-center;
 }
-
-
 </style>
