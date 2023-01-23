@@ -7,7 +7,7 @@
 				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li>
 			</div>
 		</div>
-		<div class="div-item2"  v-if="response?.length == !0 " >
+		<div class="div-item2"  >
 			<table>
 				<tr>
 					<th style="width: 30px;">ID</th>
@@ -62,7 +62,7 @@
 			</table>
 		</div>
 
-		<div class="Pagination-item" v-if="response?.length == !0 ">
+		<div class="Pagination-item">
 			<label for="cars">หน้าที่ :</label>
 			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
 			<select class="form-select" v-model="page">
@@ -160,7 +160,7 @@ export default {
 		})
 		// เช็คทุกๆ10วิ
 		setInterval(() => {
-			axios.get(`${URL_GET_REQ}/?staus="ซ่อมเสร็จ"&page=${this.page}&limit=10`).then(response => {
+			axios.get(`${URL_GET_REQ}/?staus=ซ่อมเสร็จ&page=${this.page}&limit=10`).then(response => {
 				this.response = response.data.results
 			})
 			axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ`).then(response => {
