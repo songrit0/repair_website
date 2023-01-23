@@ -68,6 +68,7 @@
 				</div>
 				<div class="button-ADD"><button @click="setFORMON()" :style="getformon?'background-color:#ffd8be;':''"> + แจ้งซ่อม</button></div>
 				<FormR :getformon="getformon" />
+				<show-information/>
 			</div>
 			<br>
 			<br>

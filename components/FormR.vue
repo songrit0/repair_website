@@ -38,8 +38,8 @@
 			</div>
 		</div>
 		<div class="row mb-3"
-			v-if="form.equipment === 'คอมพิวเตอร์แม่ข่าย' || form.equipment === 'คอมพิวเตอร์ตั้งโต๊ะ(pc)' || form.equipment === 'คอมพิวเตอร์พกพา(NoteBook)'||form.equipment === 	'เครื่องสแกนเนอร์(Scnner)' || form.equipment === 'ครื่องพิมพ์(printer)'">
-			<label for="inputEmail3" class="col-sm-2 col-form-label">ชื่อ อมพิวเตอร์/อุปกรณ์</label>
+			v-if="form.equipment === 'คอมพิวเตอร์แม่ข่าย' || form.equipment === 'คอมพิวเตอร์ตั้งโต๊ะ(pc)' || form.equipment === 'คอมพิวเตอร์พกพา(NoteBook)' || form.equipment === 'เครื่องสแกนเนอร์(Scnner)' || form.equipment === 'ครื่องพิมพ์(printer)'">
+			<label for="inputEmail3" class="col-sm-2 col-form-label">ชื่อ คอมพิวเตอร์/อุปกรณ์</label>
 			<div class="col-sm-10">
 				<input v-model="form.computer_name" type="text" class="form-control"
 					placeholder="กรอก ชื่อคอมพิวเตอร์หรือชื่อรุ่นคอมพิวเตอร์หรือชื่อรุ่นอุปกรณ์(ถ้ามี)">
@@ -55,7 +55,7 @@
 			</div>
 		</div>
 		<div class="row mb-3"
-			v-if="form.equipment === 'คอมพิวเตอร์แม่ข่าย' || form.equipment === 'คอมพิวเตอร์ตั้งโต๊ะ(pc)' || form.equipment === 'คอมพิวเตอร์พกพา(NoteBook)'||form.equipment === 	'เครื่องสแกนเนอร์(Scnner)' || form.equipment === 'ครื่องพิมพ์(printer)'">
+			v-if="form.equipment === 'คอมพิวเตอร์แม่ข่าย' || form.equipment === 'คอมพิวเตอร์ตั้งโต๊ะ(pc)' || form.equipment === 'คอมพิวเตอร์พกพา(NoteBook)' || form.equipment === 'เครื่องสแกนเนอร์(Scnner)' || form.equipment === 'ครื่องพิมพ์(printer)'">
 			<label for="inputEmail3" class="col-sm-2 col-form-label">ip_address</label>
 			<div class="col-sm-10">
 				<input v-model="form.ip_address" type="text" class="form-control" placeholder="กรอก ip_address (ถ้ามี)">
@@ -131,7 +131,6 @@ export default {
 				'อินเทอร์เน็ต(Internet)',
 				'อื่นๆ'],
 			form: {
-
 				responsible_person: "",
 				work_group: '',
 				work: '',
@@ -156,50 +155,79 @@ export default {
 			$nuxt.$store.commit('steformON')
 			// this.getformon = this.$store.state.formon
 		},
+		validate_Register() {
+			var check = true;
+			if (!this.form.responsible_person) {
+				check = false;
+			}
+			if (!this.form.work_group) {
+				check = false;
+			}
+			if (!this.form.work) {
+				check = false;
+			}
+			if (!this.form.phone) {
+				check = false;
+			}
+			if (!this.form.equipment) {
+				check = false;
+			}
+			if (!this.form.problem_symptom) {
+				check = false;
+			}
+			
+			return check;
+			
+		},
 		Register() {
-			axios.post(`${URL_PUST_ADD_INFORMATION}`, {
-				staus: "รอตอบรับ",
-				date_repair: new Date,
-				responsible_person: this.form.responsible_person,
-				name_sender: this.form.responsible_person,
-				work_group: this.form.work_group,
-				work: this.form.work,
-				phone: this.form.phone,
-				equipment: this.form.equipment,
-				computer_name: this.form.computer_name,
-				commodity_code: this.form.commodity_code,
-				ip_address: this.form.ip_address,
-				other: this.form.other,
-				problem_symptom: this.form.problem_symptom,
-				requirements: this.form.requirements,
-				user_id: this.$store.state.newUSER.user_id
-				// name_responsible: "ชื่อผู้รับadd",
+			
+		
+			console.log(this.validate_Register());
+			if (this.validate_Register()) {
+				axios.post(`${URL_PUST_ADD_INFORMATION}`, {
+					staus: "รอตอบรับ",
+					date_repair: new Date,
+					responsible_person: this.form.responsible_person,
+					name_sender: this.form.responsible_person,
+					work_group: this.form.work_group,
+					work: this.form.work,
+					phone: this.form.phone,
+					equipment: this.form.equipment,
+					computer_name: this.form.computer_name,
+					commodity_code: this.form.commodity_code,
+					ip_address: this.form.ip_address,
+					other: this.form.other,
+					problem_symptom: this.form.problem_symptom,
+					requirements: this.form.requirements,
+					user_id: this.$store.state.newUSER.user_id
+					// name_responsible: "ชื่อผู้รับadd",
 
-			}).then(response => {
-				console.log('post', response);
+				}).then(response => {
+					console.log('post', response);
 
-				Swal.fire({
-					position: "center",
-					icon: "success",
-					title: "สมัครสมาชิกสำเร็จ",
-					showConfirmButton: false,
-					timer: 1500
-				}).then(() => {
-					// window.location.reload(0)
+					Swal.fire({
+						position: "center",
+						icon: "success",
+						title: "สมัครสมาชิกสำเร็จ",
+						showConfirmButton: false,
+						timer: 1500
+					}).then(() => {
+						// window.location.reload(0)
 
-					this.setFORMON()
-				});
+						this.setFORMON()
+					});
 
-			}).catch(function (error) {
-				Swal.fire({
-					position: "center",
-					icon: "error",
-					title: "error",
-					showConfirmButton: false,
-					timer: 1500
 				})
-				console.log(error);
-			});
+			}else {
+				Swal.fire({
+						position: "center",
+						icon: "warning",
+						title: "มีข้อมูลว่าง",
+						text:'กรุณาเช็คข้อมูล',
+						showConfirmButton: false,
+						timer: 5500
+					})
+			}
 
 		}
 	},

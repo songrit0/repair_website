@@ -6,7 +6,7 @@
 				<b>ยังไม่มีข้อมูล</b>
 				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li></div>
 		</div>
-		<div class="div-item0" v-if="response?.length == !0 ">
+		<div class="div-item0" v-if="response?.length >= 1 " >
 			<table>
 				<tr>
 					<th style="width: 30px;">ID</th>
@@ -61,7 +61,7 @@
 			</table>
 		</div>
 
-		<div class="Pagination-item" v-if="response?.length == !0 " >
+		<div class="Pagination-item" v-if="response?.length >= 1 "  >
 			<label for="cars">หน้าที่ :</label>
 			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
 			<select class="form-select" v-model="page">
@@ -113,37 +113,7 @@ export default {
 			var M = new Date(item).getMinutes()
 			return `${H}:${M} น.`
 		},
-		button(item, staus) {
-			axios.put(`${URL_PUT_PROCESS}/${item}`, {
-				staus: staus
-			}).then(
-				response => {
-					console.log(response);
-					if (response.data.status === 'ok') {
-						Swal.fire({
-							position: 'center',
-							icon: 'success',
-							title: 'ทั้งหมด',
-							showConfirmButton: false,
-							timer: 2500
-						}).then(() => {
-							axios.get(`${URL_GET_REQ}/?staus="ทั้งหมด"&page=${this.page}&limit=10`).then(response => {
-								this.response = response.data.results
-
-							})
-							axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด`).then(response => {
-								this.get_lengthdata.process01 = response.data.lengthdata
-								var sum = response.data.lengthdata / 10
-								this.set_length = Math.ceil(sum)
-							})
-							axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด`).then(response => {
-								this.get_lengthdata.process03 = response.data.lengthdata
-							})
-						})
-					}
-				}
-			)
-		}
+		
 	},
 	mounted() {
 		// เปิดเว็บทำงานเลย

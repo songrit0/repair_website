@@ -53,11 +53,11 @@ export default ({
 			getIndex: ''
 		}
 	}, computed: {
-		
+
 		mode() {
 			return this.$store.state.counter
 		},
-		getnewUSER(){
+		getnewUSER() {
 			return this.$store.state.newUSER
 		}
 	},
@@ -69,20 +69,20 @@ export default ({
 		logout() {
 			localStorage.removeItem('acessToken')
 			localStorage.removeItem('users_id')
-			this.$store.commit('steUSER',null)
+			this.$store.commit('steUSER', null)
 			// window.location.replace(`/login0`)
 		},
 		increment() {
 			this.$store.commit('increment')
 		},
-		setUSER(){
+		setUSER() {
 			var id = localStorage.users_id
 			axios.get(`${URL_GET_USER}/${id}`).then(response => {
-			this.$store.commit('steUSER',response.data.results[0])
-			// console.log('home:',response.data.results[0]);
-		});
+				this.$store.commit('steUSER', response.data.results[0])
+				// console.log('home:',response.data.results[0]);
+			});
 		}
-		
+
 	},
 	mounted() {
 		this.setUSER()
@@ -325,4 +325,6 @@ br {
 	border-radius: 5px;
 	text-align: -webkit-center;
 }
+
+
 </style>

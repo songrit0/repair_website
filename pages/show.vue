@@ -1,6 +1,5 @@
 <template>
-	<div class=""> show information</div>
-
+	<show-information/>
 </template>
 
 <script>
