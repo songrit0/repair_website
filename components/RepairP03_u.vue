@@ -7,7 +7,7 @@
 				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li>
 			</div>
 		</div>
-		<div class="div-item2" v-if="response?.length == !0">
+		<div class="div-item2" v-if="response.length == !0">
 			<table>
 				<tr>
 					<th style="width: 30px;">ID</th>

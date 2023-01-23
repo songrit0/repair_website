@@ -52,7 +52,7 @@
 						<li><b>ผู้ประสานงาน(ผู้รับแจ้งซ่อม):</b> {{check(GETBYID.name_responsible)}}</li>
 					</div>
 					<div class="col-12 py-2">
-						<button type="button" class="btn btn-danger">ยกเลิกการแจ้งซ่อม</button>
+						<button type="button" class="btn btn-danger"  @click="button(GETBYID.id_repair_i, 'ยกเลิก')">ยกเลิกการแจ้งซ่อม</button>
 					</div>
 
 				</div>
@@ -63,7 +63,8 @@
 
 <script>
 import axios from 'axios'
-import { URL_PUT_GET_BY_ID } from '../constants'
+import { URL_PUT_GET_BY_ID, URL_PUT_PROCESS } from '../constants'
+import Swal from 'sweetalert2'
 export default {
 	data() {
 		return {
@@ -90,6 +91,24 @@ export default {
 				console.log(this.GETBYID);
 			})
 		},
+		button(item, staus) {
+			axios.put(`${URL_PUT_PROCESS}/${item}`, {
+				staus: staus
+			}).then(
+				response => {
+					console.log(response);
+					if (response.data.status === 'ok') {
+						Swal.fire({
+							position: 'center',
+							icon: 'success',
+							title: 'กำลังทำการยกเลิก',
+							showConfirmButton: false,
+							timer: 2500
+						}).then(() => {})
+					}
+				}
+			)
+		}
 
 	},
 	mounted() {
