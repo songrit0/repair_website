@@ -182,28 +182,36 @@ export default {
 					password: this.formlogin.password,
 				}).then(function (response) {
 					console.log(response);
-					console.log(response.data.token);
-					if (response.data.status === 'ok') {
+					// console.log(response.data.token);
+					if (response.data.status == 'ok') {
 						//เข้าสู่ระบบได้
-						console.log("data",response);
-						localStorage.setItem('acessToken', response.data.token)
-						localStorage.setItem('users_id', response.data.user_id)
-						// localStorage.setItem('acess_users_user_status', response.data.users[0].user_status)
-						// localStorage.setItem('acess_users_phone', response.data.users[0].phone)
-						// localStorage.setItem('acess_users_users_name', response.data.users[0].users_name)
-						// localStorage.setItem('acess_users_names', response.data.users[0].names)
-						window.location.replace(`/`);
-					} if (response.data.status === 'error') {
+						console.log("data", response.data.user_id);
+						if (response.data.token) {
+							localStorage.setItem('acessToken', response.data.token)
+							localStorage.setItem('users_id', response.data.user_id)
+							window.location.replace(`/`);
+						}
+
+
+					}
+					 if (response.data.status === 'error'||response.data.status === false) {
 						document.getElementById('a-User').style.backgroundColor = 'red'
 						document.getElementById('input_user_login').style.border = '3px solid red'
 						document.getElementById('input_user_login').style.borderRadius = '0px 6px 6px 0'
 						document.getElementById('input_user_login_err').innerHTML =
-							'Login False'
+							'USER Login False'
 						document.getElementById('a-password').style.backgroundColor = 'red'
 						document.getElementById('input_password_login').style.border = '3px solid red'
 						document.getElementById('input_password_login').style.borderRadius = '0px 6px 6px 0'
 						document.getElementById('input_password_login_err').innerHTML =
-							'Login False'
+							'USER Login False'
+						Swal.fire({
+							position: 'center',
+							icon: 'error',
+							title: 'USER Login False',
+							showConfirmButton: false,
+							timer: 3500
+						})
 					} if (response.data.message === 'Login False') {
 						//รหัสไม่ถูก
 						Swal.fire({
@@ -251,12 +259,33 @@ export default {
 					}
 					if (response.data.status === "error") {
 						alert("error");
+						Swal.fire({
+							position: 'center',
+							icon: 'error',
+							title: 'Login False',
+							showConfirmButton: false,
+							timer: 1500
+						})
 					}
 					if (response.data.status === "err") {
 						alert("err");
+						Swal.fire({
+							position: 'center',
+							icon: 'error',
+							title: 'Login False',
+							showConfirmButton: false,
+							timer: 1500
+						})
 					}
 				}).catch(function (error) {
 					console.log(error);
+					Swal.fire({
+						position: 'center',
+						icon: 'error',
+						title: 'Login False',
+						showConfirmButton: false,
+						timer: 1500
+					})
 				});
 			}
 		}
