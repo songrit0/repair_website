@@ -66,9 +66,10 @@
 
 
 				</div>
-				<div class="button-ADD"><button @click="setFORMON()" :style="getformon?'background-color:#ffd8be;':''"> + แจ้งซ่อม</button></div>
+				<div class="button-ADD"><button @click="setFORMON()" :style="getformon ? 'background-color:#ffd8be;' : ''">
+						+ แจ้งซ่อม</button></div>
 				<FormR :getformon="getformon" />
-				<show-information/>
+				<show-information v-if="getshowformitemON" />
 			</div>
 			<br>
 			<br>
@@ -100,6 +101,7 @@ import FormR from '../components/FormR.vue';
 export default {
 	data() {
 		return {
+			getshowformitemON:false,
 			formon: false,
 			response: "",
 			page: "1",
@@ -117,7 +119,7 @@ export default {
 				process03: false,
 			},
 			getformon: this.$store.state.formon
-			
+
 		};
 	},
 	methods: {
@@ -181,7 +183,10 @@ export default {
 		}, 10000);
 		setInterval(() => {
 			this.getformon = this.$store.state.formon
+			this.getshowformitemON = this.$store.state.showformitem.status
 		}, 1000);
+
+		
 	},
 	watch: {
 

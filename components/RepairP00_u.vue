@@ -1,12 +1,13 @@
 <template>
 	<div class="div-receive-row">
 		<h3>ทั้งหมด</h3>
-		<div class="err_not_item" v-if="response?.length == 0||response == null">
+		<div class="err_not_item" v-if="response?.length == 0 || response == null">
 			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
 				<b>ยังไม่มีข้อมูล</b>
-				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li></div>
+				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li>
+			</div>
 		</div>
-		<div class="div-item0" v-if="response?.length == !0">
+		<div class="div-item0" v-if="response">
 			<table>
 				<tr>
 					<th style="width: 30px;">ID</th>
@@ -55,7 +56,7 @@
 						<li>{{ item.staus }}</li>
 					</td>
 					<td>
-						<button>ข้อมูลเพิ่มเติม</button>
+						<button @click="Showformitem(true, item.id_repair_i )">ข้อมูลเพิ่มเติม</button>
 					</td>
 				</tr>
 			</table>
@@ -93,6 +94,11 @@ export default {
 		}
 	},
 	methods: {
+		Showformitem(payload, payload2) {
+			$nuxt.$store.commit('setShowformitem', payload)
+			$nuxt.$store.commit('setShowformitem_id',  payload2)
+			// console.log('id2',payload2);
+		},
 		onpot_pages_go() {
 			if (this.page === this.set_length) {
 

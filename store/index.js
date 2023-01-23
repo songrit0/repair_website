@@ -1,7 +1,9 @@
 export const state = () => ({
   counter: 0,
   newUSER: "",
-  formon: false
+  formon: false,
+  showformitem:{ status:false , id:0}
+
 });
 
 export const getters = {
@@ -25,6 +27,14 @@ export const mutations = {
 	state.formon = !state.formon 
 	console.log(state.formon);
   },
+  setShowformitem(state,payload){
+	state.showformitem.status = payload
+	console.log(1,payload);
+  },
+  setShowformitem_id(state,payload){
+	state.showformitem.id = payload
+	console.log(2,payload);
+  }
 };
 
 export const actions = {

@@ -56,7 +56,7 @@
 						<li>{{ item.staus }}</li>
 					</td>
 					<td>
-						<button>ข้อมูลเพิ่มเติม</button>
+						<button @click="Showformitem(true, item.id_repair_i )">ข้อมูลเพิ่มเติม</button>
 					</td>
 				</tr>
 			</table>
@@ -98,6 +98,11 @@ export default {
 		}
 	},
 	methods: {
+		Showformitem(payload, payload2) {
+			$nuxt.$store.commit('setShowformitem', payload)
+			$nuxt.$store.commit('setShowformitem_id',  payload2)
+			// console.log('id2',payload2);
+		},
 		onpot_pages_go() {
 			if (this.page === this.set_length) {
 
