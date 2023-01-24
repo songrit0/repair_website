@@ -10,7 +10,8 @@
 		<div class="div-item1" v-if="response.length >= 1">
 
 			<div class="item" v-for="item, index in response" :key="index">
-
+				<button class="btn-danger button2" style=" border: none; border-radius: 5px 0px 0px 5px;"
+					@click="button(item.id_repair_i, 'ยกเลิก')">X</button>
 				<div class="item1 col-3">
 					<div class="div-img">
 						<li v-if="item.equipment == ''">err null</li>
@@ -36,8 +37,7 @@
 					</div>
 					<div class="row">
 						<button class="btn-success button1"
-							@click="button(item.id_repair_i, 'กำลังดำเนินการ')">ตอบรับ</button><button
-							class="btn-danger button2" @click="button(item.id_repair_i, 'ยกเลิก')">X</button>
+							@click="button(item.id_repair_i, 'กำลังดำเนินการ')">ตอบรับ</button>
 					</div>
 				</div>
 				<div class="item2 col-9">
@@ -48,6 +48,17 @@
 					<li>เบอร์ติดต่อผู้แจ้งซ่อม : {{ item.phone }}</li>
 
 				</div>
+				<button class="btn-info button2" style=" border: none; border-radius: 0px 5px 5px 0px;"
+					@click="Showformitem(true, item.id_repair_i)"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+						height="16" fill="currentColor" class="bi bi-zoom-in" viewBox="0 0 16 16">
+						<path fill-rule="evenodd"
+							d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+						<path
+							d="M10.344 11.742c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1 6.538 6.538 0 0 1-1.398 1.4z" />
+						<path fill-rule="evenodd"
+							d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5z" />
+					</svg></button>
+
 			</div>
 
 
@@ -122,34 +133,80 @@ export default {
 			return `${H}:${M} น.`
 		},
 		button(item, staus) {
-			axios.put(`${URL_PUT_PROCESS}/${item}`, {
-				staus: staus
-			}).then(
-				response => {
-					console.log(response);
-					if (response.data.status === 'ok') {
-						Swal.fire({
-							position: 'center',
-							icon: 'success',
-							title: 'กำลังดำเนินการ',
-							showConfirmButton: false,
-							timer: 2500
-						}).then(() => {
-							axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10`).then(response => {
-								this.response = response.data.results
-							})
-							axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
-								this.get_lengthdata.process01 = response.data.lengthdata
-								var sum = response.data.lengthdata / 10
-								this.set_length = Math.ceil(sum)
-							})
-							axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ`).then(response => {
-								this.get_lengthdata.process02 = response.data.lengthdata
-							})
-						})
+			if (staus == 'ยกเลิก') {
+				Swal.fire({
+					title: 'คุณกำลังจะยกเลิก',
+					text: "คุณต้องการยกเลิกหรือไม่",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					cancelButtonText: 'NO',
+					confirmButtonText: 'YES'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						axios.put(`${URL_PUT_PROCESS}/${item}`, {
+							staus: staus
+						}).then(
+							response => {
+								console.log(response);
+								if (response.data.status === 'ok') {
+									Swal.fire({
+										position: 'center',
+										icon: 'success',
+										title: 'ยกเลิกเรียบร้อยแล้ว',
+										showConfirmButton: false,
+										timer: 2500
+									}).then(() => {
+										axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10`).then(response => {
+											this.response = response.data.results
+										})
+										axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
+											this.get_lengthdata.process01 = response.data.lengthdata
+											var sum = response.data.lengthdata / 10
+											this.set_length = Math.ceil(sum)
+										})
+										axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ`).then(response => {
+											this.get_lengthdata.process02 = response.data.lengthdata
+										})
+									})
+								}
+							}
+						)
 					}
-				}
-			)
+				})
+			} else {
+				axios.put(`${URL_PUT_PROCESS}/${item}`, {
+							staus: staus
+						}).then(
+							response => {
+								console.log(response);
+								if (response.data.status === 'ok') {
+									Swal.fire({
+										position: 'center',
+										icon: 'success',
+										title: 'บันทึกเรียบร้อยแล้ว',
+										showConfirmButton: false,
+										timer: 2500
+									}).then(() => {
+										axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10`).then(response => {
+											this.response = response.data.results
+										})
+										axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
+											this.get_lengthdata.process01 = response.data.lengthdata
+											var sum = response.data.lengthdata / 10
+											this.set_length = Math.ceil(sum)
+										})
+										axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ`).then(response => {
+											this.get_lengthdata.process02 = response.data.lengthdata
+										})
+									})
+								}
+							}
+						)
+			}
+
+
 		},
 		clickRE() {
 			let Toast = Swal.mixin({
@@ -170,18 +227,22 @@ export default {
 				// text: "รายการข้อมูลผู้ใช้งานจะอยู่ด้านล่าง!",
 			})
 			this.GETdata01()
-	
+
 		},
-		GETdata01(){
+		GETdata01() {
 			axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10`).then(response => {
-			this.response = response.data.results
-		})
-		axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
-			this.get_lengthdata.process01 = response.data.lengthdata
-			var sum = response.data.lengthdata / 10
-			this.set_length = Math.ceil(sum)
-		})
-		}
+				this.response = response.data.results
+			})
+			axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
+				this.get_lengthdata.process01 = response.data.lengthdata
+				var sum = response.data.lengthdata / 10
+				this.set_length = Math.ceil(sum)
+			})
+		}, Showformitem(payload, payload2) {
+			$nuxt.$store.commit('setShowformitem', payload)
+			$nuxt.$store.commit('setShowformitem_id', payload2)
+			// console.log('id2',payload2);
+		},
 	},
 	mounted() {
 
@@ -297,8 +358,10 @@ export default {
 	/* justify-items: center; */
 	margin: 0px 0px 0px 10px;
 	align-content: space-around;
+	width: 63%;
 
 }
+
 
 
 .div-item1 .item1 .button1 {

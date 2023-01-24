@@ -82,7 +82,7 @@
 						:style="getformon ? 'background-color:#ffd8be;' : ''">
 						+ แจ้งซ่อม</button></div>
 				<FormR :getformon="getformon" />
-				<show-information v-if="getshowformitemON" />
+				<show-information v-if="$store.state.showformitem.status" />
 			</div>
 
 			<br>
@@ -196,7 +196,6 @@ export default {
 		// เช็คทุกๆ10วิ
 		setInterval(() => {
 			this.getformon = this.$store.state.formon
-			this.getshowformitemON = this.$store.state.showformitem.status
 		}, 1000);
 
 
@@ -446,5 +445,12 @@ export default {
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: nowrap;
+}
+table tr td button {
+	border: none;
+    color: #ff8320;
+    border-radius: 6px;
+    background-color: white;
+    height: 30px;
 }
 </style>

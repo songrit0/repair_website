@@ -129,7 +129,7 @@ export default {
 	/* width: 70%; */
 	justify-content: center;
 	padding: 15px 30px 15px 30px;
-	background-color: #ecc6a9;
+	background-color: #d4d4d4;
 	z-index: 6;
 	border-radius: 12px;
 }

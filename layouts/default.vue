@@ -174,7 +174,12 @@ export default ({
 
 	watch: {
 		"$store.state.statusON.lengthdata"() {
-			this.checkAlert()
+			if (this.$store.state.statusON.lengthdata == 0) {
+				
+			} else {
+				this.checkAlert()
+			}
+			
 		},
 		get_acessToken() {
 			if (!this.get_acessToken) {
