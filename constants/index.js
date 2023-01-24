@@ -22,3 +22,9 @@ export const URL_GET_ALL_REQ = `${URL_IP}/Get_all_req`;
 export const URL_PUT_PROCESS = `${URL_IP}/edit_information`;
 
 export const URL_PUT_GET_BY_ID = `${URL_IP}/Get_byID`;
+
+export const URL_DELETE_INFRMATION = `${URL_IP}/delete_information`;
+
+export const URL_GET_USERS = `${URL_IP}/profile`;
+
+export const URL_DELETE_USER = `${URL_IP}/delete_user`;

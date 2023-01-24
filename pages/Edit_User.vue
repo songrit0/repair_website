@@ -51,7 +51,7 @@
 					</div>
 				</div>
 				<div class="register-div-button "><button type="button" class="btn btn-primary"
-						@click="Register(), validate_Register()">สมัครสมาชิก</button></div>
+						@click="Register(), validate_Register()">บันทึก</button></div>
 
 			</div>
 
