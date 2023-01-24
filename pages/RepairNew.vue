@@ -3,10 +3,11 @@
 		<div class="div-receive-pages">
 			<div class="row col-10">
 				<h1>แจ้งซ่อม</h1>
+
 			</div>
 			<div class="col-10">
 				<div class="div-staus">
-					<div class="col-12">
+					<div class="col-12" style="justify-content: center; display: grid;">
 						<div class="item-staus I1">
 							<img src="../img/clear_all_FILL0_wght400_GRAD0_opsz48.svg" width="40px">
 							<li>{{ get_lengthdata.All }}+</li>
@@ -21,7 +22,7 @@
 						</div>
 
 					</div>
-					<div class="col-12 ">
+					<div class="col-12 " style="justify-content: center; display: grid;">
 						<div class="item-staus I2">
 							<img src="../img/quick_reference_FILL0_wght400_GRAD0_opsz48.svg" width="40px">
 							<li>{{ get_lengthdata.process01 }}+</li>
@@ -35,7 +36,7 @@
 							</label>
 						</div>
 					</div>
-					<div class="col-12 ">
+					<div class="col-12 " style="justify-content: center; display: grid;">
 						<div class="item-staus I3 ">
 							<img src="../img/autorenew_FILL0_wght400_GRAD0_opsz48.svg" width="40px">
 							<li>{{ get_lengthdata.process02 }}+</li>
@@ -49,7 +50,7 @@
 							</label>
 						</div>
 					</div>
-					<div class="col-12 ">
+					<div class="col-12 " style="justify-content: center; display: grid;">
 						<div class="item-staus I4 ">
 							<img src="../img/done_FILL0_wght400_GRAD0_opsz48.svg" width="40px">
 							<li>{{ get_lengthdata.process03 }}+</li>
@@ -66,21 +67,34 @@
 
 
 				</div>
-				<div class="button-ADD"><button @click="setFORMON()" :style="getformon ? 'background-color:#ffd8be;' : ''">
+				<div class="div-staus">
+					<button type="button" class="btn btn-warning col-12 button-re " @click="clickRE()">
+						<li>โหลดข้อมูล</li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+							fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+							<path fill-rule="evenodd"
+								d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+							<path
+								d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+						</svg>
+					</button>
+				</div>
+				<div class="button-ADD"><button @click="setFORMON()"
+						:style="getformon ? 'background-color:#ffd8be;' : ''">
 						+ แจ้งซ่อม</button></div>
 				<FormR :getformon="getformon" />
 				<show-information v-if="getshowformitemON" />
 			</div>
+
 			<br>
 			<br>
 			<hr width=80% size=3 v-if="checkbox.process01">
-			<RepairP01_u v-if="checkbox.process01" />
+			<RepairP01_u v-if="checkbox.process01" :noclickRE='clickRE_watch' />
 			<hr width=80% size=3 v-if="checkbox.process02">
-			<RepairP02_u v-if="checkbox.process02" />
+			<RepairP02_u v-if="checkbox.process02" :noclickRE='clickRE_watch' />
 			<hr width=80% size=3 v-if="checkbox.process03">
-			<RepairP03_u v-if="checkbox.process03" />
+			<RepairP03_u v-if="checkbox.process03" :noclickRE='clickRE_watch' />
 			<hr width=80% size=3 v-if="checkbox.All">
-			<RepairP00_u v-if="checkbox.All" />
+			<RepairP00_u v-if="checkbox.All" :noclickRE='clickRE_watch' />
 
 
 			<br>
@@ -97,11 +111,12 @@ import RepairP01_u from '../components/RepairP01_u.vue';
 import { URL_GET_ALL_REQ, URL_GET_REQ, URL_PUT_PROCESS } from '../constants'
 import RepairP03_u from '../components/RepairP03_u.vue';
 import FormR from '../components/FormR.vue';
+import Swal from 'sweetalert2';
 // import Swal from 'sweetalert2'
 export default {
 	data() {
 		return {
-			getshowformitemON:false,
+			getshowformitemON: false,
 			formon: false,
 			response: "",
 			page: "1",
@@ -118,7 +133,8 @@ export default {
 				process02: false,
 				process03: false,
 			},
-			getformon: this.$store.state.formon
+			getformon: this.$store.state.formon,
+			clickRE_watch:0
 
 		};
 	},
@@ -127,6 +143,16 @@ export default {
 			var H = new Date(item).getHours();
 			var M = new Date(item).getMinutes();
 			return `${H}:${M} น.`;
+		},
+
+	},
+	computed: {
+
+	},
+	methods: {
+		setFORMON() {
+			$nuxt.$store.commit('steformON')
+			this.getformon = this.$store.state.formon
 		},
 		GETall_lengthdata() {
 			axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด&user_id=${localStorage.users_id}`).then(response => {
@@ -141,55 +167,57 @@ export default {
 			axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ&user_id=${localStorage.users_id}`).then(response => {
 				this.get_lengthdata.process03 = response.data.lengthdata;
 			});
-		}
-	},
-	computed: {
+		},
+		clickRE() {
+			let Toast = Swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 1000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.addEventListener('mouseenter', Swal.stopTimer)
+					toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
 
-	},
-	methods: {
-		setFORMON() {
-			$nuxt.$store.commit('steformON')
-			this.getformon = this.$store.state.formon
+			Toast.fire({
+				icon: 'success',
+				title: 'โหลดข้อมูลไหม่แล้ว',
+				// text: "รายการข้อมูลผู้ใช้งานจะอยู่ด้านล่าง!",
+			})
+			this.GETall_lengthdata()
+			this.clickRE_watch = this.clickRE_watch + 1
 		}
 	},
 	mounted() {
 		// เปิดเว็บทำงานเลย
-		axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด&user_id=${localStorage.users_id}`).then(response => {
-			this.get_lengthdata.All = response.data.lengthdata;
-		});
-		axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ&user_id=${localStorage.users_id}`).then(response => {
-			this.get_lengthdata.process01 = response.data.lengthdata;
-		});
-		axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ&user_id=${localStorage.users_id}`).then(response => {
-			this.get_lengthdata.process02 = response.data.lengthdata;
-		});
-		axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ&user_id=${localStorage.users_id}`).then(response => {
-			this.get_lengthdata.process03 = response.data.lengthdata;
-		});
+		this.GETall_lengthdata()
 		// เช็คทุกๆ10วิ
-		setInterval(() => {
-			axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด&user_id=${localStorage.users_id}`).then(response => {
-				this.get_lengthdata.All = response.data.lengthdata;
-			});
-			axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ&user_id=${localStorage.users_id}`).then(response => {
-				this.get_lengthdata.process01 = response.data.lengthdata;
-			});
-			axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ&user_id=${localStorage.users_id}`).then(response => {
-				this.get_lengthdata.process02 = response.data.lengthdata;
-			});
-			axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ&user_id=${localStorage.users_id}`).then(response => {
-				this.get_lengthdata.process03 = response.data.lengthdata;
-			});
-		}, 10000);
 		setInterval(() => {
 			this.getformon = this.$store.state.formon
 			this.getshowformitemON = this.$store.state.showformitem.status
 		}, 1000);
 
-		
+
 	},
 	watch: {
+		"checkbox.All"() {
+			this.GETall_lengthdata()
 
+		},
+		"checkbox.process01"() {
+			this.GETall_lengthdata()
+
+		},
+		"checkbox.process02"() {
+			this.GETall_lengthdata()
+
+		},
+		"checkbox.process03"() {
+			this.GETall_lengthdata()
+
+		}
 	},
 	components: { RepairP00_u, RepairP01_u, RepairP02_u, RepairP03_u, FormR }
 }
@@ -328,7 +356,7 @@ export default {
 	display: flex;
 	margin: 10px;
 	justify-content: center;
-	width: 55%;
+	width: 100%;
 }
 
 .checkbox-div li {
@@ -336,7 +364,7 @@ export default {
 }
 
 .switch {
-	--button-width: 3.5em;
+	--button-width: 4.5em;
 	--button-height: 2em;
 	--toggle-diameter: 1.5em;
 	--button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
@@ -408,7 +436,15 @@ export default {
 	background: #c7c7ff;
 	border: none;
 	border-radius: 12px;
+	margin-top: 10px;
 }
 
 /* checkbox-div */
+.button-re {
+	display: flex;
+	align-content: center;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: nowrap;
+}
 </style>

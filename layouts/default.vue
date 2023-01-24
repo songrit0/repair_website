@@ -89,8 +89,7 @@ export default ({
 	},
 	mounted() {
 		this.setUSER()
-		this.lengthdata()
-		this.lengthdata_all()
+	
 		setInterval(() => {
 			this.getIndex = this.$route.query.Index
 		}, 10);

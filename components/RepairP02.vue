@@ -119,7 +119,6 @@ export default {
 						}).then(() => {
 							axios.get(`${URL_GET_REQ}/?staus=กำลังดำเนินการ&page=${this.page}&limit=10`).then(response => {
 								this.response = response.data.results
-
 							})
 							axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ`).then(response => {
 								this.get_lengthdata.process01 = response.data.lengthdata

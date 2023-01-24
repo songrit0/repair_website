@@ -10,49 +10,49 @@
 					<br>
 					<h2 class="col-12 py-1">ข้อมมูลการแจ้งซ่อม</h2>
 					<div class="col-6 py-2">
-						<li><b>ชื้อผู้แจ้งซ่อม:  </b>{{ check(GETBYID.name_sender) }}</li>
+						<li><b>ชื้อผู้แจ้งซ่อม:  </b>{{ check(GETBYID?.name_sender) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>เบอร์โทรศัพท์: </b>{{ check(GETBYID.phone) }}</li>
+						<li><b>เบอร์โทรศัพท์: </b>{{ check(GETBYID?.phone) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>กลุ่มงาน: </b>{{ check(GETBYID.work_group) }}</li>
+						<li><b>กลุ่มงาน: </b>{{ check(GETBYID?.work_group) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>งาน: </b>{{ check(GETBYID.work) }}</li>
+						<li><b>งาน: </b>{{ check(GETBYID?.work) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>ต้องการแจ้งซ่อม: </b>{{ check(GETBYID.equipment) }}</li>
+						<li><b>ต้องการแจ้งซ่อม: </b>{{ check(GETBYID?.equipment) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>ชื่อ คอมพิวเตอร์/อุปกรณ์: </b>{{ check(GETBYID.computer_name) }}</li>
+						<li><b>ชื่อ คอมพิวเตอร์/อุปกรณ์: </b>{{ check(GETBYID?.computer_name) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>รหัสครุภัณฑ์: </b>{{ check(GETBYID.commodity_code) }}</li>
+						<li><b>รหัสครุภัณฑ์: </b>{{ check(GETBYID?.commodity_code) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>ip_address: </b>{{ check(GETBYID.ip_address) }}</li>
+						<li><b>ip_address: </b>{{ check(GETBYID?.ip_address) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>ปัญหา/อาการ: </b>{{ check(GETBYID.problem_symptom) }}</li>
+						<li><b>ปัญหา/อาการ: </b>{{ check(GETBYID?.problem_symptom) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>ความเร่งด่วน: </b>{{ check(GETBYID.requirements) }}</li>
+						<li><b>ความเร่งด่วน: </b>{{ check(GETBYID?.requirements) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>อื่นๆ: </b>{{ check(GETBYID.other) }}</li>
+						<li><b>อื่นๆ: </b>{{ check(GETBYID?.other) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>วัน/เวลาที่แจ้ง:</b>{{ check(GETBYID.date_repair) }}</li>
+						<li><b>วัน/เวลาที่แจ้ง:</b>{{ check(GETBYID?.date_repair) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>วัน/เวลารับแจ้ง:</b> {{ check(GETBYID.date_receive) }}</li>
+						<li><b>วัน/เวลารับแจ้ง:</b> {{ check(GETBYID?.date_receive) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>ผู้ประสานงาน(ผู้รับแจ้งซ่อม):</b> {{check(GETBYID.name_responsible)}}</li>
+						<li><b>ผู้ประสานงาน(ผู้รับแจ้งซ่อม):</b> {{check(GETBYID?.name_responsible)}}</li>
 					</div>
 					<div class="col-12 py-2">
-						<button type="button" class="btn btn-danger"  @click="button(GETBYID.id_repair_i, 'ยกเลิก')" v-if="GETBYID.staus === 'รอตอบรับ'||GETBYID.staus === 'กำลังดำเนินการ'">ยกเลิกการแจ้งซ่อม</button>
+						<button type="button" class="btn btn-danger"  @click="button(GETBYID?.id_repair_i, 'ยกเลิก')" v-if="GETBYID?.staus === 'รอตอบรับ'||GETBYID?.staus === 'กำลังดำเนินการ'">ยกเลิกการแจ้งซ่อม</button>
 					</div>
 
 				</div>
