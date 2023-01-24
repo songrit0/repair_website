@@ -7,7 +7,7 @@
 				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li>
 			</div>
 		</div>
-		<div class="div-item2"  >
+		<div class="div-item2" v-if="response.length >= 1">
 			<table>
 				<tr>
 					<th style="width: 30px;">ID</th>
@@ -61,8 +61,8 @@
 				</tr>
 			</table>
 		</div>
-
-		<div class="Pagination-item">
+		<br>
+		<div class="Pagination-item" v-if="response.length >= 1">
 			<label for="cars">หน้าที่ :</label>
 			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
 			<select class="form-select" v-model="page">
@@ -70,7 +70,17 @@
 			</select>
 			<button type="button" @click="onpot_pages_go()" class="btn btn-outline-primary">&raquo;</button>
 		</div>
-
+		<br>
+		<div class="div-staus">
+			<button type="button" class="btn btn-warning col-12 button-re " @click="clickRE()">
+				<li>โหลดข้อมูล</li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+					class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+					<path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+					<path
+						d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+				</svg>
+			</button>
+		</div>
 	</div>
 </template>
 
@@ -79,6 +89,11 @@ import axios from 'axios'
 import { URL_GET_ALL_REQ, URL_GET_REQ, URL_PUT_PROCESS } from '../constants'
 import Swal from 'sweetalert2'
 export default {
+	props: {
+		noclickRE: {
+			required: true,
+		},
+	},
 	data() {
 		return {
 			response: '',
@@ -144,11 +159,30 @@ export default {
 					}
 				}
 			)
-		}
-	},
-	mounted() {
-		// เปิดเว็บทำงานเลย
-		axios.get(`${URL_GET_REQ}/?staus=ซ่อมเสร็จ&page=${this.page}&limit=10`).then(response => {
+		},
+		clickRE() {
+			let Toast = Swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 1000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.addEventListener('mouseenter', Swal.stopTimer)
+					toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+
+			Toast.fire({
+				icon: 'success',
+				title: 'โหลดข้อมูลไหม่แล้ว',
+				// text: "รายการข้อมูลผู้ใช้งานจะอยู่ด้านล่าง!",
+			})
+			this.GETdata03()
+	
+		},
+		GETdata03(){
+			axios.get(`${URL_GET_REQ}/?staus=ซ่อมเสร็จ&page=${this.page}&limit=10`).then(response => {
 			this.response = response.data.results
 			console.log(response.data);
 		})
@@ -158,20 +192,28 @@ export default {
 			this.set_length = Math.ceil(sum)
 
 		})
+		}
+	},
+	mounted() {
+		// เปิดเว็บทำงานเลย
+		this.GETdata03()
 		// เช็คทุกๆ10วิ
 		setInterval(() => {
-			axios.get(`${URL_GET_REQ}/?staus=ซ่อมเสร็จ&page=${this.page}&limit=10`).then(response => {
-				this.response = response.data.results
-			})
-			axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ`).then(response => {
-				this.get_lengthdata.process01 = response.data.lengthdata
-				var sum = response.data.lengthdata / 10
-				this.set_length = Math.ceil(sum)
-			})
+			// axios.get(`${URL_GET_REQ}/?staus=ซ่อมเสร็จ&page=${this.page}&limit=10`).then(response => {
+			// 	this.response = response.data.results
+			// })
+			// axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ`).then(response => {
+			// 	this.get_lengthdata.process01 = response.data.lengthdata
+			// 	var sum = response.data.lengthdata / 10
+			// 	this.set_length = Math.ceil(sum)
+			// })
 		}, 10000);
 	},
 	watch: {
+		noclickRE() {
+			this.GETdata03()
 
+		},
 		page() {
 			axios.get(`${URL_GET_REQ}/?staus="ซ่อมเสร็จ"&page=${this.page}&limit=10`).then(response => {
 				this.response = response.data.results
