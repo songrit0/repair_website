@@ -26,8 +26,8 @@
 				</div>
 
 				<div class="item-User p-3 back-img-register background-img-user" @click="$router.push(`/showCRUD`)">
-					<h4>จัดการฐานข้อมูล</h4>
-					database management
+					<h4>จัดการข้อมูลเพิ่มเติม</h4>
+					manage additional information
 				</div>
 
 			</div>

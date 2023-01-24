@@ -6,7 +6,7 @@ export default {
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "wed-rehearsal0.0.2",
+    title: "Repair-Notification-System",
     htmlAttrs: {
       lang: "en",
     },
