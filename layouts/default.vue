@@ -1,11 +1,14 @@
 <template>
 	<div class="">
+
+
 		<nav class="menu-bar-layouts">
 			<div class="group-layouts" @click="$router.push({ path: '/', replace: true })">
 				<!-- <img class="logo-img" src="~/~/img/LogoMain.png" alt="" width="50px"> -->
 				<li class="item-layouts title-layouts" @click="setUSER()">ระบบแจ้งซ่อม
 					<!-- {{ getnewUSER }} -->
 				</li><label>Repair Notification System</label>
+
 
 			</div>
 			<div class="group-layouts">
@@ -17,7 +20,8 @@
 					</button>
 					<div class="Menu_item2" :class="MenuDropdown ? '' : 'Menu_off2'">
 						<div>
-							<li class="p-1 " @click="lengthdata_all()">user</li>
+							<li class="p-1 " @click="checkAlert()">user</li>
+
 						</div>
 						<div>
 							<li class="p-1 " @click="logout()">Log Out</li>
@@ -38,24 +42,26 @@
 			</div>
 		</nav>
 		<Nuxt />
+		<!-- <Receive_Repair :stateON="statusON" /> -->
 	</div>
 
 </template>
 <script>
+import Receive_Repair from '../pages/Receive_Repair.vue';
 import axios from 'axios';
-import { URL_GET_ALL_REQ, URL_GET_REQ, URL_GET_USER } from "../constants"
+import { URL_GET_ALL_REQ, URL_GET_REQ, URL_GET_USER, URL_IP } from "../constants"
+import Swal from 'sweetalert2';
 
 export default ({
+
 	data() {
 		return {
 			MenuDropdown: false,
 			get_acessToken: '',
 			getIndex: '',
-			
-
+			statusON: 'x'
 		}
 	}, computed: {
-
 		mode() {
 			return this.$store.state.counter
 		},
@@ -84,17 +90,73 @@ export default ({
 				// console.log('home:',response.data.results[0]);
 			});
 		},
-	
+
+		checkAlert() {
+
+			var USER_STAUS = this.$store.state.newUSER.user_status
+			if (USER_STAUS === 'admin') {
+				var audio = new Audio();
+				audio.src = "http://commondatastorage.googleapis.com/codeskulptor-assets/Collision8-Bit.ogg";
+				// audio.src = "https://media1.vocaroo.com/mp3/17RnRCYXCMRN";
+
+				audio.play();
+				setTimeout(() => {
+					audio.play();
+					setTimeout(() => {
+						audio.play();
+						setTimeout(() => {
+							audio.play();
+							setTimeout(() => {
+								audio.play();
+								setTimeout(() => {
+									audio.play();
+								}, 1500);
+							}, 1500);
+						}, 1500);
+					}, 1500);
+				}, 1500);
+
+
+
+				const Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 10000,
+					timerProgressBar: true,
+					didOpen: (toast) => {
+						toast.addEventListener('mouseenter', Swal.stopTimer)
+						toast.addEventListener('mouseleave', Swal.resumeTimer)
+					}
+				})
+
+				Toast.fire({
+					icon: 'warning',
+					title: `มีการแจ้งซ่อม `,
+					text: `จำนวน ${this.$store.state.statusON.lengthdata} การแจ้งซ่อม`,
+				})
+
+			}
+
+
+		}
+
 
 	},
 	mounted() {
 		this.setUSER()
-	
+
 		setInterval(() => {
 			this.getIndex = this.$route.query.Index
 		}, 10);
 
-
+		setInterval(() => {
+			axios.get(`${URL_IP}/state/?staus=รอตอบรับ`).then(response => {
+				var status = response.data
+				this.$store.commit('setstatusON', status)
+				// console.log('status "รอตอบรับ":', status);
+			});
+		}, 5000);
 		setInterval(() => {
 			var gat = localStorage.getItem('acessToken')
 
@@ -111,6 +173,9 @@ export default ({
 	},
 
 	watch: {
+		"$store.state.statusON.lengthdata"() {
+			this.checkAlert()
+		},
 		get_acessToken() {
 			if (!this.get_acessToken) {
 				this.$router.push('/login0');
@@ -118,7 +183,8 @@ export default ({
 
 			}
 		}
-	}
+	},
+	components: { Receive_Repair }
 })
 </script>
 

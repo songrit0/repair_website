@@ -2,8 +2,9 @@
 	<div class="div-receive ">
 		<div class="div-receive-pages">
 			<div class="row col-10">
-				<h1>รับ แจ้งซ่อม</h1>
+				<h1>รับ แจ้งซ่อม </h1>
 			</div>
+			<!-- {{  $store.state.statusON }}{{ getstatusON }} -->
 			<div class="col-10">
 				<div class="div-staus">
 					<div class="col-12">
@@ -103,6 +104,11 @@ import { URL_GET_ALL_REQ, URL_GET_REQ, URL_PUT_PROCESS } from '../constants'
 import Swal from 'sweetalert2';
 // import Swal from 'sweetalert2'
 export default {
+	// props: {
+	// 	stateON: {
+	// 		required: true,
+	// 	},
+	// },
 	data() {
 		return {
 			response: "",
@@ -120,7 +126,8 @@ export default {
 				process02: true,
 				process03: false,
 			},
-			clickRE_watch: 0
+			clickRE_watch: 0,
+			getstatusON: this.$store.state.statusON
 		};
 	},
 	methods: {
@@ -187,7 +194,13 @@ export default {
 			// });
 		}, 10000);
 	},
-	watch: {},
+	watch: {
+		"$store.state.statusON.lengthdata"(){
+			this.GETlengthdata()
+			this.getstatusON = this.$store.state.statusON
+			this.clickRE_watch = this.clickRE_watch + 1
+		}
+	},
 	components: { RepairP02, RepairP03, RepairP00 }
 }
 </script>

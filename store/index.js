@@ -3,10 +3,12 @@ export const state = () => ({
   newUSER: "",
   formon: false,
   showformitem: { status: false, id: 0 },
+  statusON: {
+    lengthdata: 0,
+    status: false,
+  },
   //user
 
- 
-  
   //user END
 });
 
@@ -39,7 +41,9 @@ export const mutations = {
     state.showformitem.id = payload;
     // console.log(2, payload);
   },
-
+  setstatusON(state, payload) {
+    state.statusON = payload;
+  },
 };
 
 export const actions = {
