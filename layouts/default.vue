@@ -100,21 +100,7 @@ export default ({
 				// audio.src = "https://media1.vocaroo.com/mp3/17RnRCYXCMRN";
 
 				audio.play();
-				setTimeout(() => {
-					audio.play();
-					setTimeout(() => {
-						audio.play();
-						setTimeout(() => {
-							audio.play();
-							setTimeout(() => {
-								audio.play();
-								setTimeout(() => {
-									audio.play();
-								}, 1500);
-							}, 1500);
-						}, 1500);
-					}, 1500);
-				}, 1500);
+				
 
 
 
@@ -174,7 +160,12 @@ export default ({
 
 	watch: {
 		"$store.state.statusON.lengthdata"() {
-			this.checkAlert()
+			if (this.$store.state.statusON.lengthdata == 0) {
+				
+			} else {
+				this.checkAlert()
+			}
+			
 		},
 		get_acessToken() {
 			if (!this.get_acessToken) {

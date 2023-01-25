@@ -77,6 +77,7 @@
 					</button>
 				</div>
 			</div>
+			<show-information v-if="$store.state.showformitem.status" />
 			<br>
 			<br>
 			<hr width=80% size=3 v-if="checkbox.process01">
@@ -111,6 +112,7 @@ export default {
 	// },
 	data() {
 		return {
+			getshowformitemON: false,
 			response: "",
 			page: "1",
 			set_length: 10,
@@ -176,23 +178,7 @@ export default {
 		// เปิดเว็บทำงานเลย
 		this.GETlengthdata()
 		// เช็คทุกๆ10วิ
-		setInterval(() => {
-			// axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
-			// 	this.get_lengthdata.process01 = response.data.lengthdata;
-			// });
-			// axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด`).then(response => {
-			// 	this.get_lengthdata.All = response.data.lengthdata;
-			// });
-			// axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
-			// 	this.get_lengthdata.process01 = response.data.lengthdata;
-			// });
-			// axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ`).then(response => {
-			// 	this.get_lengthdata.process02 = response.data.lengthdata;
-			// });
-			// axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ`).then(response => {
-			// 	this.get_lengthdata.process03 = response.data.lengthdata;
-			// });
-		}, 10000);
+		
 	},
 	watch: {
 		"$store.state.statusON.lengthdata"(){
@@ -283,12 +269,12 @@ export default {
 .div-receive-row .div-img {
 	display: grid;
 	align-content: center;
-	background-color: #a9a9a94a;
+	background-color: #0000004a;
 	/* margin: 25px; */
 	height: 75px;
 	width: 75px;
 	justify-content: center;
-	border-radius: 10px;
+	border-radius: 50px;
 
 }
 
@@ -409,5 +395,21 @@ export default {
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: nowrap;
+}
+table tr td button {
+    border: none;
+    color: #ff8320;
+    border-radius: 6px;
+    background-color: white;
+    height: 30px;
+}
+.buttonSET{
+	margin-left: 35%;
+    margin-top: 0.5%;
+    position: absolute;
+    border: none;
+    border-radius: 50px;
+    width: 30px;
+    height: 30px;
 }
 </style>

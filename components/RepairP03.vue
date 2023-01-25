@@ -56,7 +56,7 @@
 						<li>{{ item.staus }}</li>
 					</td>
 					<td>
-						<button>ข้อมูลเพิ่มเติม</button>
+						<button @click="Showformitem(true, item.id_repair_i)">ข้อมูลเพิ่มเติม</button>
 					</td>
 				</tr>
 			</table>
@@ -179,20 +179,25 @@ export default {
 				// text: "รายการข้อมูลผู้ใช้งานจะอยู่ด้านล่าง!",
 			})
 			this.GETdata03()
-	
-		},
-		GETdata03(){
-			axios.get(`${URL_GET_REQ}/?staus=ซ่อมเสร็จ&page=${this.page}&limit=10`).then(response => {
-			this.response = response.data.results
-			console.log(response.data);
-		})
-		axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ`).then(response => {
-			this.get_lengthdata.process01 = response.data.lengthdata
-			var sum = response.data.lengthdata / 10
-			this.set_length = Math.ceil(sum)
 
-		})
-		}
+		},
+		GETdata03() {
+			axios.get(`${URL_GET_REQ}/?staus=ซ่อมเสร็จ&page=${this.page}&limit=10`).then(response => {
+				this.response = response.data.results
+				console.log(response.data);
+			})
+			axios.get(`${URL_GET_ALL_REQ}/?staus=ซ่อมเสร็จ`).then(response => {
+				this.get_lengthdata.process01 = response.data.lengthdata
+				var sum = response.data.lengthdata / 10
+				this.set_length = Math.ceil(sum)
+
+			})
+		},	
+		Showformitem(payload, payload2) {
+			$nuxt.$store.commit('setShowformitem', payload)
+			$nuxt.$store.commit('setShowformitem_id', payload2)
+			// console.log('id2',payload2);
+		},
 	},
 	mounted() {
 		// เปิดเว็บทำงานเลย

@@ -5,12 +5,13 @@
 
 			<div class="show_i-div">
 				<div class="row col-12">
-					<div class="back-button"><button type="button" class="btn btn-danger col-1" @click="Showformitem(false)">X</button></div>
+					<div class="back-button"><button type="button" class="btn btn-danger col-1"
+							@click="Showformitem(false)">X</button></div>
 
 					<br>
 					<h2 class="col-12 py-1">ข้อมมูลการแจ้งซ่อม</h2>
 					<div class="col-6 py-2">
-						<li><b>ชื้อผู้แจ้งซ่อม:  </b>{{ check(GETBYID?.name_sender) }}</li>
+						<li><b>ชื้อผู้แจ้งซ่อม: </b>{{ check(GETBYID?.name_sender) }}</li>
 					</div>
 					<div class="col-6 py-2">
 						<li><b>เบอร์โทรศัพท์: </b>{{ check(GETBYID?.phone) }}</li>
@@ -43,16 +44,17 @@
 						<li><b>อื่นๆ: </b>{{ check(GETBYID?.other) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>วัน/เวลาที่แจ้ง:</b>{{ check(GETBYID?.date_repair) }}</li>
+						<li><b>วัน/เวลาที่แจ้ง:</b>{{  setday(GETBYID?.date_repair) }} {{ settime(GETBYID?.date_repair) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>วัน/เวลารับแจ้ง:</b> {{ check(GETBYID?.date_receive) }}</li>
+						<li><b>วัน/เวลารับแจ้ง:</b> {{  setday(GETBYID?.date_receive) }} {{ settime(GETBYID?.date_receive) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>ผู้ประสานงาน(ผู้รับแจ้งซ่อม):</b> {{check(GETBYID?.name_responsible)}}</li>
+						<li><b>ผู้ประสานงาน(ผู้รับแจ้งซ่อม):</b> {{ check(GETBYID?.name_responsible) }}</li>
 					</div>
 					<div class="col-12 py-2">
-						<button type="button" class="btn btn-danger"  @click="button(GETBYID?.id_repair_i, 'ยกเลิก')" v-if="GETBYID?.staus === 'รอตอบรับ'||GETBYID?.staus === 'กำลังดำเนินการ'">ยกเลิกการแจ้งซ่อม</button>
+						<button type="button" class="btn btn-danger" @click="button(GETBYID?.id_repair_i, 'ยกเลิก')"
+							v-if="GETBYID?.staus === 'รอตอบรับ' || GETBYID?.staus === 'กำลังดำเนินการ'">ยกเลิกการแจ้งซ่อม</button>
 					</div>
 
 				</div>
@@ -68,14 +70,14 @@ import Swal from 'sweetalert2'
 export default {
 	data() {
 		return {
-			
+
 			ID: 2,
 			GETBYID: ''
 		}
 	},
 	methods: {
 		Showformitem(payload) {
-			$nuxt.$store.commit('setShowformitem',payload)
+			$nuxt.$store.commit('setShowformitem', payload)
 		},
 		check(item) {
 			if (item) {
@@ -104,17 +106,28 @@ export default {
 							title: 'กำลังทำการยกเลิก',
 							showConfirmButton: false,
 							timer: 2500
-						}).then(() => {})
+						}).then(() => { })
 					}
 				}
 			)
+		},
+		settime(item) {
+			var H = new Date(item).getHours()
+			var M = new Date(item).getMinutes()
+			return `${H}:${M} น.`
+		},
+		setday(item) {
+			var D = new Date(item).getDate()
+			var M = new Date(item).getMonth() + 1
+			var Y = new Date(item).getFullYear()
+			return `${D} / ${M} / ${Y}`
 		}
 
 	},
 	mounted() {
 		this.GET_by_id()
 		console.log(this.GETBYID);
-		
+
 	}
 
 
@@ -129,7 +142,7 @@ export default {
 	/* width: 70%; */
 	justify-content: center;
 	padding: 15px 30px 15px 30px;
-	background-color: #ecc6a9;
+	background-color: #d4d4d4;
 	z-index: 6;
 	border-radius: 12px;
 }

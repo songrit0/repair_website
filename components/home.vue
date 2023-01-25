@@ -7,14 +7,14 @@
 					<h4>แจ้งซ่อม</h4>
 					Repair
 				</div>
-				<div class="item p-3 back-img-register background-img-Notification" @click="$router.push(`/Receive_Repair`)">
-					<h4>รับ แจ้งซ่อม</h4>
+				<div v-if="$store.state.newUSER.user_status === 'admin'" class="item p-3 back-img-register background-img-Notification" @click="$router.push(`/Receive_Repair`)">
+					<h4>รับ แจ้งซ่อม2</h4>
 					Repair Notification
 				</div>
 			</div>
 			<br>
-			<h1>ระบบ User</h1>
-			<div class="div-home-row-User">
+			<h1  v-if="$store.state.newUSER.user_status === 'admin'" >ระบบ User</h1>
+			<div  v-if="$store.state.newUSER.user_status === 'admin'"  class="div-home-row-User">
 				<div class="item-User p-3 back-img-register background-img-register" @click="$router.push(`/Register`)">
 					<h4>สมัครสมาชิก</h4>
 					register
@@ -40,6 +40,7 @@ export default {
 	data() {
 		return {
 			get: '_',
+			USER_STAUS : this.$store.state.newUSER.user_status
 		}
 	},
 	methods: {
@@ -146,7 +147,7 @@ export default {
 
 
 .back-img-register:hover {
-	background-color: #54a4ea;
+	background-color: #8888ad6c;
 	transition: all .3s ease;
 	transform: scale(1.05, 1.05);
 	cursor: pointer;
@@ -157,7 +158,7 @@ export default {
 	background-repeat: no-repeat;
 	background-position: bottom right;
 	background-size: 60px;
-	background-color: #2c74b3;
+	background-color: #C7C7FF;
 }
 
 .background-img-register {
@@ -165,21 +166,21 @@ export default {
 	background-repeat: no-repeat;
 	background-position: bottom right;
 	background-size: 60px;
-	background-color: #2c74b3;
+	background-color: #C7C7FF;
 }
 .background-img-Repair {
 	background: url(~/img/construction_FILL0_wght400_GRAD0_opsz48.svg);
 	background-repeat: no-repeat;
 	background-position: bottom right;
 	background-size: 60px;
-	background-color: #2c74b3;
+	background-color: #C7C7FF;
 }
 .background-img-Notification {
 	background: url(~/img/home_repair_service_FILL0_wght400_GRAD0_opsz48.svg);
 	background-repeat: no-repeat;
 	background-position: bottom right;
 	background-size: 60px;
-	background-color: #2c74b3;
+	background-color: #C7C7FF;
 }
 @media screen and (max-width: 900px) {
 	.div-home-main {
