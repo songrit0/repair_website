@@ -35,6 +35,7 @@
 						<img v-if="item.equipment === 'อื่นๆ'"
 							src="../img/other_admission_FILL0_wght400_GRAD0_opsz48.svg" alt="other" width="40px">
 					</div>
+					{{ item.requirements }}
 					<div class="row">
 						<button class="btn-success button1"
 							@click="button(item.id_repair_i, 'กำลังดำเนินการ')">ตอบรับ</button>
@@ -48,9 +49,9 @@
 					<li>เบอร์ติดต่อผู้แจ้งซ่อม : {{ item.phone }}</li>
 
 				</div>
-				<button class="btn-info button2" style=" border: none; border-radius: 0px 5px 5px 0px;"
-					@click="Showformitem(true, item.id_repair_i)"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-						height="16" fill="currentColor" class="bi bi-zoom-in" viewBox="0 0 16 16">
+				<button class="btn-info button2 buttonSET " @click="Showformitem(true, item.id_repair_i)"><svg
+						xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+						class="bi bi-zoom-in" viewBox="0 0 16 16">
 						<path fill-rule="evenodd"
 							d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
 						<path
@@ -87,7 +88,7 @@
 
 <script>
 import axios from 'axios'
-import { URL_GET_ALL_REQ, URL_GET_REQ, URL_PUT_PROCESS } from '../constants'
+import { URL_GET_ALL_REQ, URL_GET_REQ, URL_IP, URL_PUT_PROCESS } from '../constants'
 import Swal from 'sweetalert2'
 export default {
 
@@ -108,7 +109,7 @@ export default {
 				process01: '',
 				process02: '',
 				process03: '',
-			}
+			},
 		}
 	},
 	methods: {
@@ -132,7 +133,7 @@ export default {
 			var M = new Date(item).getMinutes()
 			return `${H}:${M} น.`
 		},
-		button(item, staus) {
+		async button(item, staus) {
 			if (staus == 'ยกเลิก') {
 				Swal.fire({
 					title: 'คุณกำลังจะยกเลิก',
@@ -176,38 +177,82 @@ export default {
 					}
 				})
 			} else {
-				axios.put(`${URL_PUT_PROCESS}/${item}`, {
-							staus: staus
-						}).then(
-							response => {
-								console.log(response);
-								if (response.data.status === 'ok') {
-									Swal.fire({
-										position: 'center',
-										icon: 'success',
-										title: 'บันทึกเรียบร้อยแล้ว',
-										showConfirmButton: false,
-										timer: 2500
-									}).then(() => {
-										axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10`).then(response => {
-											this.response = response.data.results
-										})
-										axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
-											this.get_lengthdata.process01 = response.data.lengthdata
-											var sum = response.data.lengthdata / 10
-											this.set_length = Math.ceil(sum)
-										})
-										axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ`).then(response => {
-											this.get_lengthdata.process02 = response.data.lengthdata
-										})
-									})
-								}
+				const { value: fruit } = await Swal.fire({
+					title: 'ลงชื่อผู้ประสานงาน(ผู้รับแจ้งซ่อม)',
+					input: 'text',
+					// inputOptions: this.staff.results,
+					inputPlaceholder: 'กรอกชื่อผู้รับแจ้งซ่อม',
+					showCancelButton: true,
+					inputValidator: (value) => {
+						return new Promise((resolve) => {
+							if (value) {
+								resolve()
+							} else {
+								resolve('กรอกชื่อผู้รับแจ้งซ่อม :)')
 							}
-						)
+						})
+					}
+				})
+				if (fruit) {
+					axios.put(`${URL_PUT_PROCESS}/${item}`, {
+						staus: staus,
+						name_responsible: fruit,
+						date_receive: new Date()
+					}).then(
+						response => {
+							console.log(response);
+							if (response.data.status === 'ok') {
+								Swal.fire({
+									position: 'center',
+									icon: 'success',
+									title: 'บันทึกเรียบร้อยแล้ว',
+									showConfirmButton: false,
+									timer: 2500
+								}).then(() => {
+									axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10`).then(response => {
+										this.response = response.data.results
+									})
+									axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
+										this.get_lengthdata.process01 = response.data.lengthdata
+										var sum = response.data.lengthdata / 10
+										this.set_length = Math.ceil(sum)
+									})
+									axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ`).then(response => {
+										this.get_lengthdata.process02 = response.data.lengthdata
+									})
+								})
+							}
+						}
+					)
+				}
+
 			}
 
 
 		},
+		// async button(item, staus) {
+
+		// 	const { value: fruit } = await Swal.fire({
+		// 		title: 'Select field validation',
+		// 		input: 'select',
+		// 		inputOptions: this.g,
+		// 		inputPlaceholder: 'Select a fruit',
+		// 		showCancelButton: true,
+		// 		inputValidator: (value) => {
+		// 			return new Promise((resolve) => {
+		// 				if (value) {
+		// 					resolve()
+		// 				} else {
+		// 					resolve('You need to select oranges :)')
+		// 				}
+		// 			})
+		// 		}
+		// 	})
+
+		// 	if (fruit) {
+		// 		Swal.fire(`You selected: ${fruit}`)
+		// 	}
+		// },
 		clickRE() {
 			let Toast = Swal.mixin({
 				toast: true,
@@ -243,11 +288,16 @@ export default {
 			$nuxt.$store.commit('setShowformitem_id', payload2)
 			// console.log('id2',payload2);
 		},
+		
+
+		
+
 	},
 	mounted() {
 
 		// เปิดเว็บทำงานเลย
 		this.GETdata01()
+		
 		// เช็คทุกๆ10วิ
 		setInterval(() => {
 			// this.GETdata01()
@@ -339,7 +389,7 @@ export default {
 	width: auto;
 	height: 150px;
 	display: flex;
-	background-color: #f3bbe1;
+	background-color: #f7f7f7;
 	flex-direction: row;
 	border-radius: 4px;
 }
@@ -358,7 +408,7 @@ export default {
 	/* justify-items: center; */
 	margin: 0px 0px 0px 10px;
 	align-content: space-around;
-	width: 63%;
+	width: 400px;
 
 }
 

@@ -175,13 +175,13 @@ export default {
 			if (!this.form.problem_symptom) {
 				check = false;
 			}
-			
+
 			return check;
-			
+
 		},
 		Register() {
-			
-		
+
+
 			console.log(this.validate_Register());
 			if (this.validate_Register()) {
 				axios.post(`${URL_PUST_ADD_INFORMATION}`, {
@@ -203,30 +203,41 @@ export default {
 					// name_responsible: "ชื่อผู้รับadd",
 
 				}).then(response => {
-					console.log('post', response);
+					// console.log('post', response);
 
 					Swal.fire({
 						position: "center",
 						icon: "success",
-						title: "สมัครสมาชิกสำเร็จ",
+						title: "กำลังทำการแจ้งซ่อม",
+						text: 'รอประมาณ 10-15 นาที',
 						showConfirmButton: false,
 						timer: 1500
 					}).then(() => {
 						// window.location.reload(0)
-
-						this.setFORMON()
+						this.form.responsible_person = "",
+							this.form.work_group = '',
+							this.form.work = '',
+							this.form.phone = '',
+							this.form.equipment = "",
+							this.form.computer_name = "",
+							this.form.commodity_code = '',
+							this.form.ip_address = '',
+							this.form.other = '',
+							this.form.problem_symptom = '',
+							this.form.requirements = "ปกติ",
+							this.setFORMON()
 					});
 
 				})
-			}else {
+			} else {
 				Swal.fire({
-						position: "center",
-						icon: "warning",
-						title: "มีข้อมูลว่าง",
-						text:'กรุณาเช็คข้อมูล',
-						showConfirmButton: false,
-						timer: 5500
-					})
+					position: "center",
+					icon: "warning",
+					title: "มีข้อมูลว่าง",
+					text: 'กรุณาเช็คข้อมูล',
+					showConfirmButton: false,
+					timer: 5500
+				})
 			}
 
 		}

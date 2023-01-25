@@ -100,21 +100,7 @@ export default ({
 				// audio.src = "https://media1.vocaroo.com/mp3/17RnRCYXCMRN";
 
 				audio.play();
-				setTimeout(() => {
-					audio.play();
-					setTimeout(() => {
-						audio.play();
-						setTimeout(() => {
-							audio.play();
-							setTimeout(() => {
-								audio.play();
-								setTimeout(() => {
-									audio.play();
-								}, 1500);
-							}, 1500);
-						}, 1500);
-					}, 1500);
-				}, 1500);
+				
 
 
 

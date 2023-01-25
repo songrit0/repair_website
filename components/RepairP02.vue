@@ -34,6 +34,7 @@
 						<img v-if="item.equipment === 'อื่นๆ'"
 							src="../img/other_admission_FILL0_wght400_GRAD0_opsz48.svg" alt="other" width="40px">
 					</div>
+					{{ item.requirements }}
 					<div class="row">
 						<button class="btn-success button1"
 							@click="button(item.id_repair_i, 'ซ่อมเสร็จ')">ซ่อมเสร็จ</button>
@@ -47,9 +48,9 @@
 					<li>เบอร์ติดต่อผู้แจ้งซ่อม : {{ item.phone }}</li>
 
 				</div>
-				<button class="btn-info button2" style=" border: none; border-radius: 0px 5px 5px 0px;"
-					@click="Showformitem(true, item.id_repair_i)"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-						height="16" fill="currentColor" class="bi bi-zoom-in" viewBox="0 0 16 16">
+				<button class="btn-info button2 buttonSET" @click="Showformitem(true, item.id_repair_i)"><svg
+						xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+						class="bi bi-zoom-in" viewBox="0 0 16 16">
 						<path fill-rule="evenodd"
 							d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
 						<path
@@ -317,7 +318,7 @@ export default {
 	width: auto;
 	height: 150px;
 	display: flex;
-	background-color: #ffd8be;
+	background-color: #f7f7f7;
 	flex-direction: row;
 	border-radius: 4px;
 }

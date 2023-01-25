@@ -246,31 +246,7 @@ export default {
 	grid-template-columns: 1fr 1fr;
 }
 
-.div-receive-row .div-item .item {
-	width: auto;
-	height: 150px;
-	display: flex;
-	background-color: #ffd8be;
-	flex-direction: row;
-	border-radius: 4px;
-}
 
-.div-receive-row .div-item .item .item1 {
-	display: grid;
-	align-content: space-around;
-	justify-items: center;
-	height: 150px;
-
-}
-
-.div-receive-row .div-item .item .item2 {
-	display: grid;
-	align-content: space-between;
-	/* justify-items: center; */
-	margin: 0px 0px 0px 10px;
-	align-content: space-around;
-
-}
 
 
 

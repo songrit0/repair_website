@@ -269,12 +269,12 @@ export default {
 .div-receive-row .div-img {
 	display: grid;
 	align-content: center;
-	background-color: #a9a9a94a;
+	background-color: #0000004a;
 	/* margin: 25px; */
 	height: 75px;
 	width: 75px;
 	justify-content: center;
-	border-radius: 10px;
+	border-radius: 50px;
 
 }
 
@@ -401,6 +401,15 @@ table tr td button {
     color: #ff8320;
     border-radius: 6px;
     background-color: white;
+    height: 30px;
+}
+.buttonSET{
+	margin-left: 35%;
+    margin-top: 0.5%;
+    position: absolute;
+    border: none;
+    border-radius: 50px;
+    width: 30px;
     height: 30px;
 }
 </style>
