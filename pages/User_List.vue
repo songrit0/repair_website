@@ -3,7 +3,8 @@
 		<br>
 		<h3 class="3h">จัดการฐานข้อมูล</h3>
         <br>
-        
+        <!-- <div class="delete-button">
+			<button @click="delete_all()">delete-button</button></div> -->
         <br>
 		<div class="err_not_item" v-if="response?.length == 0||response == null">
 			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
@@ -63,7 +64,7 @@
 
 <script>
 import axios from 'axios'
-import { URL_GET_ALL_REQ, URL_GET_REQ, URL_GET__INFORMATION, URL_PUT_PROCESS ,URL_DELETE_USER,URL_GET_USERS } from '../constants'
+import { URL_GET_ALL_REQ, URL_GET_REQ, URL_GET__INFORMATION, URL_DELETE_USER_ALL ,URL_DELETE_USER,URL_GET_USERS } from '../constants'
 import Swal from 'sweetalert2'
 export default {
 	data() {
@@ -128,7 +129,20 @@ export default {
 								timer: 1500
 							})
 			});
+		},
+
+		delete_all() {
+			axios.delete(`${URL_DELETE_USER_ALL}`).then(()=>{
+				Swal.fire({
+								position: 'center',
+								icon: 'success',
+								title: 'ลบข้อมูลเรียบร้อย',
+								showConfirmButton: false,
+								timer: 1500
+							})
+			});
 		}
+
 	},
 	mounted() {
 		// เปิดเว็บทำงานเลย
@@ -152,6 +166,10 @@ export default {
 </script>
 
 <style>
+.delete-button{
+	/* border: solid red 1px; */
+	margin-left: 35px;
+}
 .button-abot{
     /* border:solid red 2px ; */
     display: flex;

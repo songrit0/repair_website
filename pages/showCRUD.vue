@@ -2,6 +2,10 @@
 	<div class="div-receive-row">
 		<br>
 		<h3 class="3h">จัดการฐานข้อมูล</h3>
+<br>
+        <div class="delete-button">
+			<button @click="delete_all()">ลบข้อมูลทั้งหมด</button></div>
+
 		<div class="err_not_item" v-if="response?.length == 0||response == null">
 			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
 				<b>ยังไม่มีข้อมูล</b>
@@ -67,21 +71,21 @@
             
 		</div>
 
-		<div class="Pagination-item">
+		<br>
+		<div class="Pagination-item" v-if="response.length >= 1">
 			<label for="cars">หน้าที่ :</label>
 			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
 			<select class="form-select" v-model="page">
 				<option v-for="idex in set_length" :key="idex" :value="idex">{{ idex }}</option>
 			</select>
 			<button type="button" @click="onpot_pages_go()" class="btn btn-outline-primary">&raquo;</button>
-		</div>
-
+		</div><br>
 	</div>
 </template>
 
 <script>
 import axios from 'axios'
-import { URL_GET_ALL_REQ, URL_GET_REQ, URL_GET__INFORMATION, URL_PUT_PROCESS ,URL_DELETE_INFRMATION } from '../constants'
+import { URL_GET_ALL_REQ, URL_GET_REQ,URL_PUT_PROCESS , URL_DELETE_INFRMATION_ALL, URL_DELETE_INFRMATION } from '../constants'
 import Swal from 'sweetalert2'
 export default {
 	data() {
@@ -149,6 +153,18 @@ export default {
 								timer: 1500
 							})
 			});
+		},
+
+		delete_all() {
+			axios.delete(`${URL_DELETE_INFRMATION_ALL}`).then(()=>{
+				Swal.fire({
+								position: 'center',
+								icon: 'success',
+								title: 'ลบข้อมูลเรียบร้อย',
+								showConfirmButton: false,
+								timer: 1500
+							})
+			});
 		}
 	},
 	mounted() {
@@ -173,6 +189,17 @@ export default {
 </script>
 
 <style>
+.delete-button{
+	margin-left: 35px;
+}
+.delete-button button{
+	border: none;
+	border-radius: 10px;
+	background-color: rgb(199, 173, 173);
+	color: rgb(248, 0, 0);
+	
+}
+
 .button-abot{
     /* border:solid red 2px ; */
     display: flex;
