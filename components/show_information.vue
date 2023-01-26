@@ -5,7 +5,7 @@
 
 			<div class="show_i-div">
 				<div class="row col-12">
-					<div class="back-button"><button type="button" class="btn btn-danger col-1"
+					<div class="back-button"><button type="button" class="btn btn-danger col-3"
 							@click="Showformitem(false)">X</button></div>
 
 					<br>
@@ -181,5 +181,18 @@ export default {
 .back-button {
 	display: flex;
 	justify-content: flex-end;
+}
+
+@media screen and (max-width: 850px) {
+	.show-information {
+		padding: 10px;
+	}
+
+	.show_i-div {
+		transform: scale(0.6, 0.6);
+		position: absolute;
+		top: 0;
+
+	}
 }
 </style>

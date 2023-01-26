@@ -257,13 +257,13 @@ export default {
 	background-color: #a9ecbf;
 }
 
-.div-receive-row .div-item {
+/* .div-receive-row .div-item {
 	display: grid;
 	padding: 20px;
 	column-gap: 25px;
 	row-gap: 25px;
 	grid-template-columns: 1fr 1fr;
-}
+} */
 
 
 .div-receive-row .div-img {
@@ -404,12 +404,19 @@ table tr td button {
     height: 30px;
 }
 .buttonSET{
-	margin-left: 35%;
+	margin-left: -15%;
     margin-top: 0.5%;
-    position: absolute;
+    /* position: absolute; */
     border: none;
     border-radius: 50px;
     width: 30px;
     height: 30px;
+
+}
+.item2 li {
+	width: 235px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden !important;
 }
 </style>
