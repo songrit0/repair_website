@@ -44,10 +44,10 @@
 						<li><b>อื่นๆ: </b>{{ check(GETBYID?.other) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>วัน/เวลาที่แจ้ง:</b>{{  setday(GETBYID?.date_repair) }} {{ settime(GETBYID?.date_repair) }}</li>
+						<li><b>วัน/เวลาที่แจ้ง:</b>{{ setday(GETBYID?.date_repair) }}</li>
 					</div>
 					<div class="col-6 py-2">
-						<li><b>วัน/เวลารับแจ้ง:</b> {{  setday(GETBYID?.date_receive) }} {{ settime(GETBYID?.date_receive) }}</li>
+						<li><b>วัน/เวลารับแจ้ง:</b> {{ setday(GETBYID?.date_receive) }}</li>
 					</div>
 					<div class="col-6 py-2">
 						<li><b>ผู้ประสานงาน(ผู้รับแจ้งซ่อม):</b> {{ check(GETBYID?.name_responsible) }}</li>
@@ -111,16 +111,18 @@ export default {
 				}
 			)
 		},
-		settime(item) {
-			var H = new Date(item).getHours()
-			var M = new Date(item).getMinutes()
-			return `${H}:${M} น.`
-		},
 		setday(item) {
-			var D = new Date(item).getDate()
-			var M = new Date(item).getMonth() + 1
-			var Y = new Date(item).getFullYear()
-			return `${D} / ${M} / ${Y}`
+			if (item) {
+				var H = new Date(item).getHours()
+				var Ms = new Date(item).getMinutes()
+				var D = new Date(item).getDate()
+				var M = new Date(item).getMonth() + 1
+				var Y = new Date(item).getFullYear()
+				return ` ${D} / ${M} / ${Y} เวลา ${H}:${Ms} น.`
+			} else {
+				return `ไม่มีข้อมูล`
+			}
+
 		}
 
 	},
