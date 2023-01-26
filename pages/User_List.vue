@@ -2,10 +2,10 @@
 	<div class="div-receive-row">
 		<br>
 		<h3 class="3h">จัดการฐานข้อมูล</h3>
-        <br>
+       
         <!-- <div class="delete-button">
 			<button @click="delete_all()">delete-button</button></div> -->
-        <br>
+       
 		<div class="err_not_item" v-if="response?.length == 0||response == null">
 			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
 				<b>ยังไม่มีข้อมูล</b>

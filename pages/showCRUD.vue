@@ -72,7 +72,7 @@
 		</div>
 
 		<br>
-		<div class="Pagination-item" v-if="response.length >= 1">
+				<div class="Pagination-item">
 			<label for="cars">หน้าที่ :</label>
 			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
 			<select class="form-select" v-model="page">
