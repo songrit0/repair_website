@@ -21,7 +21,7 @@
 			</div>
 			<!-- end input User -->
 			<button @click="login(), validate_login()">Login</button>
-			<a @click="buttonbacks()" style="cursor: pointer;">Sign In</a>
+			<a @click="buttonbacks()" style="cursor: pointer;">Sign Up</a>
 		</div>
 		<div style="position: fixed; z-index: 6; width: 100%; height: 100%; transition: all .5s;"
 			:style="Register_on ? 'top : 0px' : 'top : -800px'">

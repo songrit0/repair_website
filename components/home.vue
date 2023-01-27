@@ -30,6 +30,12 @@
 					manage additional information
 				</div>
 
+				
+				<div class="item-User p-3 back-img-register background-img-user" @click="$router.push(`/Manage`)">
+					<h4>จัดการข้อมูลเจ้าหน้าที่ประสานงาน</h4>
+					Manage coordinator information
+				</div>
+
 			</div>
 		</div>
 	</div>
