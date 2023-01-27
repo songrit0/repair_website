@@ -13,7 +13,18 @@
 				<button class="btn-danger button2" style=" border: none; border-radius: 5px 0px 0px 5px;"
 					@click="button(item.id_repair_i, 'ยกเลิก')">X</button>
 				<div class="item1 col-3">
+					<button class="btn-info button2 buttonSET " @click="Showformitem(true, item.id_repair_i)"><svg
+							xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-zoom-in" viewBox="0 0 16 16">
+							<path fill-rule="evenodd"
+								d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+							<path
+								d="M10.344 11.742c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1 6.538 6.538 0 0 1-1.398 1.4z" />
+							<path fill-rule="evenodd"
+								d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5z" />
+						</svg>ข้อมมูล</button>
 					<div class="div-img">
+
 						<li v-if="item.equipment == ''">err null</li>
 						<img v-if="item.equipment == 'คอมพิวเตอร์แม่ข่าย'"
 							src="../img/computer_FILL0_wght400_GRAD0_opsz48.svg" alt="computer" width="40px">
@@ -49,16 +60,7 @@
 					<li>เบอร์ติดต่อผู้แจ้งซ่อม : {{ item.phone }}</li>
 
 				</div>
-				<button class="btn-info button2 buttonSET " @click="Showformitem(true, item.id_repair_i)"><svg
-						xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-						class="bi bi-zoom-in" viewBox="0 0 16 16">
-						<path fill-rule="evenodd"
-							d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-						<path
-							d="M10.344 11.742c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1 6.538 6.538 0 0 1-1.398 1.4z" />
-						<path fill-rule="evenodd"
-							d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5z" />
-					</svg></button>
+
 
 			</div>
 
@@ -288,16 +290,16 @@ export default {
 			$nuxt.$store.commit('setShowformitem_id', payload2)
 			// console.log('id2',payload2);
 		},
-		
 
-		
+
+
 
 	},
 	mounted() {
 
 		// เปิดเว็บทำงานเลย
 		this.GETdata01()
-		
+
 		// เช็คทุกๆ10วิ
 		setInterval(() => {
 			// this.GETdata01()
@@ -408,7 +410,7 @@ export default {
 	/* justify-items: center; */
 	margin: 0px 0px 0px 10px;
 	align-content: space-around;
-	width: 400px;
+	width: auto;
 
 }
 
@@ -431,8 +433,9 @@ export default {
 
 .div-item1 .item1 .button2 {
 	position: absolute;
-	margin-top: -111px;
+	margin-top: 60px;
 	width: 73px;
+	font-size: 13px;
 	height: 20px;
 }
 
@@ -452,13 +455,20 @@ export default {
 	width: 120px;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 850px) {
 	.div-receive-row .div-item1 {
 		grid-template-columns: 1fr;
+		width: 100%;
+		margin: 0px 0px 0px -45px;
 	}
 
-	.div-staus {
-		grid-template-columns: 1fr 1fr;
+	.div-receive-row .div-item1 .item {
+		/* width: 90%; */
 	}
+}
+
+.div-staus {
+	grid-template-columns: 1fr 1fr;
+
 }
 </style>

@@ -93,7 +93,7 @@ export default ({
 
 		checkAlert() {
 
-			var USER_STAUS = this.$store.state.newUSER.user_status
+			var USER_STAUS = this.$store.state?.newUSER?.user_status
 			if (USER_STAUS === 'admin') {
 				var audio = new Audio();
 				audio.src = "http://commondatastorage.googleapis.com/codeskulptor-assets/Collision8-Bit.ogg";

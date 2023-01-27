@@ -238,13 +238,7 @@ export default {
 	row-gap: 27px;
 }
 
-.div-receive-row .div-item {
-	display: grid;
-	padding: 20px;
-	column-gap: 25px;
-	row-gap: 25px;
-	grid-template-columns: 1fr 1fr;
-}
+
 
 
 
@@ -265,13 +259,7 @@ export default {
 	justify-content: center;
 }
 
-.div-item .item1 .button2 {
 
-	position: absolute;
-	margin-top: -111px;
-	width: 73px;
-	height: 20px;
-}
 
 .Pagination-item {
 	display: flex;
@@ -319,13 +307,5 @@ export default {
 
 
 /* --------------------table-end------------------- */
-@media screen and (max-width: 800px) {
-	.div-receive-row .div-item {
-		grid-template-columns: 1fr;
-	}
 
-	.div-staus {
-		grid-template-columns: 1fr 1fr;
-	}
-}
 </style>
