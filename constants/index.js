@@ -31,7 +31,10 @@ export const URL_GET_INFRMATION_ALL = `${URL_IP}/Getall_information`;
 export const URL_GET_INFRMATION_BYID = `${URL_IP}/Get_information_Byid`;
 
 export const URL_PUT_INFRMATION = `${URL_IP}/edit_information`;
+
 export const URL_PUT_INFRMATION_ADDMIND = `${URL_IP}/edit_information_addmind`;
+
+
 
 
 export const URL_GET_USERS = `${URL_IP}/profile`;

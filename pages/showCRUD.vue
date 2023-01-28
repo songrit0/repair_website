@@ -4,8 +4,12 @@
 		<h3 class="3h">จัดการฐานข้อมูล</h3>
 <br>
         <div class="delete-button">
-			<button @click="delete_all()">ลบข้อมูลทั้งหมด</button></div>
-
+				<button @click="delete_all()">ลบข้อมูลทั้งหมด</button>	
+		</div>
+		<div class="add-button">
+			<button class="add-button"  @click="$router.push(`/add_inform`)">เพิ่มข้อมูล</button>
+		</div>
+		
 		<div class="err_not_item" v-if="response?.length == 0||response == null">
 			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
 				<b>ยังไม่มีข้อมูล</b>
@@ -192,12 +196,23 @@ export default {
 .delete-button{
 	margin-left: 35px;
 }
+.add-button{
+	margin-left: 80px;
+	margin-top: -25px;
+}
+
 .delete-button button{
 	border: none;
 	border-radius: 10px;
 	background-color: rgb(199, 173, 173);
 	color: rgb(248, 0, 0);
 	
+}
+.add-button button{
+	border: none;
+	border-radius: 10px;
+	background-color: rgb(171, 185, 223);
+	color: rgb(0, 66, 248);
 }
 
 .button-abot{
