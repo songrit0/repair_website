@@ -6,9 +6,9 @@
         <div class="delete-button">
 				<button @click="delete_all()">ลบข้อมูลทั้งหมด</button>	
 		</div>
-		<div class="add-button">
+		<!-- <div class="add-button">
 			<button class="add-button"  @click="$router.push(`/add_inform`)">เพิ่มข้อมูล</button>
-		</div>
+		</div> -->
 		
 		<div class="err_not_item" v-if="response?.length == 0||response == null">
 			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">

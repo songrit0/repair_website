@@ -48,3 +48,6 @@ export const URL_GET_RECIPIENT_ALL = `${URL_IP}/all_recipient`;
 export const URL_DELETE_RECIPIENT = `${URL_IP}/delete_recipient`;
 
 export const URL_PUT_RECIPIENT = `${URL_IP}/edit_recipient`;
+
+export const URL_ADD_RECIPIENT = `${URL_IP}/add_recipient`;
+

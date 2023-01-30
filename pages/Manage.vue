@@ -2,7 +2,7 @@
 	<div class="div-receive-row">
 		<br>
 		<h3 class="3h">จัดการข้อมูลเจ้าหน้าที่ประสานงาน</h3>
-       
+		<br>
 		<div class="add-button">
 			<button class="add-button"  @click="$router.push(`/add_inform`)">เพิ่มข้อมูล</button>
 		</div>
@@ -171,8 +171,8 @@ export default {
 	margin-left: 35px;
 }
 .add-button{
-	margin-left: 80px;
-	margin-top: -25px;
+	margin-left: 33px;
+	margin-top: -15px;
 }
 
 .delete-button button{
