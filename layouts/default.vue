@@ -20,7 +20,7 @@
 					</button>
 					<div class="Menu_item2" :class="MenuDropdown ? '' : 'Menu_off2'">
 						<div>
-							<li class="p-1 " @click="checkAlert()">user</li>
+							<li class="p-1 "  @click="$router.push({name:'Edit_User',path:'/Edit_User',query:{id: $store.state.newUSER.user_id}})">user</li>
 
 						</div>
 						<div>

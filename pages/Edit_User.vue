@@ -35,7 +35,7 @@
 						<span id="input_password_err" class="err-msg-Register"></span>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row" v-if=" $store.state.newUSER.user_status === 'admin'">
 					<div class="col-sm-3"><label for="textarea-small">user_status:</label></div>
 					<div class="col-sm-9">
 						<div class="form-check form-check-inline">
