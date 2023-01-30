@@ -55,6 +55,8 @@
 					<div class="col-12 py-2">
 						<button type="button" class="btn btn-danger" @click="button(GETBYID?.id_repair_i, 'ยกเลิก')"
 							v-if="GETBYID?.staus === 'รอตอบรับ' || GETBYID?.staus === 'กำลังดำเนินการ'">ยกเลิกการแจ้งซ่อม</button>
+							<button type="button" class="btn btn-danger" @click="$router.push({ namr:'Preview_Print',path: '/Preview_Print', query: { id: GETBYID?.id_repair_i  }})"
+							>พิมพ์+</button>
 					</div>
 
 				</div>

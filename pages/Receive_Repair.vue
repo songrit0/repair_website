@@ -417,6 +417,7 @@ table tr td button {
 	width: 235px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden !important;
+    /* overflow: scroll hidden ; */
+
 }
 </style>

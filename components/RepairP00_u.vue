@@ -138,6 +138,7 @@ export default {
 		GET00_u() {
 			axios.get(`${URL_GET_REQ}/?staus=ทั้งหมด&page=${this.page}&limit=10&user_id=${localStorage.users_id}`).then(response => {
 				this.response = response.data.results
+				console.log(response.data.results);
 			})
 		},
 		GETset_length() {

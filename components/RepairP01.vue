@@ -10,19 +10,9 @@
 		<div class="div-item1" v-if="response.length >= 1">
 
 			<div class="item" v-for="item, index in response" :key="index">
-				<button class="btn-danger button2" style=" border: none; border-radius: 5px 0px 0px 5px;"
-					@click="button(item.id_repair_i, 'ยกเลิก')">X</button>
+				
 				<div class="item1 col-3">
-					<button class="btn-info button2 buttonSET " @click="Showformitem(true, item.id_repair_i)"><svg
-							xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-zoom-in" viewBox="0 0 16 16">
-							<path fill-rule="evenodd"
-								d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-							<path
-								d="M10.344 11.742c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1 6.538 6.538 0 0 1-1.398 1.4z" />
-							<path fill-rule="evenodd"
-								d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5z" />
-						</svg>ข้อมมูล</button>
+					
 					<div class="div-img">
 
 						<li v-if="item.equipment == ''">err null</li>
@@ -47,12 +37,9 @@
 							src="../img/other_admission_FILL0_wght400_GRAD0_opsz48.svg" alt="other" width="40px">
 					</div>
 					{{ item.requirements }}
-					<div class="row">
-						<button class="btn-success button1"
-							@click="button(item.id_repair_i, 'กำลังดำเนินการ')">ตอบรับ</button>
-					</div>
+					
 				</div>
-				<div class="item2 col-9">
+				<div class="item2 col">
 					<li>ต้องการแจ้งซ่อม : {{ item.equipment }}</li>
 					<li>ปัณหา : {{ item.problem_symptom }}</li>
 					<li>เวลาที่แจ้ง : {{ settime(item.date_repair) }}</li>
@@ -60,7 +47,29 @@
 					<li>เบอร์ติดต่อผู้แจ้งซ่อม : {{ item.phone }}</li>
 
 				</div>
+				<div class="" style="height: 30px;font-size: 15px;position: absolute;margin-block-start: 150px;"><button
+						type="button" class="btn  btn-info"
+						@click="$router.push({ namr: 'Preview_Print', path: '/Preview_Print', query: { id: item?.id_repair_i } })"><svg
+							xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-printer" viewBox="0 0 16 16">
+							<path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+							<path
+								d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+						</svg> พิมพ์+</button>
 
+					<button class="btn-info btn" @click="Showformitem(true, item.id_repair_i)"><svg
+							xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-zoom-in" viewBox="0 0 16 16">
+							<path fill-rule="evenodd"
+								d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+							<path
+								d="M10.344 11.742c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1 6.538 6.538 0 0 1-1.398 1.4z" />
+							<path fill-rule="evenodd"
+								d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5z" />
+						</svg>ข้อมมูล</button> <button class="btn-danger btn"
+						@click="button(item.id_repair_i, 'ยกเลิก')">ยกเลิก</button>
+					<button class="btn-success btn" @click="button(item.id_repair_i, 'กำลังดำเนินการ')">ตอบรับ</button>
+				</div>
 
 			</div>
 
@@ -374,7 +383,7 @@ export default {
 	justify-items: stretch;
 	align-items: stretch;
 	column-gap: 27px;
-	row-gap: 27px;
+	row-gap: 60px;
 }
 
 
@@ -383,7 +392,7 @@ export default {
 	display: grid;
 	padding: 20px;
 	column-gap: 25px;
-	row-gap: 25px;
+	row-gap: 60px;
 	grid-template-columns: 1fr 1fr;
 }
 
@@ -411,9 +420,22 @@ export default {
 	margin: 0px 0px 0px 10px;
 	align-content: space-around;
 	width: auto;
-
+	overflow: scroll hidden;
 }
 
+.item2::-webkit-scrollbar {
+	height: 7px;
+}
+
+.item2::-webkit-scrollbar-track {
+	background-color: #fca5a5;
+	border-radius: 40px;
+}
+
+.item2::-webkit-scrollbar-thumb {
+	background-color: #0fd8ac;
+	border-radius: 30px;
+}
 
 
 .div-item1 .item1 .button1 {
@@ -462,9 +484,7 @@ export default {
 		margin: 0px 0px 0px -45px;
 	}
 
-	.div-receive-row .div-item1 .item {
-		/* width: 90%; */
-	}
+	
 }
 
 .div-staus {
