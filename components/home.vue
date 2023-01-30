@@ -8,7 +8,7 @@
 					Repair
 				</div>
 				<div v-if="$store.state.newUSER?.user_status === 'admin'" class="item p-3 back-img-register background-img-Notification" @click="$router.push(`/Receive_Repair`)">
-					<h4>รับ แจ้งซ่อม2</h4>
+					<h4>รับ แจ้งซ่อม</h4>
 					Repair Notification
 				</div>
 			</div>
