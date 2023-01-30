@@ -56,7 +56,7 @@
 						<li>{{ item.staus }}</li>
 					</td>
 					<td>
-						<button @click="Showformitem(true, item.id_repair_i)">ข้อมูลเพิ่มเติม</button>
+						<button @click="Showformitem(true, item.id_repair_i)">ข้อมูลเพิ่มเติม</button><button	@click="$router.push({ namr: 'Preview_Print', path: '/Preview_Print', query: { id: item?.id_repair_i } })">พิมพ์+</button>
 					</td>
 				</tr>
 			</table>

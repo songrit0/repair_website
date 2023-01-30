@@ -193,6 +193,7 @@ export default {
 	mounted() {
 		// เปิดเว็บทำงานเลย
 		this.GETall_lengthdata()
+		
 		// เช็คทุกๆ10วิ
 		setInterval(() => {
 			this.getformon = this.$store.state.formon
