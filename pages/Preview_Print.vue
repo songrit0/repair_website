@@ -47,10 +47,11 @@ export default {
 			this.printON = !this.printON
 			setTimeout(() => {
 				window.print()
-			}, 500);
+			}, 1000);
 			setTimeout(() => {
 				this.printON = !this.printON
-			}, 1000);
+				this.router.go(0)
+			}, 5000);
 		}
 	},
 	mounted() {

@@ -7,14 +7,14 @@
 					<h4>แจ้งซ่อม</h4>
 					Repair
 				</div>
-				<div v-if="$store.state.newUSER.user_status === 'admin'" class="item p-3 back-img-register background-img-Notification" @click="$router.push(`/Receive_Repair`)">
+				<div v-if="$store.state.newUSER?.user_status === 'admin'" class="item p-3 back-img-register background-img-Notification" @click="$router.push(`/Receive_Repair`)">
 					<h4>รับ แจ้งซ่อม2</h4>
 					Repair Notification
 				</div>
 			</div>
 			<br>
-			<h1  v-if="$store.state.newUSER.user_status === 'admin'" >ระบบ User</h1>
-			<div  v-if="$store.state.newUSER.user_status === 'admin'"  class="div-home-row-User">
+			<h1  v-if="$store.state.newUSER?.user_status === 'admin'" >ระบบ User</h1>
+			<div  v-if="$store.state.newUSER?.user_status === 'admin'"  class="div-home-row-User">
 				<div class="item-User p-3 back-img-register background-img-register" @click="$router.push(`/Register`)">
 					<h4>สมัครสมาชิก</h4>
 					register
@@ -46,7 +46,7 @@ export default {
 	data() {
 		return {
 			get: '_',
-			USER_STAUS : this.$store.state.newUSER.user_status
+			USER_STAUS : this.$store.state.newUSER?.user_status
 		}
 	},
 	methods: {

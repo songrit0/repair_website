@@ -1,2 +1,3 @@
-// import Paginate from 'vuejs-paginate'
-// Vue.component('paginate', Paginate)
+import Vue from 'vue'
+import VueQriously from 'vue-qriously'
+Vue.use(VueQriously)

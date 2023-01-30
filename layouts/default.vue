@@ -3,6 +3,7 @@
 
 
 		<nav class="menu-bar-layouts">
+			<!-- <qriously v-if="QRon" value="Hello World!" :size="200" /> -->
 			<div class="group-layouts" @click="$router.push({ path: '/', replace: true })">
 				<!-- <img class="logo-img" src="~/~/img/LogoMain.png" alt="" width="50px"> -->
 				<li class="item-layouts title-layouts" @click="setUSER()">ระบบแจ้งซ่อม
@@ -20,8 +21,13 @@
 					</button>
 					<div class="Menu_item2" :class="MenuDropdown ? '' : 'Menu_off2'">
 						<div>
-							<li class="p-1 "  @click="$router.push({name:'Edit_User',path:'/Edit_User',query:{id: $store.state.newUSER.user_id}})">user</li>
+							<li class="p-1 "
+								@click="$router.push({ name: 'Edit_User', path: '/Edit_User', query: { id: $store.state.newUSER.user_id } })">
+								user</li>
 
+						</div>
+						<div>
+							<li class="p-1 " @click="QRon = !QRon">QR</li>
 						</div>
 						<div>
 							<li class="p-1 " @click="logout()">Log Out</li>
@@ -38,6 +44,25 @@
 						</svg>
 						<span>Back</span>
 					</button>
+				</div>
+
+				<div class="QR-mian" v-if="QRon">
+					<div class="qriously">
+						<button @click="QRon = !QRon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ffff"
+								class="bi bi-x" viewBox="0 0 16 16">
+								<path
+									d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+							</svg></button>
+						<qriously class="qriously-item" :value="URL" :size="200" />
+						<br>
+						<div class="row"><input type="text" v-model="URL" class="form-control col-9"></div>
+						<div class="row center">
+							URL สำหรับแชร์
+							<br>
+							{{ URL }}
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</nav>
@@ -59,7 +84,9 @@ export default ({
 			MenuDropdown: false,
 			get_acessToken: '',
 			getIndex: '',
-			statusON: 'x'
+			statusON: 'x',
+			QRon: false,
+			URL: ''
 		}
 	}, computed: {
 		mode() {
@@ -149,7 +176,7 @@ export default ({
 
 
 		}, 1000);
-
+		this.URL = window.origin
 	},
 
 	watch: {
@@ -182,6 +209,54 @@ export default ({
 
 br {
 	width: 50px;
+}
+
+.QR-mian {
+	position: absolute;
+	display: grid;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	justify-items: center;
+	align-items: center;
+	z-index: 10;
+	backdrop-filter: blur(2px);
+
+}
+
+.qriously {
+	display: flex;
+	width: 400px;
+	height: 450px;
+	background-color: #dedede;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 5px;
+}
+
+.qriously-item {
+	display: flex;
+	width: 55%;
+	height: 50%;
+	margin-top: 15px;
+	background-color: #dedede;
+	border: 5px solid #000000;
+	border-radius: 5px;
+}
+
+.qriously button {
+	background-color: #dc3545;
+    border: none;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    border-radius: 55px;
+    align-items: center;
+    position: initial;
+    justify-content: center;
+    margin-top: 1%;
+    margin-right: 89%;
 }
 
 .menu-bar-layouts {
