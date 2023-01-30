@@ -1,13 +1,10 @@
 <template>
-	<show-information/>
+  <show-information />
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-
 </style>
