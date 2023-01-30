@@ -389,7 +389,7 @@ br {
 
 body::-webkit-scrollbar {
 	width: 15px;
-	background-color: #cecece7b;
+	/* background-color: #cecece7b; */
 
 }
 body::-webkit-scrollbar-button {
@@ -425,12 +425,12 @@ body::-webkit-scrollbar-button {
 }
 
 body::-webkit-scrollbar-track {
-	background-color: #cecece7b;
+	/* background-color: #cecece7b; */
 	position: absolute;
 }
 
 body::-webkit-scrollbar-thumb {
-	background-color: #0062ffc9;
+	background-color: #0062ff67;
 	border-radius: 12px ;
 }
 </style>
