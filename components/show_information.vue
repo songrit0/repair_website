@@ -5,7 +5,7 @@
 
 			<div class="show_i-div">
 				<div class="row col-12">
-					<div class="back-button"><button type="button" class="btn btn-danger col-3"
+					<div class="back-button"><button type="button" class="btn btn-danger"
 							@click="Showformitem(false)">X</button></div>
 
 					<br>
@@ -153,16 +153,16 @@ export default {
 
 .show-information {
 	display: flex;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	/* max-height: 19cm; */
-	height: 777px;
-	padding: 150px;
-	justify-content: center;
-	z-index: 5;
-	/* filter: blur(4px); */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* max-height: 19cm; */
+    max-height: 20cm;
+    padding: 45px 95px 95px 95px;
+    justify-content: center;
+    z-index: 5;
+	
 }
 
 .show-information-B {
@@ -194,7 +194,17 @@ export default {
 		transform: scale(0.6, 0.6);
 		position: absolute;
 		top: 0;
+		margin-top: -25px;
 
+	}
+	@media screen and (max-width: 450px) {
+		.show_i-div {
+    transform: scale(0.6, 0.6);
+    position: absolute;
+    top: 0;
+    margin-top: 100px;
+    width: 167%;
+}
 	}
 }
 </style>

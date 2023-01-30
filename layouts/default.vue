@@ -100,7 +100,7 @@ export default ({
 				// audio.src = "https://media1.vocaroo.com/mp3/17RnRCYXCMRN";
 
 				audio.play();
-				
+
 
 
 
@@ -161,11 +161,11 @@ export default ({
 	watch: {
 		"$store.state.statusON.lengthdata"() {
 			if (this.$store.state.statusON.lengthdata == 0) {
-				
+
 			} else {
 				this.checkAlert()
 			}
-			
+
 		},
 		get_acessToken() {
 			if (!this.get_acessToken) {
@@ -385,5 +385,52 @@ br {
 	flex-direction: column;
 	border-radius: 5px;
 	text-align: -webkit-center;
+}
+
+body::-webkit-scrollbar {
+	width: 15px;
+	background-color: #cecece7b;
+
+}
+body::-webkit-scrollbar-button {
+    display: block;
+    background-color: #b91c1c;
+    background-repeat: no-repeat;   
+    background-size: 50%;
+    background-position: center;
+}
+
+body::-webkit-scrollbar-button:vertical:start:increment {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/7e/Chevron-up.svg');  
+	border-radius:  0px 0px 5px 5px; 
+	height: 20px;
+}
+
+body::-webkit-scrollbar-button:vertical:start:decrement {
+    display: none;
+}
+
+body::-webkit-scrollbar-button:vertical:end:increment {
+    display: none;
+}
+
+body::-webkit-scrollbar-button:vertical:end:decrement {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ee/Chevron-down.svg');   
+	border-radius: 5px 5px 0px 0px;
+	height: 20px;
+}
+body::-webkit-scrollbar-button {
+	background-color: #ff7300c9;
+	
+}
+
+body::-webkit-scrollbar-track {
+	background-color: #cecece7b;
+	position: absolute;
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: #0062ffc9;
+	border-radius: 12px ;
 }
 </style>

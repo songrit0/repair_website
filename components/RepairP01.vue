@@ -8,11 +8,11 @@
 			</div>
 		</div>
 		<div class="div-item1" v-if="response.length >= 1">
-
+		
 			<div class="item" v-for="item, index in response" :key="index">
-				
+
 				<div class="item1 col-3">
-					
+
 					<div class="div-img">
 
 						<li v-if="item.equipment == ''">err null</li>
@@ -37,7 +37,7 @@
 							src="../img/other_admission_FILL0_wght400_GRAD0_opsz48.svg" alt="other" width="40px">
 					</div>
 					{{ item.requirements }}
-					
+
 				</div>
 				<div class="item2 col">
 					<li>ต้องการแจ้งซ่อม : {{ item.equipment }}</li>
@@ -121,6 +121,7 @@ export default {
 				process02: '',
 				process03: '',
 			},
+			
 		}
 	},
 	methods: {
@@ -191,7 +192,7 @@ export default {
 				const { value: fruit } = await Swal.fire({
 					title: 'ลงชื่อผู้ประสานงาน(ผู้รับแจ้งซ่อม)',
 					input: 'text',
-					// inputOptions: this.staff.results,
+					inputValue:   this.$store.state.newUSER.names,
 					inputPlaceholder: 'กรอกชื่อผู้รับแจ้งซ่อม',
 					showCancelButton: true,
 					inputValidator: (value) => {
@@ -305,7 +306,7 @@ export default {
 
 	},
 	mounted() {
-
+		
 		// เปิดเว็บทำงานเลย
 		this.GETdata01()
 
@@ -484,7 +485,7 @@ export default {
 		margin: 0px 0px 0px -45px;
 	}
 
-	
+
 }
 
 .div-staus {
