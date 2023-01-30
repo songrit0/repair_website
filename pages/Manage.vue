@@ -1,15 +1,12 @@
 <template>
 	<div class="div-receive-row">
 		<br>
-		<h3 class="3h">จัดการฐานข้อมูล</h3>
-<br>
-        <div class="delete-button">
-				<button @click="delete_all()">ลบข้อมูลทั้งหมด</button>	
-		</div>
+		<h3 class="3h">จัดการข้อมูลเจ้าหน้าที่ประสานงาน</h3>
+       
 		<div class="add-button">
 			<button class="add-button"  @click="$router.push(`/add_inform`)">เพิ่มข้อมูล</button>
 		</div>
-		
+       
 		<div class="err_not_item" v-if="response?.length == 0||response == null">
 			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
 				<b>ยังไม่มีข้อมูล</b>
@@ -18,13 +15,11 @@
 		<div class="div-item0">
 			<table>
 				<tr>
-					<th style="width: 30px;">ID</th>
-					<th style="width: 100px;">ปัณหา</th>
-					<th style="width: 88px;">ต้องการแจ้งซ่อม</th>
-					<th style="width: 80px;">ชื้อผู้แจ้งซ่อม</th>
-					<th style="width: 70px;">วัน/เวลาที่แจ้ง</th>
-					<th style="width: 70px;">วัน/เวลารับแจ้ง</th>
-					<th style="width: 55px;">สถานะ</th>
+					<th style="width: 30px;">recipient_id</th>
+					<th style="width: 100px;">recipients</th>
+					<th style="width: 88px;">positions</th>
+					<th style="width: 80px;">phone</th>
+					<th style="width: 55px;">email</th>
 					<th style="width: 65px;">จัดการเพิ่มเติม</th>
 				</tr>
 
@@ -33,40 +28,21 @@
 						<li>{{ idex+1 }}</li>
 					</td>
 					<td>
-						<li>{{ item.problem_symptom }}</li>
+						<li>{{ item.recipients }}</li>
 					</td>
 					<td>
-						<li>{{ item.equipment }}</li>
+						<li>{{ item.positions }}</li>
 					</td>
 					<td>
-						<li>{{ item.name_sender }}</li>
-
+						<li>{{ item.phone }}</li>
 					</td>
 					<td>
-						<b>{{
-						`${new Date(item.date_repair).getDate()} /
-						${new Date(item.date_repair).getMonth() + 1} /
-						${new Date(item.date_repair).getFullYear()}
-						`
-						}}<br>{{ settime(item.date_repair) }}
-						</b>
-					</td>
-					<td>
-						<b>{{
-						`${new Date(item.date_repair).getDate()} /
-						${new Date(item.date_repair).getMonth() + 1} /
-						${new Date(item.date_repair).getFullYear()}
-						`
-						}}<br>{{ settime(item.date_repair) }}
-						</b>
-					</td>
-					<td>
-						<li>{{ item.staus }}</li>
+						<li>{{ item.email }}</li>
 					</td>
 					<td>
                         <div class="button-abot">
-						<button class="button-edit-1"  @click="$router.push({name:'edit_infor',path:'/edit_infor',query:{id:item.id_repair_i,idex:idex}})">แก้ไข </button>
-                        <button class="button-edit-2"  @click="deleteinfrmation(item.id_repair_i)">ลบข้อมูล </button>
+						<button class="button-edit-1"  @click="$router.push({name:'edit_recipipent',path:'/edit_recipipent',query:{id:item.recipient_id,idex:idex}})">แก้ไข </button>
+                        <button class="button-edit-2"  @click="deleteinfrmation(item.recipient_id)">ลบข้อมูล </button>
                         
                     </div>
 					</td>
@@ -75,21 +51,21 @@
             
 		</div>
 
-		<br>
-				<div class="Pagination-item">
+		<div class="Pagination-item">
 			<label for="cars">หน้าที่ :</label>
 			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
 			<select class="form-select" v-model="page">
 				<option v-for="idex in set_length" :key="idex" :value="idex">{{ idex }}</option>
 			</select>
 			<button type="button" @click="onpot_pages_go()" class="btn btn-outline-primary">&raquo;</button>
-		</div><br>
+		</div>
+
 	</div>
 </template>
 
 <script>
 import axios from 'axios'
-import { URL_GET_ALL_REQ, URL_GET_REQ,URL_PUT_PROCESS , URL_DELETE_INFRMATION_ALL, URL_DELETE_INFRMATION } from '../constants'
+import { URL_DELETE_USER_ALL ,URL_DELETE_RECIPIENT,URL_GET_RECIPIENT_ALL } from '../constants'
 import Swal from 'sweetalert2'
 export default {
 	data() {
@@ -134,21 +110,18 @@ export default {
 		},
 		
 		GET00_u() {
-			axios.get(`${URL_GET_REQ}/?staus=ทั้งหมด&page=${this.page}&limit=10`).then(response => {
+			axios.get(`${URL_GET_RECIPIENT_ALL}/?staus=ทั้งหมด&page=${this.page}&limit=10`).then(response => {
 				this.response = response.data.results
 			})
 		},
 		GETset_length() {
-			axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด&user_id=${localStorage.users_id}`).then(response => {
-				this.get_lengthdata.process01 = response.data.lengthdata
-				var sum = response.data.lengthdata / 10
-				this.set_length = Math.ceil(sum)
-
+			axios.get(`${URL_GET_RECIPIENT_ALL}/?staus=ทั้งหมด&user_id=${localStorage.recipient_id}`).then(response => {
+                this.response = response.data.results
 			})
 		},
 		
 		deleteinfrmation(item) {
-			axios.delete(`${URL_DELETE_INFRMATION}/${item}`).then(()=>{
+			axios.delete(`${URL_DELETE_RECIPIENT}/${item}`).then(()=>{
 				Swal.fire({
 								position: 'center',
 								icon: 'success',
@@ -160,7 +133,7 @@ export default {
 		},
 
 		delete_all() {
-			axios.delete(`${URL_DELETE_INFRMATION_ALL}`).then(()=>{
+			axios.delete(`${URL_DELETE_USER_ALL}`).then(()=>{
 				Swal.fire({
 								position: 'center',
 								icon: 'success',
@@ -170,6 +143,7 @@ export default {
 							})
 			});
 		}
+
 	},
 	mounted() {
 		// เปิดเว็บทำงานเลย
@@ -214,7 +188,10 @@ export default {
 	background-color: rgb(171, 185, 223);
 	color: rgb(0, 66, 248);
 }
-
+.delete-button{
+	/* border: solid red 1px; */
+	margin-left: 35px;
+}
 .button-abot{
     /* border:solid red 2px ; */
     display: flex;

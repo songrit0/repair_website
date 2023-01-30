@@ -61,7 +61,7 @@
 
 <script>
 import axios from 'axios';
-import { URL_API, URL_GET_USER, URL_PUST_EDIT_USER, URL_PUST_REGISTER } from '../constants';
+import { URL_API, URL_GET_USER, URL_PUST_EDIT_USER } from '../constants';
 import Swal from 'sweetalert2';
 
 export default {

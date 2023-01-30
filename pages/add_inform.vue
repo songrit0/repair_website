@@ -101,7 +101,7 @@
 <script>
 
 import axios from 'axios';
-import { URL_API,URL_GET_INFRMATION_ALL,URL_PUT_INFRMATION,URL_PUT_INFRMATION_ADDMIND ,URL_GET_INFRMATION_BYID} from '../constants';
+import { URL_API,URL_PUST_ADD_INFORMATION,URL_PUT_INFRMATION,URL_PUT_INFRMATION_ADDMIND ,URL_GET_INFRMATION_BYID} from '../constants';
 import Swal from 'sweetalert2';
 
 				// user_id:"",
@@ -120,7 +120,7 @@ import Swal from 'sweetalert2';
 				// name_sender:"",
 				// name_responsible:"",
 export default {
-	name: "edit_infor",
+	name: "add_infor",
 	data() {
 		return {
 			form: {
@@ -207,10 +207,10 @@ methods: {
     },
  
     Register() {
-		const getid = this.$route.query.id
+		// const getid = this.$route.query.id
         console.log(this.validate_Register());
         if (this.validate_Register()) {
-            axios.put(`${URL_PUT_INFRMATION_ADDMIND}/${getid}`, {
+            axios.put(`${URL_PUST_ADD_INFORMATION}`, {
 
                 responsible_person: this.form.responsible_person,
                 work_group: this.form.work_group,
@@ -256,26 +256,22 @@ methods: {
 
 mounted() {
 		//getid
-		var id = this.$route.query.idex
-		// var id = this.$route.query.id_repair_i
+		// var id = this.$route.query.idex
+		// console.log(this.$route.query.id_repair_i);
+		// axios.get(`${URL_GET_INFRMATION_ALL}`).then(response => {
+		// 	console.log(response);
 
-		console.log(this.$route.query.id_repair_i);
-		axios.get(`${URL_GET_INFRMATION_ALL}`).then(response => {
-			console.log(response);
+		// 	this.form.responsible_person = response.data.results[id].responsible_person
+		// 	this.form.work_group = response.data.results[id].work_group
+		// 	this.form.work = response.data.results[id].work
+		// 	this.form.phone = response.data.results[id].phone
+		// 	this.form.equipment = response.data.results[id].equipment
+		// 	this.form.name_sender = response.data.results[id].name_sender
+		// 	this.form.commodity_code = response.data.results[id].commodity_code
+		// 	this.form.problem_symptom = response.data.results[id].problem_symptom
+		// 	this.form.requirements = response.data.results[id].requirements
 
-			this.form.responsible_person = response.data.results[id].responsible_person
-			this.form.work_group = response.data.results[id].work_group
-			this.form.work = response.data.results[id].work
-			this.form.phone = response.data.results[id].phone
-			this.form.equipment = response.data.results[id].equipment
-			this.form.name_sender = response.data.results[id].name_sender
-			this.form.commodity_code = response.data.results[id].commodity_code
-			// this.form.ip_address = response.data.results[id].ip_address
-			// this.form.other = response.data.results[id].other
-			this.form.problem_symptom = response.data.results[id].problem_symptom
-			this.form.requirements = response.data.results[id].requirements
-
-		})
+		// })
 	},
 
 watch: {
