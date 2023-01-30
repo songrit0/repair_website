@@ -14,86 +14,66 @@
             </button>
           </div>
 
-          <br />
-          <h2 class="col-12 py-1">ข้อมมูลการแจ้งซ่อม</h2>
-          <div class="col-6 py-2">
-            <li><b>ชื้อผู้แจ้งซ่อม: </b>{{ check(GETBYID?.name_sender) }}</li>
-          </div>
-          <div class="col-6 py-2">
-            <li><b>เบอร์โทรศัพท์: </b>{{ check(GETBYID?.phone) }}</li>
-          </div>
-          <div class="col-6 py-2">
-            <li><b>กลุ่มงาน: </b>{{ check(GETBYID?.work_group) }}</li>
-          </div>
-          <div class="col-6 py-2">
-            <li><b>งาน: </b>{{ check(GETBYID?.work) }}</li>
-          </div>
-          <div class="col-6 py-2">
-            <li><b>ต้องการแจ้งซ่อม: </b>{{ check(GETBYID?.equipment) }}</li>
-          </div>
-          <div class="col-6 py-2">
-            <li>
-              <b>ชื่อ คอมพิวเตอร์/อุปกรณ์: </b
-              >{{ check(GETBYID?.computer_name) }}
-            </li>
-          </div>
-          <div class="col-6 py-2">
-            <li><b>รหัสครุภัณฑ์: </b>{{ check(GETBYID?.commodity_code) }}</li>
-          </div>
-          <div class="col-6 py-2">
-            <li><b>ip_address: </b>{{ check(GETBYID?.ip_address) }}</li>
-          </div>
-          <div class="col-6 py-2">
-            <li><b>ปัญหา/อาการ: </b>{{ check(GETBYID?.problem_symptom) }}</li>
-          </div>
-          <div class="col-6 py-2">
-            <li><b>ความเร่งด่วน: </b>{{ check(GETBYID?.requirements) }}</li>
-          </div>
-          <div class="col-6 py-2">
-            <li><b>อื่นๆ: </b>{{ check(GETBYID?.other) }}</li>
-          </div>
-          <div class="col-6 py-2">
-            <li><b>วัน/เวลาที่แจ้ง:</b>{{ setday(GETBYID?.date_repair) }}</li>
-          </div>
-          <div class="col-6 py-2">
-            <li><b>วัน/เวลารับแจ้ง:</b> {{ setday(GETBYID?.date_receive) }}</li>
-          </div>
-          <div class="col-6 py-2">
-            <li>
-              <b>ผู้ประสานงาน(ผู้รับแจ้งซ่อม):</b>
-              {{ check(GETBYID?.name_responsible) }}
-            </li>
-          </div>
-          <div class="col-12 py-2">
-            <button
-              type="button"
-              class="btn btn-danger"
-              @click="button(GETBYID?.id_repair_i, 'ยกเลิก')"
-              v-if="
-                GETBYID?.staus === 'รอตอบรับ' ||
-                GETBYID?.staus === 'กำลังดำเนินการ'
-              "
-            >
-              ยกเลิกการแจ้งซ่อม
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger"
-              @click="
-                $router.push({
-                  namr: 'Preview_Print',
-                  path: '/Preview_Print',
-                  query: { id: GETBYID?.id_repair_i },
-                })
-              "
-            >
-              พิมพ์+
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+			<div class="show_i-div">
+				<div class="row col-12">
+					<div class="back-button"><button type="button" class="btn btn-danger"
+							@click="Showformitem(false)">X</button></div>
+
+					<br>
+					<h2 class="col-12 py-1">ข้อมมูลการแจ้งซ่อม</h2>
+					<div class="col-6 py-2">
+						<li><b>ชื้อผู้แจ้งซ่อม: </b>{{ check(GETBYID?.name_sender) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>เบอร์โทรศัพท์: </b>{{ check(GETBYID?.phone) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>กลุ่มงาน: </b>{{ check(GETBYID?.work_group) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>งาน: </b>{{ check(GETBYID?.work) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>ต้องการแจ้งซ่อม: </b>{{ check(GETBYID?.equipment) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>ชื่อ คอมพิวเตอร์/อุปกรณ์: </b>{{ check(GETBYID?.computer_name) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>รหัสครุภัณฑ์: </b>{{ check(GETBYID?.commodity_code) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>ip_address: </b>{{ check(GETBYID?.ip_address) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>ปัญหา/อาการ: </b>{{ check(GETBYID?.problem_symptom) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>ความเร่งด่วน: </b>{{ check(GETBYID?.requirements) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>อื่นๆ: </b>{{ check(GETBYID?.other) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>วัน/เวลาที่แจ้ง:</b>{{ setday(GETBYID?.date_repair) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>วัน/เวลารับแจ้ง:</b> {{ setday(GETBYID?.date_receive) }}</li>
+					</div>
+					<div class="col-6 py-2">
+						<li><b>ผู้ประสานงาน(ผู้รับแจ้งซ่อม):</b> {{ check(GETBYID?.name_responsible) }}</li>
+					</div>
+					<div class="col-12 py-2">
+						<button type="button" class="btn btn-danger" @click="button(GETBYID?.id_repair_i, 'ยกเลิก')"
+							v-if="GETBYID?.staus === 'รอตอบรับ' || GETBYID?.staus === 'กำลังดำเนินการ'">ยกเลิกการแจ้งซ่อม</button>
+							<button type="button" class="btn btn-danger" @click="$router.push({ namr:'Preview_Print',path: '/Preview_Print', query: { id: GETBYID?.id_repair_i  }})"
+							>พิมพ์+</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -178,17 +158,17 @@ export default {
 }
 
 .show-information {
-  display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  /* max-height: 19cm; */
-  height: 777px;
-  padding: 150px;
-  justify-content: center;
-  z-index: 5;
-  /* filter: blur(4px); */
+	display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* max-height: 19cm; */
+    max-height: 20cm;
+    padding: 45px 95px 95px 95px;
+    justify-content: center;
+    z-index: 5;
+	
 }
 
 .show-information-B {
@@ -216,10 +196,21 @@ export default {
     padding: 10px;
   }
 
-  .show_i-div {
+	.show_i-div {
+		transform: scale(0.6, 0.6);
+		position: absolute;
+		top: 0;
+		margin-top: -25px;
+
+	}
+	@media screen and (max-width: 450px) {
+		.show_i-div {
     transform: scale(0.6, 0.6);
     position: absolute;
     top: 0;
-  }
+    margin-top: 100px;
+    width: 167%;
+}
+	}
 }
 </style>

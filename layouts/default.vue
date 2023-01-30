@@ -135,9 +135,8 @@ export default {
   mounted() {
     this.setUSER();
 
-    setInterval(() => {
-      this.getIndex = this.$route.query.Index;
-    }, 10);
+				audio.play();
+
 
     setInterval(() => {
       axios.get(`${URL_IP}/state/?staus=รอตอบรับ`).then((response) => {
@@ -157,22 +156,79 @@ export default {
     }, 1000);
   },
 
-  watch: {
-    "$store.state.statusON.lengthdata"() {
-      if (this.$store.state.statusON.lengthdata == 0) {
-      } else {
-        this.checkAlert();
-      }
-    },
-    get_acessToken() {
-      if (!this.get_acessToken) {
-        this.$router.push("/login0");
-      } else {
-      }
-    },
-  },
-  components: { Receive_Repair },
-};
+				const Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 10000,
+					timerProgressBar: true,
+					didOpen: (toast) => {
+						toast.addEventListener('mouseenter', Swal.stopTimer)
+						toast.addEventListener('mouseleave', Swal.resumeTimer)
+					}
+				})
+
+				Toast.fire({
+					icon: 'warning',
+					title: `มีการแจ้งซ่อม `,
+					text: `จำนวน ${this.$store.state.statusON.lengthdata} การแจ้งซ่อม`,
+				})
+
+			}
+
+
+		}
+
+
+	},
+	mounted() {
+		this.setUSER()
+
+		setInterval(() => {
+			this.getIndex = this.$route.query.Index
+		}, 10);
+
+		setInterval(() => {
+			axios.get(`${URL_IP}/state/?staus=รอตอบรับ`).then(response => {
+				var status = response.data
+				this.$store.commit('setstatusON', status)
+				// console.log('status "รอตอบรับ":', status);
+			});
+		}, 5000);
+		setInterval(() => {
+			var gat = localStorage.getItem('acessToken')
+
+			if (gat) {
+				this.get_acessToken = true
+			} else {
+				this.get_acessToken = false
+			}
+
+
+
+		}, 1000);
+
+	},
+
+	watch: {
+		"$store.state.statusON.lengthdata"() {
+			if (this.$store.state.statusON.lengthdata == 0) {
+
+			} else {
+				this.checkAlert()
+			}
+
+		},
+		get_acessToken() {
+			if (!this.get_acessToken) {
+				this.$router.push('/login0');
+			} else {
+
+			}
+		}
+	},
+	components: { Receive_Repair }
+})
 </script>
 
 <style>
@@ -377,5 +433,52 @@ br {
   flex-direction: column;
   border-radius: 5px;
   text-align: -webkit-center;
+}
+
+body::-webkit-scrollbar {
+	width: 15px;
+	/* background-color: #cecece7b; */
+
+}
+body::-webkit-scrollbar-button {
+    display: block;
+    background-color: #b91c1c;
+    background-repeat: no-repeat;   
+    background-size: 50%;
+    background-position: center;
+}
+
+body::-webkit-scrollbar-button:vertical:start:increment {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/7e/Chevron-up.svg');  
+	border-radius:  0px 0px 5px 5px; 
+	height: 20px;
+}
+
+body::-webkit-scrollbar-button:vertical:start:decrement {
+    display: none;
+}
+
+body::-webkit-scrollbar-button:vertical:end:increment {
+    display: none;
+}
+
+body::-webkit-scrollbar-button:vertical:end:decrement {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ee/Chevron-down.svg');   
+	border-radius: 5px 5px 0px 0px;
+	height: 20px;
+}
+body::-webkit-scrollbar-button {
+	background-color: #ff7300c9;
+	
+}
+
+body::-webkit-scrollbar-track {
+	/* background-color: #cecece7b; */
+	position: absolute;
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: #0062ff67;
+	border-radius: 12px ;
 }
 </style>
