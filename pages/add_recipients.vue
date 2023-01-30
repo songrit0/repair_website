@@ -2,18 +2,17 @@
   <div class="div-register">
     <div class="div-register-main">
       <div class="container div-container">
-        <h4>แก้ไขข้อมูลเจ้าหน้าที่ประสานงาน</h4>
-
+        <h4>เพิ่มข้อมูลเจ้าหน้าที่</h4>
         <div class="row">
           <div class="col-sm-2">
-            <label for="textarea-small">recipients :</label>
+            <label for="textarea-small">recipients:</label>
           </div>
           <div class="col-sm-10">
             <input
               v-model="form.recipients"
               id="input_recipients"
               type="text"
-              placeholder=""
+              placeholder="Enter recipients"
               class="form-control"
             />
             <span id="input_recipients_err" class="err-msg-Register"></span>
@@ -28,7 +27,7 @@
               v-model="form.positions"
               id="input_positions"
               type="text"
-              placeholder=""
+              placeholder="Enter positions"
               class="form-control"
             />
             <span id="input_positions_err" class="err-msg-Register"></span>
@@ -41,13 +40,12 @@
               v-model="form.phone"
               id="input_phone"
               type="text"
-              placeholder=""
+              placeholder="Enter phone"
               class="form-control"
             />
             <span id="input_phone_err" class="err-msg-Register"></span>
           </div>
         </div>
-
         <div class="row">
           <div class="col-sm-2"><label for="textarea-small">email:</label></div>
           <div class="col-sm-10">
@@ -55,7 +53,7 @@
               v-model="form.email"
               id="input_email"
               type="text"
-              placeholder=""
+              placeholder="Enter email"
               class="form-control"
             />
             <span id="input_email_err" class="err-msg-Register"></span>
@@ -80,16 +78,15 @@
 import axios from "axios";
 import {
   URL_API,
-  URL_GET_USER,
-  URL_PUST_EDIT_USER,
-  URL_PUST_REGISTER,
-  URL_GET_RECIPIENT_ALL,
-  URL_PUT_RECIPIENT,
+  URL_GET_INFRMATION_ALL,
+  URL_ADD_RECIPIENT,
+  URL_PUT_INFRMATION_ADDMIND,
+  URL_GET_INFRMATION_BYID,
 } from "../constants";
 import Swal from "sweetalert2";
 
 export default {
-  name: "edit_recipipent",
+  name: "add_recipients",
   data() {
     return {
       form: {
@@ -101,6 +98,7 @@ export default {
       recipients: [],
     };
   },
+
   methods: {
     validate_Register() {
       let check = true;
@@ -132,108 +130,68 @@ export default {
       }
       return check;
     },
+
+    setFORMON() {
+      $nuxt.$store.commit("steformON");
+      // this.getformon = this.$store.state.formon
+    },
+
     Register() {
+      const getid = this.$route.query.id;
+      console.log(this.validate_Register());
       if (this.validate_Register()) {
-        const getid = this.$route.query.id;
-        console.log(this.$route.query.recipient_id);
         axios
-          .put(`${URL_PUT_RECIPIENT}/${getid}`, {
+          .post(`${URL_ADD_RECIPIENT}`, {
             recipients: this.form.recipients,
             positions: this.form.positions,
             phone: this.form.phone,
             email: this.form.email,
           })
           .then((response) => {
-            console.log(response);
-            if (response.data.status === "ok") {
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "บันทึกสำเร็จ",
-                showConfirmButton: false,
-                timer: 1500,
-              }).then(() => {
-                this.$router.back(1);
-              });
-            }
-            if (response.data.status === "error") {
-              alert("error");
-            }
-            if (response.data.status === "err") {
-              alert("err");
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
+            console.log("post", response);
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "บันทึกสำเร็จ",
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(() => {
+              // window.location.reload(0)
+              this.setFORMON();
+            });
           });
+      } else {
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "มีข้อมูลว่าง",
+          text: "กรุณาเช็คข้อมูล",
+          showConfirmButton: false,
+          timer: 5500,
+        });
       }
     },
   },
+
   mounted() {
-    //getid
-    const getid = this.$route.query.recipient_id;
     var id = this.$route.query.idex;
-    console.log(this.$route.query.recipient_id);
-    axios.get(`${URL_GET_RECIPIENT_ALL}`).then((response) => {
-      console.log(response);
-      this.form.recipients = response.data.results[id].recipients;
-      this.form.positions = response.data.results[id].positions;
-      this.form.phone = response.data.results[id].phone;
-      this.form.email = response.data.results[id].email;
-    });
+    // var id = this.$route.query.id_repair_i
+    // console.log(this.$route.query.id_repair_i);
+    // axios.get(`${URL_ADD_RECIPIENT}`).then(response => {
+    // 	console.log(response);
+    // 	this.form.recipients = response.data.results[id].recipients
+    // 	this.form.positions = response.data.results[id].positions
+    // 	this.form.phone = response.data.results[id].phone
+    // 	this.form.email = response.data.results[id].email
+    // })
   },
+
   watch: {
-    "form.recipients"() {
-      if (this.form.recipients) {
-        document.getElementById("input_recipients").style.border =
-          "0px solid red";
-        document.getElementById("input_recipients_err").innerHTML = "";
-      } else {
-        document.getElementById("input_recipients").style.border =
-          "3px solid red";
-        document.getElementById("input_recipients_err").innerHTML =
-          "please enter recipients";
-      }
-    },
-    "form.positions"() {
-      if (this.form.positions) {
-        document.getElementById("input_positions").style.border =
-          "0px solid red";
-        document.getElementById("input_positions_err").innerHTML = "";
-      } else {
-        document.getElementById("input_positions").style.border =
-          "3px solid red";
-        document.getElementById("input_positions_err").innerHTML =
-          "please enter positions";
-      }
-    },
-    "form.phone"() {
-      if (this.form.phone) {
-        document.getElementById("input_phone").style.border = "0px solid red";
-        document.getElementById("input_phone_err").innerHTML = "";
-      } else {
-        document.getElementById("input_phone").style.border = "3px solid red";
-        document.getElementById("input_phone_err").innerHTML =
-          "please enter phone";
-      }
-    },
-    "form.email"() {
-      if (this.form.email) {
-        document.getElementById("input_email").style.border = "0px solid red";
-        document.getElementById("input_email_err").innerHTML = "";
-      } else {
-        document.getElementById("input_email").style.border = "3px solid red";
-        document.getElementById("input_email_err").innerHTML =
-          "please enter email";
-      }
-    },
+
   },
   computed: {},
+  components: {},
 };
-
-// onCurrentPage: function (page) {
-//       this.$emit("pagechanged", page);
-//     },
 </script>
 
 <style>
@@ -285,3 +243,6 @@ export default {
   }
 }
 </style>
+
+
+
