@@ -172,7 +172,7 @@ export default {
 	left: 0;
 	width: 100%;
 	/* max-height: 19cm; */
-	height: 777px;
+	height: 200%;
 	padding: 150px;
 	justify-content: center;
 	/* background-color: rgba(9, 9, 9, 0); */

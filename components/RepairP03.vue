@@ -8,6 +8,16 @@
 			</div>
 		</div>
 		<div class="div-item2" v-if="response.length >= 1">
+			<div class="col-3">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="height: 38px;" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+							 fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+							<path
+								d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+						</svg></span>
+					<input type="text" class="form-control" placeholder="ค้นหา" v-model="searching" @input="searchingEvent()">
+				</div>
+			</div>
 			<table>
 				<tr>
 					<th style="width: 30px;">ID</th>
@@ -96,6 +106,7 @@ export default {
 	},
 	data() {
 		return {
+			searching: '',
 			response: '',
 			page: 1,
 			set_length: 10,
@@ -109,6 +120,12 @@ export default {
 		}
 	},
 	methods: {
+		searchingEvent(){
+			setTimeout(() => {
+				this.GETdata03()
+			}, 2500);
+			
+		},
 		onpot_pages_go() {
 			if (this.page === this.set_length) {
 
@@ -143,7 +160,7 @@ export default {
 							showConfirmButton: false,
 							timer: 2500
 						}).then(() => {
-							axios.get(`${URL_GET_REQ}/?staus="ซ่อมเสร็จ"&page=${this.page}&limit=10`).then(response => {
+							axios.get(`${URL_GET_REQ}/?search=${this.searching}&staus="ซ่อมเสร็จ"&page=${this.page}&limit=10`).then(response => {
 								this.response = response.data.results
 
 							})
@@ -182,7 +199,7 @@ export default {
 
 		},
 		GETdata03() {
-			axios.get(`${URL_GET_REQ}/?staus=ซ่อมเสร็จ&page=${this.page}&limit=10`).then(response => {
+			axios.get(`${URL_GET_REQ}/?search=${this.searching}&staus=ซ่อมเสร็จ&page=${this.page}&limit=10`).then(response => {
 				this.response = response.data.results
 				console.log(response.data);
 			})
@@ -220,7 +237,7 @@ export default {
 
 		},
 		page() {
-			axios.get(`${URL_GET_REQ}/?staus="ซ่อมเสร็จ"&page=${this.page}&limit=10`).then(response => {
+			axios.get(`${URL_GET_REQ}/?search=${this.searching}&staus="ซ่อมเสร็จ"&page=${this.page}&limit=10`).then(response => {
 				this.response = response.data.results
 				// console.log(this.Getlimit_information);
 			})

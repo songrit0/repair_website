@@ -310,7 +310,7 @@
 			<div class="row col-12">
 				<li class="">รายการสิ่งที่ต้องการเบิก/จัดซื้อ</li>
 			</div>
-			<div class="row col-12">
+			<div class="row col-12 table-print">
 				<table class="">
 					<tr>
 						<th style="width: 1cm;">ลำดับ</th>
@@ -557,15 +557,15 @@ export default {
 	text-decoration: underline;
 }
 
-table,
-td,
-th {
+.table-print table,
+.table-print td,
+.table-print th {
 	border-collapse: collapse;
 	border: 1px solid #000000;
 	text-align: center;
 }
 
-table td {
+.table-print table td {
 	height: 35px;
 }
 

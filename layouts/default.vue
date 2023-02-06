@@ -504,4 +504,5 @@ body::-webkit-scrollbar-thumb {
 	background-color: #0062ff67;
 	border-radius: 12px;
 }
+
 </style>

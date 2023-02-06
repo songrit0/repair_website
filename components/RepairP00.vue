@@ -8,6 +8,16 @@
 			</div>
 		</div>
 		<div class="div-item0" v-if="response.length >= 1">
+			<div class="col-3">
+				<div class="input-group mb-3">
+					<span class="input-group-text" style="height: 38px;" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+							 fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+							<path
+								d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+						</svg></span>
+					<input type="text" class="form-control" placeholder="ค้นหา" v-model="searching" @input="searchingEvent()">
+				</div>
+			</div>
 			<table>
 				<tr>
 					<th style="width: 30px;">ID</th>
@@ -56,7 +66,8 @@
 						<li>{{ item.staus }}</li>
 					</td>
 					<td>
-						<button @click="Showformitem(true, item.id_repair_i)">ข้อมูลเพิ่มเติม</button><button	@click="$router.push({ namr: 'Preview_Print', path: '/Preview_Print', query: { id: item?.id_repair_i } })">พิมพ์+</button>
+						<button @click="Showformitem(true, item.id_repair_i)">ข้อมูลเพิ่มเติม</button><button
+							@click="$router.push({ namr: 'Preview_Print', path: '/Preview_Print', query: { id: item?.id_repair_i } })">พิมพ์+</button>
 					</td>
 				</tr>
 			</table>
@@ -96,6 +107,7 @@ export default {
 	},
 	data() {
 		return {
+			searching:'',
 			response: '',
 			page: 1,
 			set_length: 10,
@@ -109,6 +121,12 @@ export default {
 		}
 	},
 	methods: {
+		searchingEvent(){
+			setTimeout(() => {
+				this.GETdata00()
+			}, 2500);
+			
+		},
 		onpot_pages_go() {
 			if (this.page === this.set_length) {
 
@@ -151,7 +169,7 @@ export default {
 
 		},
 		GETdata00() {
-			axios.get(`${URL_GET__INFORMATION}/?page=${this.page}&per_page=10`).then(response => {
+			axios.get(`${URL_GET_REQ}/?search=${this.searching}&staus=&user_id=&page=${this.page}&limit=5`).then(response => {
 				this.response = response.data.results
 				console.log(response.data.results);
 			})
@@ -190,7 +208,9 @@ export default {
 
 		},
 		page() {
-			axios.get(`${URL_GET__INFORMATION}/?page=${this.page}&per_page=10`).then(response => {
+			axios.get(`${URL_GET_REQ}/?search=${this.searching}&staus=&user_id=&page=${this.page}&limit=5`
+				// `${URL_GET_REQ}/?page=${this.page}&limit=5&search=ming`
+			).then(response => {
 				this.response = response.data.results
 				// console.log(this.Getlimit_information);
 			})

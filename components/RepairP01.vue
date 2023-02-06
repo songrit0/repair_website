@@ -7,8 +7,20 @@
 				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li>
 			</div>
 		</div>
+		<div class="col-3"  >
+			<div class="input-group mb-3">
+				<span class="input-group-text" style="height: 38px;" id="basic-addon1"><svg
+						xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" class="bi bi-search"
+						viewBox="0 0 16 16">
+						<path
+							d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+					</svg></span>
+				<input type="text" class="form-control" placeholder="ค้นหา" v-model="searching"
+					@input="searchingEvent()">
+			</div>
+		</div>
 		<div class="div-item1" v-if="response.length >= 1">
-		
+
 			<div class="item" v-for="item, index in response" :key="index">
 
 				<div class="item1 col-3">
@@ -76,6 +88,7 @@
 
 		</div><br>
 		<div class="Pagination-item" v-if="response.length >= 1">
+
 			<label for="cars">หน้าที่ :</label>
 			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
 			<select class="form-select" v-model="page">
@@ -120,11 +133,17 @@ export default {
 				process01: '',
 				process02: '',
 				process03: '',
-			},
-			
+			}, searching: '',
+
 		}
 	},
 	methods: {
+		searchingEvent() {
+			setTimeout(() => {
+				this.GETdata01()
+			}, 2500);
+			
+		},
 		onpot_pages_go() {
 			if (this.page === this.set_length) {
 
@@ -171,7 +190,9 @@ export default {
 										showConfirmButton: false,
 										timer: 2500
 									}).then(() => {
-										axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10`).then(response => {
+										axios.get(`${URL_GET_REQ}/?search=${this.searching}&staus=รอตอบรับ&user_id=&page=${this.page}&limit=5`
+											).then(response => {
+												
 											this.response = response.data.results
 										})
 										axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
@@ -192,7 +213,7 @@ export default {
 				const { value: fruit } = await Swal.fire({
 					title: 'ลงชื่อผู้ประสานงาน(ผู้รับแจ้งซ่อม)',
 					input: 'text',
-					inputValue:   this.$store.state.newUSER.names,
+					inputValue: this.$store.state.newUSER.names,
 					inputPlaceholder: 'กรอกชื่อผู้รับแจ้งซ่อม',
 					showCancelButton: true,
 					inputValidator: (value) => {
@@ -221,7 +242,7 @@ export default {
 									showConfirmButton: false,
 									timer: 2500
 								}).then(() => {
-									axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10`).then(response => {
+									axios.get(`${URL_GET_REQ}/?search=${this.searching}&staus=รอตอบรับ&user_id=&page=${this.page}&limit=5`).then(response => {
 										this.response = response.data.results
 									})
 									axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
@@ -287,7 +308,7 @@ export default {
 
 		},
 		GETdata01() {
-			axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10`).then(response => {
+			axios.get(`${URL_GET_REQ}/?search=${this.searching}&staus=รอตอบรับ&user_id=&page=${this.page}&limit=5`).then(response => {
 				this.response = response.data.results
 			})
 			axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
@@ -306,7 +327,7 @@ export default {
 
 	},
 	mounted() {
-		
+
 		// เปิดเว็บทำงานเลย
 		this.GETdata01()
 
@@ -329,7 +350,7 @@ export default {
 
 		},
 		page() {
-			axios.get(`${URL_GET_REQ}/?staus=รอตอบรับ&page=${this.page}&limit=10`).then(response => {
+			axios.get(`${URL_GET_REQ}/?search=${this.searching}&staus=รอตอบรับ&user_id=&page=${this.page}&limit=5`).then(response => {
 				this.response = response.data.results
 				// console.log(this.Getlimit_information);
 			})

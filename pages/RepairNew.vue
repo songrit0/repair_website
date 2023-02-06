@@ -158,7 +158,7 @@ export default {
 			axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด&user_id=${localStorage.users_id}`).then(response => {
 				this.get_lengthdata.All = response.data.lengthdata;
 			});
-			axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ`).then(response => {
+			axios.get(`${URL_GET_ALL_REQ}/?staus=รอตอบรับ&user_id=${localStorage.users_id}`).then(response => {
 				this.get_lengthdata.process01 = response.data.lengthdata;
 			});
 			axios.get(`${URL_GET_ALL_REQ}/?staus=กำลังดำเนินการ&user_id=${localStorage.users_id}`).then(response => {
