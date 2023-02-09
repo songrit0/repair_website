@@ -366,7 +366,9 @@ export default {
 
 		font-size: 10px;
 	}
-
+	.div-item0 table {
+		width: 660px;
+	}
 	.div-receive-row .div-item0 {
 		grid-template-columns: 1fr;
 	}

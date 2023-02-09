@@ -360,13 +360,24 @@ export default {
 
 		font-size: 10px;
 	}
-
+	.div-item2 table {
+		width: 660px;
+	}
 	.div-receive-row .div-item2 {
 		grid-template-columns: 1fr;
+		overflow: scroll hidden;
+		width: auto;
 	}
 
 	.div-staus {
 		grid-template-columns: 1fr 1fr;
+	}
+	@media screen and (max-width : 350px) {
+		.div-receive-row .div-item2 {
+		grid-template-columns: 1fr;
+		overflow: scroll hidden;
+		width: 300px;
+	}
 	}
 }
 </style>

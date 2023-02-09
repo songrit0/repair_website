@@ -10,12 +10,14 @@
 		<div class="div-item0" v-if="response.length >= 1">
 			<div class="col-3">
 				<div class="input-group mb-3">
-					<span class="input-group-text" style="height: 38px;" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-							 fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+					<span class="input-group-text" style="height: 38px;" id="basic-addon1"><svg
+							xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" class="bi bi-search"
+							viewBox="0 0 16 16">
 							<path
 								d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
 						</svg></span>
-					<input type="text" class="form-control" placeholder="ค้นหา" v-model="searching" @input="searchingEvent()">
+					<input type="text" class="form-control" placeholder="ค้นหา" v-model="searching"
+						@input="searchingEvent()">
 				</div>
 			</div>
 			<table>
@@ -107,7 +109,7 @@ export default {
 	},
 	data() {
 		return {
-			searching:'',
+			searching: '',
 			response: '',
 			page: 1,
 			set_length: 10,
@@ -121,11 +123,11 @@ export default {
 		}
 	},
 	methods: {
-		searchingEvent(){
+		searchingEvent() {
 			setTimeout(() => {
 				this.GETdata00()
 			}, 2500);
-			
+
 		},
 		onpot_pages_go() {
 			if (this.page === this.set_length) {
@@ -171,7 +173,7 @@ export default {
 		GETdata00() {
 			axios.get(`${URL_GET_REQ}/?search=${this.searching}&staus=&user_id=&page=${this.page}&limit=5`).then(response => {
 				this.response = response.data.results
-				console.log(response.data.results);
+				console.log(response.data);
 			})
 			axios.get(`${URL_GET_ALL_REQ}/?staus=ทั้งหมด`).then(response => {
 				this.get_lengthdata.process01 = response.data.lengthdata
@@ -374,10 +376,15 @@ export default {
 	.div-item0 table td {
 
 		font-size: 10px;
+		
 	}
-
+	.div-item0 table {
+		width: 660px;
+	}
 	.div-receive-row .div-item0 {
 		grid-template-columns: 1fr;
+		overflow: scroll hidden;
+		width: auto;
 	}
 
 	.div-staus {

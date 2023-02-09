@@ -333,4 +333,18 @@ export default {
 		grid-template-columns: 1fr 1fr;
 	}
 }
+@media screen and (max-width: 800px) {
+	.div-item01 table th {
+		font-size: 10px;
+	}
+
+	.div-item01 table {
+		width: 660px;
+	}
+	.div-receive-row .div-item01 {
+		grid-template-columns: 1fr;
+		overflow: scroll hidden;
+		width: auto;
+	}
+}
 </style>
