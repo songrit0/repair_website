@@ -416,6 +416,7 @@ export default {
 	column-gap: 25px;
 	row-gap: 60px;
 	grid-template-columns: 1fr 1fr;
+	padding-bottom: 60px;
 }
 
 .div-receive-row .div-item1 .item {
@@ -425,6 +426,7 @@ export default {
 	background-color: #f7f7f7;
 	flex-direction: row;
 	border-radius: 4px;
+	
 }
 
 .div-receive-row .div-item1 .item .item1 {

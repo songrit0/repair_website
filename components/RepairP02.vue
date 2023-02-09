@@ -344,6 +344,7 @@ export default {
 	column-gap: 30px;
 	row-gap: 60px;
 	grid-template-columns: 1fr 1fr;
+	padding-bottom: 60px;
 }
 
 .div-receive-row .div-item .item {

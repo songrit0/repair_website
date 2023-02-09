@@ -12,8 +12,35 @@
 
 
 			</div>
+			<div class="div-toggler" :style="set_state_on ? '' : 'left: -192px;'" v-if="$store.state?.newUSER?.user_status === 'admin'">
+				<li>เปิดการแจ้งเตือน :</li>
+				<div class="toggler">
+					<input id="toggler-1" name="toggler-1" type="checkbox" v-model="set_state">
+					<label for="toggler-1">
+						<svg class="toggler-on" version="1.1" xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 130.2 130.2">
+							<polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+						</svg>
+						<svg class="toggler-off" version="1.1" xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 130.2 130.2">
+							<line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+							<line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+						</svg>
+					</label>
+				</div>
+				<div class="div-toggler_BTN" @click="set_state_on = !set_state_on" 
+					:style="set_state ? 'background-color: rgb(77, 252, 156); color: #000000' : 'color:#fff'">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" :fill="set_state ? '#000000' : '#ffff'"
+						class="bi bi-bell" viewBox="0 0 16 16">
+						<path
+							d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+					</svg>{{ $store.state.statusON.lengthdata }}
+				</div>
+			</div>
 			<div class="group-layouts">
+
 				<div class="item-MenuDropdown">
+
 					<div class="box001"></div>
 					<button @click="MenuDropdown = !MenuDropdown" class="Menu_item1"
 						:class="MenuDropdown ? '' : 'Menu_off'">
@@ -28,6 +55,9 @@
 						</div>
 						<div>
 							<li class="p-1 " @click="QRon = !QRon">QR</li>
+						</div>
+						<div class="">
+
 						</div>
 						<div>
 							<li class="p-1 " @click="logout()">Log Out</li>
@@ -48,8 +78,8 @@
 
 				<div class="QR-mian" v-if="QRon">
 					<div class="qriously">
-						<button @click="QRon = !QRon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ffff"
-								class="bi bi-x" viewBox="0 0 16 16">
+						<button @click="QRon = !QRon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+								fill="#ffff" class="bi bi-x" viewBox="0 0 16 16">
 								<path
 									d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
 							</svg></button>
@@ -86,7 +116,9 @@ export default ({
 			getIndex: '',
 			statusON: 'x',
 			QRon: false,
-			URL: ''
+			URL: '',
+			set_state: false,
+			set_state_on: false
 		}
 	}, computed: {
 		mode() {
@@ -146,24 +178,36 @@ export default ({
 			}
 
 
+		},
+		get_state() {
+			axios.get(`${URL_IP}/state/?staus=รอตอบรับ`).then(response => {
+				var status = response.data
+				this.$store.commit('setstatusON', status)
+				// console.log('status "รอตอบรับ":', status);
+				// console.log(1);
+			})
 		}
 
 
 	},
 	mounted() {
 		this.setUSER()
-
+		this.get_state()
 		setInterval(() => {
 			this.getIndex = this.$route.query.Index
 		}, 10);
+		setInterval(() => {
+			this.get_state()
+		}, 60000);
 
 		setInterval(() => {
-			axios.get(`${URL_IP}/state/?staus=รอตอบรับ`).then(response => {
-				var status = response.data
-				this.$store.commit('setstatusON', status)
-				// console.log('status "รอตอบรับ":', status);
-			});
-		}, 5000);
+			if (this.set_state) {
+				this.get_state()
+			}
+			// console.log(2);
+		}, 10000);
+
+
 		setInterval(() => {
 			var gat = localStorage.getItem('acessToken')
 
@@ -247,16 +291,16 @@ br {
 
 .qriously button {
 	background-color: #dc3545;
-    border: none;
-    width: 30px;
-    height: 30px;
-    display: grid;
-    border-radius: 55px;
-    align-items: center;
-    position: initial;
-    justify-content: center;
-    margin-top: 1%;
-    margin-right: 89%;
+	border: none;
+	width: 30px;
+	height: 30px;
+	display: grid;
+	border-radius: 55px;
+	align-items: center;
+	position: initial;
+	justify-content: center;
+	margin-top: 1%;
+	margin-right: 89%;
 }
 
 .menu-bar-layouts {
@@ -505,4 +549,139 @@ body::-webkit-scrollbar-thumb {
 	border-radius: 12px;
 }
 
+
+
+.div-toggler {
+	display: flex;
+	background-color: rgba(170, 170, 170, 0.733);
+	width: 210px;
+	height: 45px;
+	position: absolute;
+	top: 71px;
+	border-radius: 0px 10px 10px 0px;
+	align-items: center;
+	justify-content: center;
+	left: 0px;
+	transition: all .2s linear;
+}
+
+.div-toggler_BTN {
+	display: flex;
+    background-color: rgb(252, 77, 77);
+    width: 40px;
+    height: 45px;
+    margin-right: -214px;
+    position: absolute;
+    border-radius: 0px 10px 10px 0px;
+    align-items: center;
+    justify-content: center;
+	column-gap: 3px;
+
+}
+
+.toggler {
+	width: 72px;
+	transform: scale(0.7, 0.7);
+	/* margin: 40px auto; */
+}
+
+.toggler input {
+	display: none;
+}
+
+.toggler label {
+	display: block;
+	position: relative;
+	width: 72px;
+	height: 36px;
+	border: 1px solid #d6d6d6;
+	border-radius: 36px;
+	background: #e4e8e8;
+	cursor: pointer;
+}
+
+.toggler label::after {
+	display: block;
+	border-radius: 100%;
+	background-color: #d7062a;
+	content: '';
+	animation-name: toggler-size;
+	animation-duration: 0.15s;
+	animation-timing-function: ease-out;
+	animation-direction: forwards;
+	animation-iteration-count: 1;
+	animation-play-state: running;
+}
+
+.toggler label::after,
+.toggler label .toggler-on,
+.toggler label .toggler-off {
+	position: absolute;
+	top: 50%;
+	left: 25%;
+	width: 26px;
+	height: 26px;
+	transform: translateY(-50%) translateX(-50%);
+	transition: left 0.15s ease-in-out, background-color 0.2s ease-out, width 0.15s ease-in-out, height 0.15s ease-in-out, opacity 0.15s ease-in-out;
+}
+
+.toggler input:checked+label::after,
+.toggler input:checked+label .toggler-on,
+.toggler input:checked+label .toggler-off {
+	left: 75%;
+}
+
+.toggler input:checked+label::after {
+	background-color: #50ac5d;
+	animation-name: toggler-size2;
+}
+
+.toggler .toggler-on,
+.toggler .toggler-off {
+	opacity: 1;
+	z-index: 2;
+}
+
+.toggler input:checked+label .toggler-off,
+.toggler input:not(:checked)+label .toggler-on {
+	width: 0;
+	height: 0;
+	opacity: 0;
+}
+
+.toggler .path {
+	fill: none;
+	stroke: #fefefe;
+	stroke-width: 7px;
+	stroke-linecap: round;
+	stroke-miterlimit: 10;
+}
+
+@keyframes toggler-size {
+
+	0%,
+	100% {
+		width: 26px;
+		height: 26px;
+	}
+
+	50% {
+		width: 20px;
+		height: 20px;
+	}
+}
+
+@keyframes toggler-size2 {
+
+	0%,
+	100% {
+		width: 26px;
+		height: 26px;
+	}
+
+	50% {
+		width: 20px;
+		height: 20px;
+	}
+}
 </style>

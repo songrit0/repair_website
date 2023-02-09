@@ -10,7 +10,7 @@
 					<span id="input_user_login_err" class="err-msg-login"></span>
 				</div>
 				<div class="input-group"> <b class="a-User " id="a-password">password</b>
-					<input id="input_password_login" v-model="formlogin.password"
+					<input id="input_password_login" v-model="formlogin.password" @keydown.enter="login(), validate_login()"
 						:type="password_show ? 'text' : 'password'" class="input-password" placeholder="password"
 						autocomplete="off " style="border-radius: 0px 6px 6px 0px;">
 					<span id="input_password_login_err" class="err-msg-login"></span>
