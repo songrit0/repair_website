@@ -129,7 +129,6 @@ export default ({
 		}
 	},
 	methods: {
-
 		submitSearch() {
 			localStorage.setItem('acessToken', 'AA')
 		},

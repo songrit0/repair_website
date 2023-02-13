@@ -131,6 +131,7 @@ export default {
 
 			} else {
 				this.page = this.page + 1
+				
 			}
 
 		},
@@ -192,7 +193,7 @@ export default {
 
 			Toast.fire({
 				icon: 'success',
-				title: 'โหลดข้อมูลไหม่แล้ว',
+				title: 'โหลดข้อมูลใหม่แล้ว',
 				// text: "รายการข้อมูลผู้ใช้งานจะอยู่ด้านล่าง!",
 			})
 			this.GETdata03()
@@ -237,7 +238,7 @@ export default {
 
 		},
 		page() {
-			axios.get(`${URL_GET_REQ}/?search=${this.searching}&staus="ซ่อมเสร็จ"&page=${this.page}&limit=10`).then(response => {
+			axios.get(`${URL_GET_REQ}/?search=${this.searching}&staus=ซ่อมเสร็จ&page=${this.page}&limit=10`).then(response => {
 				this.response = response.data.results
 				// console.log(this.Getlimit_information);
 			})

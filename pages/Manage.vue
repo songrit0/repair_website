@@ -1,7 +1,10 @@
 <template>
 	<div class="div-receive-row">
 		<br>
+		<br>
+
 		<h3 class="3h">จัดการข้อมูลเจ้าหน้าที่ประสานงาน</h3>
+		<li>ข้อมูลนี้จะแสดงอยู่ในหน้าปริ้นเอกสาร</li>
 		<br>
 		<div class="add-button">
 			<button class="add-button"  @click="$router.push(`/add_recipients`)">เพิ่มข้อมูลเจ้าหน้าที่ประสานงาน</button>
@@ -13,7 +16,7 @@
 				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li></div>
 		</div>
 		<div class="div-item0">
-			<table>
+			<table class="table-ov">
 				<tr>
 					<th style="width: 30px;">recipient_id</th>
 					<th style="width: 100px;">recipients</th>
@@ -22,7 +25,6 @@
 					<th style="width: 55px;">email</th>
 					<th style="width: 65px;">จัดการเพิ่มเติม</th>
 				</tr>
-
 				<tr v-for="(item, idex) in response" :key="idex">
 					<td>
 						<li>{{ idex+1 }}</li>
@@ -48,17 +50,19 @@
 					</td>
 				</tr>
 			</table>
+			<table></table>
+
             
 		</div>
 
-		<div class="Pagination-item">
+		<!-- <div class="Pagination-item">
 			<label for="cars">หน้าที่ :</label>
 			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
 			<select class="form-select" v-model="page">
 				<option v-for="idex in set_length" :key="idex" :value="idex">{{ idex }}</option>
 			</select>
 			<button type="button" @click="onpot_pages_go()" class="btn btn-outline-primary">&raquo;</button>
-		</div>
+		</div> -->
 
 	</div>
 </template>
@@ -110,7 +114,7 @@ export default {
 		},
 		
 		GET00_u() {
-			axios.get(`${URL_GET_RECIPIENT_ALL}/?staus=ทั้งหมด&page=${this.page}&limit=10`).then(response => {
+			axios.get(`${URL_GET_RECIPIENT_ALL}/?staus=ทั้งหมด&page=&limit=`).then(response => {
 				this.response = response.data.results
 			})
 		},
@@ -259,7 +263,9 @@ export default {
 	padding: 20px;
 	column-gap: 25px;
 	row-gap: 25px;
-	grid-template-columns: 1fr
+	grid-template-columns: 1fr;
+	overflow-x: hidden;
+    height: 630px;
 }
 
 .div-receive-row .div-item0 .item {
@@ -358,16 +364,20 @@ export default {
 	}
 
 	.div-item0 table td {
-
 		font-size: 10px;
 	}
 
 	.div-receive-row .div-item0 {
 		grid-template-columns: 1fr;
+		overflow-y: scroll;
+		overflow-x: scroll;
 	}
 
 	.div-staus {
 		grid-template-columns: 1fr 1fr;
 	}
+}
+.table-ov{
+
 }
 </style>

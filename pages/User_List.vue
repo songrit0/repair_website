@@ -1,15 +1,17 @@
 <template>
 	<div class="div-receive-row">
 		<br>
-		<h3 class="3h">จัดการฐานข้อมูล</h3>
-       
-        <!-- <div class="delete-button">
+		<br>
+		<h3 class="3h">จัดการ USERS</h3>
+
+		<!-- <div class="delete-button">
 			<button @click="delete_all()">delete-button</button></div> -->
-       
-		<div class="err_not_item" v-if="response?.length == 0||response == null">
+
+		<div class="err_not_item" v-if="response?.length == 0 || response == null">
 			<div class="item"> <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="">
 				<b>ยังไม่มีข้อมูล</b>
-				<li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li></div>
+
+			</div>
 		</div>
 		<div class="div-item0">
 			<table>
@@ -39,32 +41,34 @@
 						<li>{{ item.phone }}</li>
 					</td>
 					<td>
-                        <div class="button-abot">
-						<button class="button-edit-1"  @click="$router.push({name:'Edit_User',path:'/Edit_User',query:{id:item.user_id}})">แก้ไข </button>
-                        <button class="button-edit-2"  @click="deleteinfrmation(item.user_id)">ลบข้อมูล </button>
-                        
-                    </div>
+						<div class="button-abot">
+							<button class="button-edit-1"
+								@click="$router.push({ name: 'Edit_User', path: '/Edit_User', query: { id: item.user_id } })">แก้ไข
+							</button>
+							<button class="button-edit-2" @click="deleteinfrmation(item.user_id)">ลบข้อมูล </button>
+
+						</div>
 					</td>
 				</tr>
 			</table>
-            
+
 		</div>
 
-		<div class="Pagination-item">
+		<!-- <div class="Pagination-item">
 			<label for="cars">หน้าที่ :</label>
 			<button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
 			<select class="form-select" v-model="page">
 				<option v-for="idex in set_length" :key="idex" :value="idex">{{ idex }}</option>
 			</select>
 			<button type="button" @click="onpot_pages_go()" class="btn btn-outline-primary">&raquo;</button>
-		</div>
+		</div> -->
 
 	</div>
 </template>
 
 <script>
 import axios from 'axios'
-import { URL_GET_ALL_REQ, URL_GET_REQ, URL_GET__INFORMATION, URL_DELETE_USER_ALL ,URL_DELETE_USER,URL_GET_USERS } from '../constants'
+import { URL_GET_ALL_REQ, URL_GET_REQ, URL_GET__INFORMATION, URL_DELETE_USER_ALL, URL_DELETE_USER, URL_GET_USERS } from '../constants'
 import Swal from 'sweetalert2'
 export default {
 	data() {
@@ -84,7 +88,7 @@ export default {
 	methods: {
 		Showformitem(payload, payload2) {
 			$nuxt.$store.commit('setShowformitem', payload)
-			$nuxt.$store.commit('setShowformitem_id',  payload2)
+			$nuxt.$store.commit('setShowformitem_id', payload2)
 			// console.log('id2',payload2);
 		},
 		onpot_pages_go() {
@@ -107,7 +111,7 @@ export default {
 			var M = new Date(item).getMinutes()
 			return `${H}:${M} น.`
 		},
-		
+
 		GET00_u() {
 			axios.get(`${URL_GET_USERS}/?staus=ทั้งหมด&page=${this.page}&limit=10`).then(response => {
 				this.response = response.data.results
@@ -115,31 +119,31 @@ export default {
 		},
 		GETset_length() {
 			axios.get(`${URL_GET_USERS}/?staus=ทั้งหมด&user_id=${localStorage.users_id}`).then(response => {
-                this.response = response.data.results
+				this.response = response.data.results
 			})
 		},
-		
+
 		deleteinfrmation(item) {
-			axios.delete(`${URL_DELETE_USER}/${item}`).then(()=>{
+			axios.delete(`${URL_DELETE_USER}/${item}`).then(() => {
 				Swal.fire({
-								position: 'center',
-								icon: 'success',
-								title: 'ลบข้อมูลเรียบร้อย',
-								showConfirmButton: false,
-								timer: 1500
-							})
+					position: 'center',
+					icon: 'success',
+					title: 'ลบข้อมูลเรียบร้อย',
+					showConfirmButton: false,
+					timer: 1500
+				})
 			});
 		},
 
 		delete_all() {
-			axios.delete(`${URL_DELETE_USER_ALL}`).then(()=>{
+			axios.delete(`${URL_DELETE_USER_ALL}`).then(() => {
 				Swal.fire({
-								position: 'center',
-								icon: 'success',
-								title: 'ลบข้อมูลเรียบร้อย',
-								showConfirmButton: false,
-								timer: 1500
-							})
+					position: 'center',
+					icon: 'success',
+					title: 'ลบข้อมูลเรียบร้อย',
+					showConfirmButton: false,
+					timer: 1500
+				})
 			});
 		}
 
@@ -166,23 +170,27 @@ export default {
 </script>
 
 <style>
-.delete-button{
+.delete-button {
 	/* border: solid red 1px; */
 	margin-left: 35px;
 }
-.button-abot{
-    /* border:solid red 2px ; */
-    display: flex;
+
+.button-abot {
+	/* border:solid red 2px ; */
+	display: flex;
 	justify-content: center;
 }
-.button-edit-1{
-    border: none;
-    color: rgb(227, 220, 3);
+
+.button-edit-1 {
+	border: none;
+	color: rgb(227, 220, 3);
 }
-.button-edit-2{
-    border: none;
-    color: rgb(244, 0, 0);
+
+.button-edit-2 {
+	border: none;
+	color: rgb(244, 0, 0);
 }
+
 .div-receive {
 	display: flex;
 	flex-direction: column;

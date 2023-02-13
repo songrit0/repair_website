@@ -25,13 +25,13 @@
 					User
 				</div>
 
-				<div class="item-User p-3 back-img-register background-img-user" @click="$router.push(`/showCRUD`)">
+				<div class="item-User p-3 back-img-register background-img-I" @click="$router.push(`/showCRUD`)">
 					<h4>จัดการข้อมูลเพิ่มเติม</h4>
 					manage additional information
 				</div>
 
 				
-				<div class="item-User p-3 back-img-register background-img-user" @click="$router.push(`/Manage`)">
+				<div class="item-User p-3 back-img-register background-img-I2" @click="$router.push(`/Manage`)">
 					<h4>จัดการข้อมูลเจ้าหน้าที่ประสานงาน</h4>
 					Manage coordinator information
 				</div>
@@ -166,7 +166,20 @@ export default {
 	background-size: 60px;
 	background-color: #C7C7FF;
 }
-
+.background-img-I {
+	background: url(~/img/database.svg);
+	background-repeat: no-repeat;
+	background-position: bottom right;
+	background-size: 60px;
+	background-color: #C7C7FF;
+}
+.background-img-I2 {
+	background: url(~/img/clipboard-minus.svg);
+	background-repeat: no-repeat;
+	background-position: bottom right;
+	background-size: 60px;
+	background-color: #C7C7FF;
+}
 .background-img-register {
 	background: url(~/img/app_registration_FILL0_wght400_GRAD0_opsz48.svg);
 	background-repeat: no-repeat;

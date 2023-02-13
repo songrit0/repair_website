@@ -157,6 +157,7 @@ export default {
               timer: 1500,
             }).then(() => {
               // window.location.reload(0)
+              history.back()
               this.setFORMON();
             });
           });

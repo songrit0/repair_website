@@ -12,16 +12,12 @@
 
     <div class="err_not_item" v-if="response?.length == 0 || response == null">
       <div class="item">
-        <img
-          src="../img/error_FILL0_wght400_GRAD0_opsz48.svg"
-          width="50%"
-          alt=""
-        />
+        <img src="../img/error_FILL0_wght400_GRAD0_opsz48.svg" width="50%" alt="" />
         <b>ยังไม่มีข้อมูล</b>
         <li>ยังไม่มีข้อมูลในการแจ้งซ่อมของผู้ใช้</li>
       </div>
     </div>
-    <div class="div-item0">
+    <div class="div-item0" v-if="response.length >= 1">
       <table>
         <tr>
           <th style="width: 30px">ID</th>
@@ -48,23 +44,21 @@
             <li>{{ item.name_sender }}</li>
           </td>
           <td>
-            <b
-              >{{
-                `${new Date(item.date_repair).getDate()} /
-						${new Date(item.date_repair).getMonth() + 1} /
-						${new Date(item.date_repair).getFullYear()}
-						`
-              }}<br />{{ settime(item.date_repair) }}
+            <b>{{
+            `${new Date(item.date_repair).getDate()} /
+            ${new Date(item.date_repair).getMonth() + 1} /
+            ${new Date(item.date_repair).getFullYear()}
+            `
+            }}<br />{{ settime(item.date_repair) }}
             </b>
           </td>
           <td>
-            <b
-              >{{
-                `${new Date(item.date_repair).getDate()} /
-						${new Date(item.date_repair).getMonth() + 1} /
-						${new Date(item.date_repair).getFullYear()}
-						`
-              }}<br />{{ settime(item.date_repair) }}
+            <b>{{
+            `${new Date(item.date_repair).getDate()} /
+            ${new Date(item.date_repair).getMonth() + 1} /
+            ${new Date(item.date_repair).getFullYear()}
+            `
+            }}<br />{{ settime(item.date_repair) }}
             </b>
           </td>
           <td>
@@ -72,22 +66,16 @@
           </td>
           <td>
             <div class="button-abot">
-              <button
-                class="button-edit-1"
-                @click="
-                  $router.push({
-                    name: 'edit_infor',
-                    path: '/edit_infor',
-                    query: { id: item.id_repair_i, idex: idex },
-                  })
-                "
-              >
+              <button class="button-edit-1" @click="
+                $router.push({
+                  name: 'edit_infor',
+                  path: '/edit_infor',
+                  query: { id: item.id_repair_i, idex: idex },
+                })
+              ">
                 แก้ไข
               </button>
-              <button
-                class="button-edit-2"
-                @click="deleteinfrmation(item.id_repair_i)"
-              >
+              <button class="button-edit-2" @click="deleteinfrmation(item.id_repair_i)">
                 ลบข้อมูล
               </button>
             </div>
@@ -97,27 +85,13 @@
     </div>
 
     <br />
-    <div class="Pagination-item">
+    <div class="Pagination-item" v-if="response.length >= 1">
       <label for="cars">หน้าที่ :</label>
-      <button
-        type="button"
-        @click="onpot_pages_back()"
-        class="btn btn-outline-primary"
-      >
-        &laquo;
-      </button>
+      <button type="button" @click="onpot_pages_back()" class="btn btn-outline-primary">&laquo;</button>
       <select class="form-select" v-model="page">
-        <option v-for="idex in set_length" :key="idex" :value="idex">
-          {{ idex }}
-        </option>
+        <option v-for="idex in set_length" :key="idex" :value="idex">{{ idex }}</option>
       </select>
-      <button
-        type="button"
-        @click="onpot_pages_go()"
-        class="btn btn-outline-primary"
-      >
-        &raquo;
-      </button>
+      <button type="button" @click="onpot_pages_go()" class="btn btn-outline-primary">&raquo;</button>
     </div>
     <br />
   </div>
@@ -174,7 +148,7 @@ export default {
 
     GET00_u() {
       axios
-        .get(`${URL_GET_REQ}/?staus=ทั้งหมด&page=${this.page}&limit=10`)
+        .get(`${URL_GET_REQ}/?staus=&page=${this.page}&limit=10`)
         .then((response) => {
           this.response = response.data.results;
         });
@@ -182,7 +156,7 @@ export default {
     GETset_length() {
       axios
         .get(
-          `${URL_GET_ALL_REQ}/?staus=ทั้งหมด&user_id=${localStorage.users_id}`
+          `${URL_GET_ALL_REQ}/?staus=ทั้งหมด`
         )
         .then((response) => {
           this.get_lengthdata.process01 = response.data.lengthdata;
@@ -223,7 +197,7 @@ export default {
             });
           });
         } else if (result.isDenied) {
-          
+
         }
       });
     },
@@ -252,6 +226,7 @@ export default {
 .delete-button {
   margin-left: 35px;
 }
+
 /* .add-button {
   margin-left: 80px;
   margin-top: -25px;
@@ -263,6 +238,7 @@ export default {
   background-color: rgb(199, 173, 173);
   color: rgb(248, 0, 0);
 }
+
 .add-button button {
   border: none;
   border-radius: 10px;
@@ -275,14 +251,17 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .button-edit-1 {
   border: none;
   color: rgb(227, 220, 3);
 }
+
 .button-edit-2 {
   border: none;
   color: rgb(244, 0, 0);
 }
+
 .div-receive {
   display: flex;
   flex-direction: column;
